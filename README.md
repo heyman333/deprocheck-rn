@@ -8,4 +8,5 @@
 2. React hooks
 3. Mobx4
 4. styled-components
-5. Hermes
+5. typescript
+6. Hermes
