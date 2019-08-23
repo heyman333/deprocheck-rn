@@ -1,5 +1,5 @@
 module.exports = {
   root: true,
   extends: ['@react-native-community', 'prettier'],
-  parser: '@typescript-eslint/parser'
+  parser: '@typescript-eslint/parser',
 };
