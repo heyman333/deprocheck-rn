@@ -1,26 +1,25 @@
-import React, { Fragment } from 'react';
-import { Text, StyleSheet, SafeAreaView } from 'react-native';
+import React from 'react';
+import MainNavigator from './src/navigators/MainNavi';
+import { NavigationContainerComponent } from 'react-navigation';
 
-const App = () => (
-  <Fragment>
-    <SafeAreaView style={styles.container}>
-      <Text>디프만 출첵앱</Text>
-    </SafeAreaView>
-  </Fragment>
-);
+import { ThemeProvider } from 'styled-components';
+import { registerAppContainer } from './src/navigators/NavigationService';
+import { createTheme } from './src/utils/theme';
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: 'pink',
-  },
-  modalView: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: 200,
-    height: 200,
-    backgroundColor: 'orange',
-  },
-});
+const App = () => {
+  const appContainer = React.createRef<NavigationContainerComponent>();
+
+  React.useEffect(() => {
+    if (appContainer.current) {
+      registerAppContainer(appContainer.current);
+    }
+  }, [appContainer]);
+
+  return (
+    <ThemeProvider theme={createTheme('ADMIN')}>
+      <MainNavigator ref={appContainer} />
+    </ThemeProvider>
+  );
+};
 
 export default App;
