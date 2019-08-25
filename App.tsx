@@ -7,7 +7,7 @@ import { registerAppContainer } from './src/navigators/NavigationService';
 import { createTheme } from './src/utils/theme';
 
 const App = () => {
-  const appContainer = React.createRef<NavigationContainerComponent>();
+  const appContainer = React.useRef<NavigationContainerComponent>(null);
 
   React.useEffect(() => {
     if (appContainer.current) {
