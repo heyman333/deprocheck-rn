@@ -6,7 +6,7 @@
 
 1. React-Native (0.60.x)
 2. React hooks
-3. Mobx4
+3. ~~Mobx4~~ Context(useContext)
 4. styled-components
 5. typescript
 6. Hermes
