@@ -28,6 +28,50 @@ const BottomButton = styled(DCTouchable)`
   background-color: ${({ theme }) => theme.background};
 `
 
+const LogoImage = styled.Image`
+  width: 220px;
+  margin-bottom: 75px;
+`;
+
+//TODO: placeholder 스타일 적용 안됨
+const NameInput = styled.TextInput`
+  box-shadow: none;
+  background-color: transparent;
+  width: 300px;
+  height: 50px;
+  font-size: 14px;
+  borderBottomColor: #222222;
+  borderBottomWidth: 2px;
+  
+  ::placeholder {
+    color: #222222;
+    font-size: 14px;
+  }
+`;
+
+const JobButtonContainer = styled.View`
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+`;
+
+const JobButton = styled.TouchableOpacity`
+  width: 150px;
+  height: 50px;
+  border: solid 1px #dddddd;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const JobText = styled.Text`
+  color: #222222;
+  font-weight: 500;
+  font-size: 14px;
+  letter-spacing: -0.3px;
+`
+
 const Footer = styled.View`
   justify-content: center;
   align-items: center;
@@ -96,10 +140,31 @@ const Login: React.FC = () => {
         <BottomButton onPress={onLogin}>
           <BottomText>로그인하기</BottomText>
         </BottomButton>
-        <Image
+        <LogoImage
             source={require('../asset/deprocheck-logo.png')}
             width={220}
         />
+
+        <NameInput
+          placeholder={`이름을 입력해주세요`}
+        />
+
+        <JobButtonContainer>
+          <JobButton
+              // onClick={onClickJob(true)}
+              // active={deginerSelected === true}
+          >
+            <JobText>Designer</JobText>
+          </JobButton>
+          <JobButton
+              // onClick={onClickJob(false)}
+              // active={deginerSelected === false}
+              style={{ borderLeftWidth: 0 }}
+          >
+            <JobText>Developer</JobText>
+          </JobButton>
+        </JobButtonContainer>
+
 
         <Footer>
           <DCTouchable onPress={onLogin}>
