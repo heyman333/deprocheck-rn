@@ -7,9 +7,11 @@ export const colors = {
 const theme = {
   member: {
     background: colors.white,
+    reverseBackColor: colors.black,
   },
   admin: {
     background: colors.black,
+    reverseBackColor: colors.white,
   },
 };
 
