@@ -9,8 +9,12 @@ interface Props {
 }
 
 // TODO: 안드로이드 기기 확인 후 리플 등 필요한 버튼 기능 넣기
-export const DCTouchable: React.FC<Props> = ({ children, onPress }: Props) => {
-  return <Touchable onPress={onPress}>{children}</Touchable>;
+export const DCTouchable: React.FC<Props> = ({ children, onPress, style }) => {
+  return (
+    <Touchable style={style} onPress={onPress} activeOpacity={0.75}>
+      {children}
+    </Touchable>
+  );
 };
 
 export default DCTouchable;
