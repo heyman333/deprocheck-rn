@@ -5,9 +5,10 @@ import DCTouchable from '../components/DCTouchable';
 import DCText from '../components/DCText';
 import ScreenWrap from '../components/ScreenWrap';
 import SwitchToggle from '../components/SwitchToggle';
-import { navigate } from '../navigators/NavigationService';
-import { AppContext } from '../contexts/AppContext';
+import { replace } from '../navigators/NavigationService';
+import { AppContext, UserContext } from '../contexts';
 import { img_deprocheck_logo } from '../assets/images';
+import { requestMemberLoginByName } from '../modules/auth';
 
 const Wrap = styled.View`
   flex: 1;
@@ -51,19 +52,32 @@ const Logo = styled.Image.attrs({ source: img_deprocheck_logo })`
 `;
 
 const Login: React.FC = () => {
-  const onLogin = () => {
-    navigate('Home');
-  };
-
   const { state, dispatch } = React.useContext(AppContext);
+  const { dispatch: authDispatch } = React.useContext(UserContext);
+
+  const onLogin = async () => {
+    try {
+      // FIXME: 일단 아무이름이나 하드코딩
+      const data = await requestMemberLoginByName('한영수');
+      if (data.accessToken) {
+        authDispatch({
+          type: 'SET_USER_INFO',
+          payload: { userInfo: { name: '한영수' } },
+        });
+        replace('Home');
+      }
+    } catch (error) {
+      console.log('error', error);
+    }
+  };
 
   const onPressToggle = () => {
     if (state.theme === 'ADMIN') {
-      dispatch({ type: 'change-theme', payload: { theme: 'MEMBER' } });
+      dispatch({ type: 'CHANGE_THEME', payload: { theme: 'MEMBER' } });
       return;
     }
 
-    dispatch({ type: 'change-theme', payload: { theme: 'ADMIN' } });
+    dispatch({ type: 'CHANGE_THEME', payload: { theme: 'ADMIN' } });
   };
 
   return (

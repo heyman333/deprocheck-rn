@@ -1,20 +1,22 @@
 import React, { Dispatch } from 'react';
 
-export type AactionType = 'CHANGE_THEME';
+export type AactionType = 'SET_USER_INFO';
 
 export interface Action {
   type: AactionType;
   payload: {
-    theme: string;
+    userInfo: {
+      name: string;
+    };
   };
 }
 
 export interface State {
-  theme: string;
+  userInfo: { name: string };
 }
 
 export const initialState: State = {
-  theme: 'MEMBER',
+  userInfo: { name: '' },
 };
 
 interface Context {
@@ -22,9 +24,9 @@ interface Context {
   dispatch: Dispatch<Action>;
 }
 
-const AppContext = React.createContext<Context>({
+const UserContext = React.createContext<Context>({
   state: initialState,
   dispatch: () => initialState,
 });
 
-export default AppContext;
+export default UserContext;

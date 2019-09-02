@@ -1,7 +1,6 @@
 import React, { useReducer } from 'react';
-import {
+import AppContext, {
   AactionType,
-  AppContext,
   State,
   initialState,
 } from '../contexts/AppContext';
@@ -16,7 +15,7 @@ interface Action {
 }
 
 interface Props {
-  children?: any;
+  children?: React.ReactElement;
 }
 
 export interface State {
@@ -25,7 +24,7 @@ export interface State {
 
 const reducer = (state: State, action: Action) => {
   switch (action.type) {
-    case 'change-theme':
+    case 'CHANGE_THEME':
       return {
         ...state,
         theme: action.payload.theme,
@@ -38,8 +37,6 @@ const reducer = (state: State, action: Action) => {
 function AppProvider(props: Props) {
   const [state, dispatch] = useReducer(reducer, initialState);
   const value = { state, dispatch };
-
-  console.log('!', value);
 
   return (
     <AppContext.Provider value={value}>{props.children}</AppContext.Provider>
