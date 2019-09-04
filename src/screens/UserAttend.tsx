@@ -6,10 +6,13 @@ import { Dimensions } from 'react-native';
 import DCTouchable from '../components/DCTouchable';
 import DCText from '../components/DCText';
 import ScreenWrap from '../components/ScreenWrap';
+import MyMapView from '../components/MyMapView';
 
 import { navigate } from '../navigators/NavigationService';
 import { AppContext } from '../contexts/AppContext';
 import { img_deprocheck_logo_2 } from '../assets/images';
+
+
 
 const Wrap = styled.View`
   flex: 1;
@@ -138,6 +141,7 @@ const UserAttend: React.FC = () => {
               현위치를 눌러 출석하기를 완료해주세요!
             </HelpText>
           </HelpBox>
+          <MyMapView/>
         </Body>
 
         <Footer>
