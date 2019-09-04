@@ -8,7 +8,6 @@ import SwitchToggle from '../components/SwitchToggle';
 import { navigate } from '../navigators/NavigationService';
 import { AppContext } from '../contexts/AppContext';
 import { img_deprocheck_logo } from '../assets/images';
-import {Image} from "react-native";
 
 const Wrap = styled.View`
   flex: 1;
@@ -113,7 +112,7 @@ const EnterText = styled.Text`
 
 const Login: React.FC = () => {
   const onLogin = () => {
-    navigate('Home');
+    navigate('UserAttend');
   };
 
   const { state, dispatch } = React.useContext(AppContext);
@@ -141,8 +140,8 @@ const Login: React.FC = () => {
           <BottomText>로그인하기</BottomText>
         </BottomButton>
         <LogoImage
-            source={require('../asset/deprocheck-logo.png')}
-            width={220}
+          source={require('../assets/images/deprocheck-logo.png')}
+          width={220}
         />
 
         <NameInput
@@ -151,15 +150,15 @@ const Login: React.FC = () => {
 
         <JobButtonContainer>
           <JobButton
-              // onClick={onClickJob(true)}
-              // active={deginerSelected === true}
+            // onClick={onClickJob(true)}
+            // active={deginerSelected === true}
           >
             <JobText>Designer</JobText>
           </JobButton>
           <JobButton
-              // onClick={onClickJob(false)}
-              // active={deginerSelected === false}
-              style={{ borderLeftWidth: 0 }}
+            // onClick={onClickJob(false)}
+            // active={deginerSelected === false}
+            style={{ borderLeftWidth: 0 }}
           >
             <JobText>Developer</JobText>
           </JobButton>
