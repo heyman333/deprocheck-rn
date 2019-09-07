@@ -141,7 +141,7 @@ const UserAttend: React.FC = () => {
               현위치를 눌러 출석하기를 완료해주세요!
             </HelpText>
           </HelpBox>
-          <MyMapView/>
+          <MyMapView style={{ width: 50, height: 35 }} />
         </Body>
 
         <Footer>

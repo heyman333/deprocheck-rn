@@ -1,23 +1,26 @@
 import React, { Component } from 'react';
 import { AppRegistry, StyleSheet, Text, View } from 'react-native';
 import MapView from 'react-native-maps';
+import Geolocation from '@react-native-community/geolocation';
 
 export default class MyMapView extends Component {
   state = {
     mapRegion: null,
     lastLat: null,
     lastLong: null,
-  }
+  };
 
   componentDidMount() {
-    this.watchID = navigator.geolocation.watchPosition((position) => {
+    console.log(Geolocation);
+    this.watchID = Geolocation.watchPosition(position => {
       // Create the object to update this.state.mapRegion through the onRegionChange function
+      console.log('postion', position);
       let region = {
         latitude: position.coords.latitude,
         longitude: position.coords.longitude,
-        latitudeDelta: 0.00922*1.5,
-        longitudeDelta: 0.00421*1.5
-      }
+        latitudeDelta: 0.00922 * 1.5,
+        longitudeDelta: 0.00421 * 1.5,
+      };
       this.onRegionChange(region, region.latitude, region.longitude);
     });
   }
@@ -48,14 +51,15 @@ export default class MyMapView extends Component {
 
   render() {
     return (
-      <View style={{flex: 1}}>
+      <View style={styles.container}>
         <MapView
           style={styles.map}
           region={this.state.mapRegion}
           showsUserLocation={true}
           followUserLocation={true}
           onRegionChange={this.onRegionChange.bind(this)}
-          onPress={this.onMapPress.bind(this)}>
+          onPress={this.onMapPress.bind(this)}
+        >
           <MapView.Marker
             coordinate={{
               latitude: (this.state.lastLat + 0.00050) || -36.82339,
@@ -73,9 +77,31 @@ export default class MyMapView extends Component {
   }
 }
 
+// const styles = StyleSheet.create({
+//   map: {
+//     // ...StyleSheet.absoluteFillObject,
+//     flex: 1,
+//     width: 80,
+//     height: 80,
+//   },
+// });
+
 const styles = StyleSheet.create({
+  container: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+  },
   map: {
-    ...StyleSheet.absoluteFillObject,
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
   },
 });
 
