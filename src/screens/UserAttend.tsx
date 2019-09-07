@@ -21,17 +21,24 @@ const Wrap = styled.View`
 
 const Body = styled.View`
   justify-content: center;
+  flex-direction: column;
+  justify-content: center;
   align-items: center;
+`;
+
+const SessionTextWrap = styled.View`
+  width: 300px;
+  margin-bottom: 8px;
 `;
 
 const SessionText = styled(DCText)`
   font-size: 14px;
   letter-spacing: -0.28px;
   color: #222222;
-  margin-bottom: 12px;
+  align-self: flex-start;
 `;
 
-//TODO: 왜 중앙정렬되지
+//TODO: 중앙정렬 안되는 문제 해결하기
 const LocationArea = styled.View`
   display: flex;
   flex-direction: row;
@@ -42,6 +49,7 @@ const LocationArea = styled.View`
 
 const LocationIcon = styled.Image`
   width: 24px;
+  align-self: flex-start;
 `;
 
 const LocationText = styled(DCText)`
@@ -49,6 +57,7 @@ const LocationText = styled(DCText)`
   font-weight: bold;
   letter-spacing: -0.36px;
   color: #222222;
+  align-self: flex-start;
 `;
 
 const Bar = styled.View`
@@ -65,7 +74,7 @@ const HelpBox = styled.View`
   
   justify-content: center;
   align-items: center;
-  margin-top: 50px;
+  margin-top: 45px;
 `
 
 const HelpText = styled(DCText)`
@@ -128,7 +137,10 @@ const UserAttend: React.FC = () => {
         />
 
         <Body>
-          <SessionText>오늘의 세션장소</SessionText>
+          <SessionTextWrap>
+            <SessionText>오늘의 세션장소</SessionText>
+          </SessionTextWrap>
+
           <LocationArea>
             <LocationIcon
               source={require('../asset/baseline-place-24-px.png')}
@@ -141,8 +153,9 @@ const UserAttend: React.FC = () => {
               현위치를 눌러 출석하기를 완료해주세요!
             </HelpText>
           </HelpBox>
-          <MyMapView style={{ width: 50, height: 35 }} />
         </Body>
+
+        <MyMapView/>
 
         <Footer>
           <DCTouchable onPress={onLogin}>
