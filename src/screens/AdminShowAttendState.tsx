@@ -6,18 +6,20 @@ import DCText from '../components/DCText';
 
 const Wrap = styled.View`
   flex: 1;
+  justify-content: center;
+  align-items: center;
 `;
 
 import ScreenWrap from '../components/ScreenWrap';
 
-const AdminHome: React.FC<NavigationScreenComponent> = () => {
+const AdminShowAttendState: React.FC<NavigationScreenComponent> = () => {
   return (
     <ScreenWrap>
       <Wrap>
-        <DCText>관리자</DCText>
+        <DCText>출석현황</DCText>
       </Wrap>
     </ScreenWrap>
   );
 };
 
-export default AdminHome;
+export default AdminShowAttendState;

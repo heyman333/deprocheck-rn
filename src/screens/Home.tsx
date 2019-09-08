@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components/native';
+import { NavigationScreenComponent } from 'react-navigation';
 
 import { UserContext } from '../contexts';
 import ScreenWrap from '../components/ScreenWrap';
@@ -10,7 +11,7 @@ const Wrap = styled.View`
   align-items: center;
 `;
 
-const Home: React.FC = () => {
+const Home: React.FC<NavigationScreenComponent> = () => {
   const { state: authState, dispatch: authDispatch } = React.useContext(
     UserContext
   );

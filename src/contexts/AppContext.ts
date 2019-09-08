@@ -11,10 +11,12 @@ export interface Action {
 
 export interface State {
   theme: string;
+  tabVisible: boolean;
 }
 
 export const initialState: State = {
   theme: 'MEMBER',
+  tabVisible: true,
 };
 
 interface Context {
