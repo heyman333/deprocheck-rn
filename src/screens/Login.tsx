@@ -71,7 +71,8 @@ const JobText = styled.Text`
   letter-spacing: -0.3px;
 `
 
-const Footer = styled.View`
+const Footer = styled(DCTouchable)`
+  display: flex;
   justify-content: center;
   align-items: center;
   position: absolute;
@@ -165,10 +166,8 @@ const Login: React.FC = () => {
         </JobButtonContainer>
 
 
-        <Footer>
-          <DCTouchable onPress={onLogin}>
-            <EnterText>입장하기</EnterText>
-          </DCTouchable>
+        <Footer onPress={onLogin}>
+          <EnterText>입장하기</EnterText>
         </Footer>
       </Wrap>
     </ScreenWrap>
