@@ -74,7 +74,7 @@ const HelpBox = styled.View`
   
   justify-content: center;
   align-items: center;
-  margin-top: 45px;
+  margin-top: 48px;
 `
 
 const HelpText = styled(DCText)`
@@ -122,7 +122,7 @@ const EnterText = styled.Text`
 
 const UserAttend: React.FC = () => {
   const onLogin = () => {
-    navigate('Home');
+    navigate('UserStatus');
   };
 
   const { state } = React.useContext(AppContext);
@@ -157,11 +157,11 @@ const UserAttend: React.FC = () => {
 
         <MyMapView/>
 
-        <Footer>
-          <DCTouchable onPress={onLogin}>
+        <DCTouchable onPress={onLogin}>
+          <Footer>
             <EnterText>출석하기</EnterText>
-          </DCTouchable>
-        </Footer>
+          </Footer>
+        </DCTouchable>
       </Wrap>
     </ScreenWrap>
   );

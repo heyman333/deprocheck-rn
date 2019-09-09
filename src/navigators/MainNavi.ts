@@ -1,8 +1,10 @@
 import { createStackNavigator, createAppContainer } from 'react-navigation';
 
 import Login from '../screens/Login';
-import Home from '../screens/Home'
-import UserAttend from '../screens/UserAttend'
+import Home from '../screens/Home';
+import UserAttend from '../screens/UserAttend';
+import UserStatus from '../screens/UserStatus';
+
 
 const AppNavigator = createStackNavigator(
   {
@@ -14,6 +16,9 @@ const AppNavigator = createStackNavigator(
     },
     UserAttend: {
       screen: UserAttend,
+    },
+    UserStatus: {
+      screen: UserStatus,
     },
   },
   {
