@@ -5,12 +5,12 @@ export type AactionType = 'CHANGE_THEME';
 export interface Action {
   type: AactionType;
   payload: {
-    theme: string;
+    theme: 'ADMIN' | 'MEMBER';
   };
 }
 
 export interface State {
-  theme: string;
+  theme: 'ADMIN' | 'MEMBER';
   tabVisible: boolean;
 }
 

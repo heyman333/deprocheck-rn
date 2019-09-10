@@ -12,9 +12,9 @@ const Wrap = styled.View`
 
 import ScreenWrap from '../components/ScreenWrap';
 
-const AdminShowAttendState: React.FC<NavigationScreenComponent> = () => {
+const AdminShowAttendState: NavigationScreenComponent = () => {
   return (
-    <ScreenWrap>
+    <ScreenWrap mode="ADMIN">
       <Wrap>
         <DCText>출석현황</DCText>
       </Wrap>

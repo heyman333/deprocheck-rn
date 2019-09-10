@@ -38,6 +38,7 @@ const BottomButton = styled(DCTouchable)`
 
 const BottomText = styled(DCText)`
   color: ${({ theme }) => theme.background};
+  font-weight: bold;
 `;
 
 const StyledToggle = styled(SwitchToggle).attrs(({ theme }) => ({
@@ -52,7 +53,7 @@ const Logo = styled.Image.attrs({ source: img_deprocheck_logo })`
   height: 153px;
 `;
 
-const Login: React.FC<NavigationScreenComponent> = () => {
+const Login: NavigationScreenComponent = () => {
   const { state, dispatch } = React.useContext(AppContext);
   const { dispatch: authDispatch } = React.useContext(UserContext);
 
@@ -93,7 +94,7 @@ const Login: React.FC<NavigationScreenComponent> = () => {
   };
 
   return (
-    <ScreenWrap>
+    <ScreenWrap mode={state.theme}>
       <Wrap>
         <Header>
           <StyledToggle

@@ -12,14 +12,12 @@ const Wrap = styled.View`
 `;
 
 const Home: React.FC<NavigationScreenComponent> = () => {
-  const { state: authState, dispatch: authDispatch } = React.useContext(
-    UserContext
-  );
+  const { state: authState } = React.useContext(UserContext);
 
   console.log('state', authState.userInfo);
 
   return (
-    <ScreenWrap>
+    <ScreenWrap mode="MEMBER">
       <Wrap>
         <Text>메인화면</Text>
       </Wrap>

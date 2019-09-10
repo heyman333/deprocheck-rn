@@ -14,9 +14,9 @@ import ScreenWrap from '../components/ScreenWrap';
 
 const AdminSessionCreate: React.FC<NavigationScreenComponent> = () => {
   return (
-    <ScreenWrap>
+    <ScreenWrap mode="ADMIN">
       <Wrap>
-        <DCText>세션 생성</DCText>
+        <DCText isLight={true}>세션 생성</DCText>
       </Wrap>
     </ScreenWrap>
   );

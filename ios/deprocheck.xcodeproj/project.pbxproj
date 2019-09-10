@@ -18,6 +18,7 @@
 		2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		2DCD954D1E0B4F2C00145EB5 /* deprocheckTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* deprocheckTests.m */; };
 		87225E656D7D61E3F6CA36F3 /* libPods-deprocheck-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6FCC45A4BCDB7582AD2A8AE1 /* libPods-deprocheck-tvOS.a */; };
+		DA7556132328133F0064AF4D /* Fonts in Resources */ = {isa = PBXBuildFile; fileRef = DA7556122328133E0064AF4D /* Fonts */; };
 		EF8CCAE3D778D7A859B76621 /* libPods-deprocheck.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5140F75E9A3EF2262D270FED /* libPods-deprocheck.a */; };
 		FE4346CED683594A715DF34E /* libPods-deprocheck-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B9C759F04068C9E089BF1C11 /* libPods-deprocheck-tvOSTests.a */; };
 /* End PBXBuildFile section */
@@ -64,6 +65,7 @@
 		74ACA400E4045E9AFF69D3C7 /* Pods-deprocheck.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-deprocheck.release.xcconfig"; path = "Target Support Files/Pods-deprocheck/Pods-deprocheck.release.xcconfig"; sourceTree = "<group>"; };
 		AA3390A041AC684E6AB1AD02 /* libPods-deprocheckTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-deprocheckTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B9C759F04068C9E089BF1C11 /* libPods-deprocheck-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-deprocheck-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		DA7556122328133E0064AF4D /* Fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Fonts; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
 		ED86A5C51D956FFADD71B150 /* Pods-deprocheck-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-deprocheck-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-deprocheck-tvOSTests/Pods-deprocheck-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -159,6 +161,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				DA7556122328133E0064AF4D /* Fonts */,
 				13B07FAE1A68108700A75B9A /* deprocheck */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* deprocheckTests */,
@@ -339,6 +342,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DA7556132328133F0064AF4D /* Fonts in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
 			);
