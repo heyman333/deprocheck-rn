@@ -11,7 +11,7 @@ const Wrap = styled.View`
   align-items: center;
 `;
 
-const Home: React.FC<NavigationScreenComponent> = () => {
+const Home: NavigationScreenComponent = () => {
   const { state: authState } = React.useContext(UserContext);
 
   console.log('state', authState.userInfo);
