@@ -58,25 +58,27 @@ const Login: NavigationScreenComponent = () => {
   const { dispatch: authDispatch } = React.useContext(UserContext);
 
   const onLogin = async () => {
-    try {
-      // FIXME: 일단 아무이름이나 하드코딩
-      const data = await requestMemberLoginByName('한영수');
-      if (data.accessToken) {
-        authDispatch({
-          type: 'SET_USER_INFO',
-          payload: { userInfo: { name: '한영수' } },
-        });
+    gotoHome();
+    // try {\
+    //   // FIXME: 일단 아무이름이나 하드코딩
+    //   const data = await requestMemberLoginByName('한영수');
+    //   if (data.accessToken) {
+    //     authDispatch({
+    //       type: 'SET_USER_INFO',
+    //       payload: { userInfo: { name: '한영수' } },
+    //     });
 
-        gotoHome();
-      }
-    } catch (error) {
-      console.log('error', error);
-    }
+    //     gotoHome();
+    //   }
+    // } catch (error) {
+    //   console.log('error', error);
+    // }
   };
 
   const gotoHome = () => {
     // 화면을 따로 만들고 공통된 컴포넌트 최대한 활용
     // 사용자 위치는 renderProps 디자인 패턴을 활용해서 재활용
+
     if (state.theme === 'ADMIN') {
       replace('Admin');
       return;

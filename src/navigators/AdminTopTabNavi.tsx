@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components/native';
+import { getStatusBarHeight } from 'react-native-safe-area-view';
 import {
   createNavigator,
   TabRouter,
@@ -9,10 +10,14 @@ import {
 } from 'react-navigation';
 import { AppContext } from '../contexts';
 
+import { isSmallDeviceSize } from '../utils/styleUtils';
+import { img_deprocheck_white, icon_cancel } from '../assets/images';
 import DCTouchable from '../components/DCTouchable';
 import DCText from '../components/DCText';
 import AdminSessionCreate from '../screens/AdminSessionCreate';
 import AdminShowAttendState from '../screens/AdminShowAttendState';
+
+const HORIZONTAL_PADDING = isSmallDeviceSize() ? 16 : 38;
 
 const Wrap = styled.View`
   flex: 1;
@@ -31,6 +36,16 @@ const TopBarContent = styled.View`
   background-color: #1818b5;
 `;
 
+const Header = styled.View`
+  border-bottom-color: white;
+  border-bottom-width: 1px;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: ${40 + getStatusBarHeight()}px ${HORIZONTAL_PADDING}px 57px
+    ${HORIZONTAL_PADDING}px;
+`;
+
 const TopBarTab = styled(DCTouchable)<{ isLast: boolean }>`
   padding: 31px;
   justify-content: center;
@@ -44,12 +59,37 @@ const TabText = styled(DCText)`
   font-size: 20px;
 `;
 
+const Logo = styled.Image.attrs({ source: img_deprocheck_white })`
+  width: 200px;
+  height: 32px;
+`;
+
+const CancelButton = styled(DCTouchable).attrs({
+  hitSlop: { top: 10, right: 10, bottom: 10, left: 10 },
+})``;
+
+const CancelImg = styled.Image.attrs({ source: icon_cancel })`
+  width: 25px;
+  height: 25px;
+`;
+
+const UnderTouch = styled.TouchableWithoutFeedback``;
+
+const UnderView = styled.View`
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  top: 0;
+  z-index: 99;
+`;
+
 const MainRoutes = {
-  SessionCreate: {
-    screen: AdminSessionCreate,
-  },
   ShowAttendState: {
     screen: AdminShowAttendState,
+  },
+  SessionCreate: {
+    screen: AdminSessionCreate,
   },
 };
 
@@ -60,11 +100,22 @@ const TopBar = ({
   navigation: NavigationScreenProp<NavigationLeafRoute>;
   titles: string[];
 }) => {
+  const { dispatch } = React.useContext(AppContext);
   const { routes } = navigation.state;
+
+  const onPressCancel = () => {
+    dispatch({ type: 'SET_TAB_VISIBLE', payload: { tabVisible: false } });
+  };
 
   return (
     <TopBarContainer>
       <TopBarContent>
+        <Header>
+          <Logo />
+          <CancelButton onPress={onPressCancel}>
+            <CancelImg />
+          </CancelButton>
+        </Header>
         {routes.map((route, index) => (
           <TopBarTab
             isLast={index === 1}
@@ -76,6 +127,20 @@ const TopBar = ({
         ))}
       </TopBarContent>
     </TopBarContainer>
+  );
+};
+
+const BottomTouch = () => {
+  const { dispatch } = React.useContext(AppContext);
+
+  const onPressCancel = () => {
+    dispatch({ type: 'SET_TAB_VISIBLE', payload: { tabVisible: false } });
+  };
+
+  return (
+    <UnderTouch onPress={onPressCancel}>
+      <UnderView />
+    </UnderTouch>
   );
 };
 
@@ -95,6 +160,7 @@ const TopBarView = ({
 
   return (
     <Wrap>
+      {!!state.tabVisible && <BottomTouch />}
       {!!state.tabVisible && (
         <TopBar navigation={navigation} titles={navigationConfig.titles} />
       )}
@@ -103,10 +169,12 @@ const TopBarView = ({
   );
 };
 
-const CustomTabRouter = TabRouter(MainRoutes, {});
+const CustomTabRouter = TabRouter(MainRoutes, {
+  initialRouteName: 'SessionCreate',
+});
 
 const AdminTopTabNavi = createNavigator(TopBarView, CustomTabRouter, {
-  titles: ['출석현황', '일정선택'],
+  titles: ['출석현황', '일정생성'],
 });
 
 export default AdminTopTabNavi;

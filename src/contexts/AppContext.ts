@@ -1,12 +1,10 @@
-import React, { Dispatch } from 'react';
+import React from 'react';
 
-export type AactionType = 'CHANGE_THEME';
+export type AactionType = 'CHANGE_THEME' | 'SET_TAB_VISIBLE';
 
 export interface Action {
   type: AactionType;
-  payload: {
-    theme: 'ADMIN' | 'MEMBER';
-  };
+  payload: any;
 }
 
 export interface State {
@@ -16,17 +14,17 @@ export interface State {
 
 export const initialState: State = {
   theme: 'MEMBER',
-  tabVisible: true,
+  tabVisible: false,
 };
 
-interface Context {
-  state: State;
-  dispatch: Dispatch<Action>;
-}
+// FIXME: dispatch type 정의
+const empty = (action: Action) => {
+  console.log(action);
+};
 
-const AppContext = React.createContext<Context>({
+const AppContext = React.createContext({
   state: initialState,
-  dispatch: () => initialState,
+  dispatch: (action: Action) => empty(action),
 });
 
 export default AppContext;

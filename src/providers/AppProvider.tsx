@@ -9,9 +9,7 @@ const AppConsumer = AppContext.Consumer;
 
 interface Action {
   type: AactionType;
-  payload: {
-    theme: string;
-  };
+  payload: any;
 }
 
 interface Props {
@@ -20,6 +18,7 @@ interface Props {
 
 export interface State {
   theme: string;
+  tabVisible: boolean;
 }
 
 const reducer = (state: State, action: Action) => {
@@ -28,6 +27,11 @@ const reducer = (state: State, action: Action) => {
       return {
         ...state,
         theme: action.payload.theme,
+      };
+    case 'SET_TAB_VISIBLE':
+      return {
+        ...state,
+        tabVisible: action.payload.tabVisible,
       };
     default:
       return state;
