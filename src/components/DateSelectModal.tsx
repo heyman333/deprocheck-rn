@@ -25,6 +25,7 @@ const Wrap = styled.View`
   padding: 0px ${HORIZONTAL_PADDING}px;
   justify-content: center;
   align-items: center;
+  z-index: -100;
 `;
 
 const ModalWrap = styled.View`
