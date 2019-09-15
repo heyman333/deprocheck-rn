@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components/native';
 import { NavigationScreenComponent } from 'react-navigation';
+import { getInset } from 'react-native-safe-area-view';
 
 import { SessionDateType } from '../interfaces/sessionDate';
 import { AppContext } from '../contexts';
@@ -101,7 +102,8 @@ const BottomButton = styled(DCTouchable)`
   right: 0;
   justify-content: center;
   align-items: center;
-  height: 80px;
+  height: ${getInset('bottom') + 80}px;
+  padding-bottom: ${getInset('bottom')};
   background-color: white;
 `;
 
@@ -143,7 +145,7 @@ const AdminSessionCreate: NavigationScreenComponent = () => {
   };
 
   return (
-    <ScreenWrap mode="ADMIN">
+    <ScreenWrap mode="ADMIN" forceInset={{ bottom: 'never' }}>
       <Wrap>
         <Header>
           <Logo />

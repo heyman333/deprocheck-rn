@@ -4,14 +4,11 @@ import Modal from 'react-native-modal';
 import styled from 'styled-components/native';
 import _partial from 'lodash/partial';
 
-import { isSmallDeviceSize } from '../utils/styleUtils';
 import { toYYMMDDKR } from '../utils/timeUtils';
 import { SessionDateType } from '../interfaces/sessionDate';
 import { colors } from '../utils/theme';
 import DCText from './DCText';
 import DCTouchable from './DCTouchable';
-
-const HORIZONTAL_PADDING = isSmallDeviceSize() ? 16 : 38;
 
 interface Props {
   isVisible: boolean;
@@ -19,14 +16,6 @@ interface Props {
   onConfirm: (item: SessionDateType) => void;
   data: SessionDateType[];
 }
-
-const Wrap = styled.View`
-  flex: 1;
-  padding: 0px ${HORIZONTAL_PADDING}px;
-  justify-content: center;
-  align-items: center;
-  z-index: -100;
-`;
 
 const ModalWrap = styled.View`
   height: 355px;
@@ -40,9 +29,10 @@ const Row = styled(DCTouchable)``;
 
 const DateText = styled(DCText)<{ selected: boolean }>`
   color: ${colors.black};
-  font-size: 14px;
+  font-size: ${({ selected }) => (selected ? 15 : 14)}px;
   margin-bottom: 5px;
   font-weight: ${({ selected }) => (selected ? 'bold' : 'normal')};
+  line-height: 28px;
 `;
 
 const BottomButton = styled(DCTouchable)`
@@ -78,7 +68,7 @@ const DateSelectModal: React.FC<Props> = ({
     index: number;
   }) => {
     return (
-      <Row onPress={_partial(onSelectRow, index)}>
+      <Row onPress={_partial(onSelectRow, index)} noEffect>
         <DateText selected={selectedRow === index}>
           {toYYMMDDKR(item.startTime)}
         </DateText>
@@ -91,25 +81,23 @@ const DateSelectModal: React.FC<Props> = ({
   };
 
   return (
-    <Wrap>
-      <Modal
-        isVisible={isVisible}
-        onBackButtonPress={onClose}
-        onBackdropPress={onClose}
-      >
-        <ModalWrap>
-          <FlatList
-            data={data}
-            renderItem={renderRow}
-            keyExtractor={item => item.startTime.toDateString()}
-            extraData={selectedRow}
-          />
-          <BottomButton onPress={onPressConfirm}>
-            <BottomText>일정 선택확인</BottomText>
-          </BottomButton>
-        </ModalWrap>
-      </Modal>
-    </Wrap>
+    <Modal
+      isVisible={isVisible}
+      onBackButtonPress={onClose}
+      onBackdropPress={onClose}
+    >
+      <ModalWrap>
+        <FlatList
+          data={data}
+          renderItem={renderRow}
+          keyExtractor={item => item.startTime.toDateString()}
+          extraData={selectedRow}
+        />
+        <BottomButton onPress={onPressConfirm}>
+          <BottomText>일정 선택확인</BottomText>
+        </BottomButton>
+      </ModalWrap>
+    </Modal>
   );
 };
 
