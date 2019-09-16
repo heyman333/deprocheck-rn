@@ -6,7 +6,7 @@ import { StyleProp, ViewStyle } from 'react-native';
 
 interface Props {
   onPress: () => void;
-  children: React.ReactElement;
+  children: React.ReactElement[] | React.ReactElement;
   style?: StyleProp<ViewStyle>;
   hitSlop?: NativeScrollRectangle;
   noEffect?: boolean;
