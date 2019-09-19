@@ -17,7 +17,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
 
-  NSString *googleMapKey = [ReactNativeConfig envFor:@"GOOGLE_MAP_KEY"];
+  NSString *googleMapKey = [ReactNativeConfig envFor:@"IOS_GOOGLE_MAP_KEY"];
   RCTBridge *bridge = [[RCTBridge alloc] initWithDelegate:self launchOptions:launchOptions];
   RCTRootView *rootView = [[RCTRootView alloc] initWithBridge:bridge
                                                    moduleName:@"deprocheck"
