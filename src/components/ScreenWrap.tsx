@@ -1,19 +1,11 @@
 import React from 'react';
+import { StatusBar } from 'react-native';
 import styled from 'styled-components/native';
-import { Platform } from 'react-native';
+import SafeAreaView, { SafeAreaViewProps } from 'react-native-safe-area-view';
 
-const paltformVersion =
-  typeof Platform.Version === 'string'
-    ? parseInt(Platform.Version, 10)
-    : Platform.Version;
-
-const iOS10Under = Platform.OS === 'ios' && paltformVersion <= 10;
-
-const Wrap = (iOS10Under ? styled.View : styled.SafeAreaView)<{
-  bgColor: string;
-}>`
+let Wrap = styled(SafeAreaView)`
   flex: 1;
-  background-color: ${props => props.bgColor};
+  background-color: ${({ theme }) => theme.background};
 `;
 
 const InnerWrap = styled.View`
@@ -21,14 +13,17 @@ const InnerWrap = styled.View`
   background-color: #f6f9ff;
 `;
 
-interface Props {
+interface Props extends SafeAreaViewProps {
   children: React.ReactElement;
-  safeAreaColor?: string;
+  mode: 'ADMIN' | 'MEMBER';
 }
 
-const ScreenWrap: React.FC<Props> = ({ children, safeAreaColor }: Props) => {
+const ScreenWrap: React.FC<Props> = ({ children, mode, forceInset }: Props) => {
   return (
-    <Wrap bgColor={safeAreaColor || '#fff'}>
+    <Wrap forceInset={forceInset}>
+      <StatusBar
+        barStyle={mode === 'ADMIN' ? 'light-content' : 'dark-content'}
+      />
       <InnerWrap>{children}</InnerWrap>
     </Wrap>
   );

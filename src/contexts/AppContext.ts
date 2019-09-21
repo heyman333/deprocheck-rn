@@ -1,28 +1,30 @@
-import React, { Dispatch } from 'react';
+import React from 'react';
 
-export type AactionType = 'change-theme';
+export type AactionType = 'CHANGE_THEME' | 'SET_TAB_VISIBLE';
 
 export interface Action {
   type: AactionType;
-  payload: {
-    theme: string;
-  };
+  payload: any;
 }
 
 export interface State {
-  theme: string;
+  theme: 'ADMIN' | 'MEMBER';
+  tabVisible: boolean;
 }
 
 export const initialState: State = {
   theme: 'MEMBER',
+  tabVisible: false,
 };
 
-interface Context {
-  state: State;
-  dispatch: Dispatch<Action>;
-}
+// FIXME: dispatch type 정의
+const empty = (action: Action) => {
+  console.log(action);
+};
 
-export const AppContext = React.createContext<Context>({
+const AppContext = React.createContext({
   state: initialState,
-  dispatch: () => initialState,
+  dispatch: (action: Action) => empty(action),
 });
+
+export default AppContext;

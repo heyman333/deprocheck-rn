@@ -1,13 +1,15 @@
 import React from 'react';
 import styled from 'styled-components/native';
-
+import { NavigationScreenComponent } from 'react-navigation';
+import { getInset } from 'react-native-safe-area-view';
 import DCTouchable from '../components/DCTouchable';
 import DCText from '../components/DCText';
 import ScreenWrap from '../components/ScreenWrap';
 import SwitchToggle from '../components/SwitchToggle';
-import { navigate } from '../navigators/NavigationService';
-import { AppContext } from '../contexts/AppContext';
+import { replace } from '../navigators/NavigationService';
+import { AppContext, UserContext } from '../contexts';
 import { img_deprocheck_logo } from '../assets/images';
+import { requestMemberLoginByName } from '../modules/auth';
 
 const Wrap = styled.View`
   flex: 1;
@@ -30,12 +32,14 @@ const BottomButton = styled(DCTouchable)`
   right: 0;
   justify-content: center;
   align-items: center;
-  height: 80px;
+  height: ${getInset('bottom') + 80}px;
+  padding-bottom: ${getInset('bottom')};
   background-color: ${({ theme }) => theme.reverseBackColor};
 `;
 
 const BottomText = styled(DCText)`
   color: ${({ theme }) => theme.background};
+  font-weight: bold;
 `;
 
 const StyledToggle = styled(SwitchToggle).attrs(({ theme }) => ({
@@ -50,24 +54,50 @@ const Logo = styled.Image.attrs({ source: img_deprocheck_logo })`
   height: 153px;
 `;
 
-const Login: React.FC = () => {
-  const onLogin = () => {
-    navigate('Home');
+const Login: NavigationScreenComponent = () => {
+  const { state, dispatch } = React.useContext(AppContext);
+  const { dispatch: authDispatch } = React.useContext(UserContext);
+
+  const onLogin = async () => {
+    gotoHome();
+    // try {\
+    //   // FIXME: 일단 아무이름이나 하드코딩
+    //   const data = await requestMemberLoginByName('한영수');
+    //   if (data.accessToken) {
+    //     authDispatch({
+    //       type: 'SET_USER_INFO',
+    //       payload: { userInfo: { name: '한영수' } },
+    //     });
+
+    //     gotoHome();
+    //   }
+    // } catch (error) {
+    //   console.log('error', error);
+    // }
   };
 
-  const { state, dispatch } = React.useContext(AppContext);
+  const gotoHome = () => {
+    // 화면을 따로 만들고 공통된 컴포넌트 최대한 활용
+    // 사용자 위치는 renderProps 디자인 패턴을 활용해서 재활용
+
+    if (state.theme === 'ADMIN') {
+      replace('Admin');
+      return;
+    }
+    replace('UserHome');
+  };
 
   const onPressToggle = () => {
     if (state.theme === 'ADMIN') {
-      dispatch({ type: 'change-theme', payload: { theme: 'MEMBER' } });
+      dispatch({ type: 'CHANGE_THEME', payload: { theme: 'MEMBER' } });
       return;
     }
 
-    dispatch({ type: 'change-theme', payload: { theme: 'ADMIN' } });
+    dispatch({ type: 'CHANGE_THEME', payload: { theme: 'ADMIN' } });
   };
 
   return (
-    <ScreenWrap>
+    <ScreenWrap mode={state.theme}>
       <Wrap>
         <Header>
           <StyledToggle

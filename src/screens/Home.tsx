@@ -1,5 +1,8 @@
 import React from 'react';
 import styled from 'styled-components/native';
+import { NavigationScreenComponent } from 'react-navigation';
+
+import { UserContext } from '../contexts';
 import ScreenWrap from '../components/ScreenWrap';
 import Text from '../components/DCText';
 
@@ -8,9 +11,13 @@ const Wrap = styled.View`
   align-items: center;
 `;
 
-const Home: React.FC = () => {
+const Home: NavigationScreenComponent = () => {
+  const { state: authState } = React.useContext(UserContext);
+
+  console.log('state', authState.userInfo);
+
   return (
-    <ScreenWrap>
+    <ScreenWrap mode="MEMBER">
       <Wrap>
         <Text>메인화면</Text>
       </Wrap>

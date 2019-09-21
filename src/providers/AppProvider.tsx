@@ -1,7 +1,6 @@
 import React, { useReducer } from 'react';
-import {
+import AppContext, {
   AactionType,
-  AppContext,
   State,
   initialState,
 } from '../contexts/AppContext';
@@ -10,25 +9,29 @@ const AppConsumer = AppContext.Consumer;
 
 interface Action {
   type: AactionType;
-  payload: {
-    theme: string;
-  };
+  payload: any;
 }
 
 interface Props {
-  children?: any;
+  children?: React.ReactElement;
 }
 
 export interface State {
   theme: string;
+  tabVisible: boolean;
 }
 
 const reducer = (state: State, action: Action) => {
   switch (action.type) {
-    case 'change-theme':
+    case 'CHANGE_THEME':
       return {
         ...state,
         theme: action.payload.theme,
+      };
+    case 'SET_TAB_VISIBLE':
+      return {
+        ...state,
+        tabVisible: action.payload.tabVisible,
       };
     default:
       return state;
@@ -38,8 +41,6 @@ const reducer = (state: State, action: Action) => {
 function AppProvider(props: Props) {
   const [state, dispatch] = useReducer(reducer, initialState);
   const value = { state, dispatch };
-
-  console.log('!', value);
 
   return (
     <AppContext.Provider value={value}>{props.children}</AppContext.Provider>

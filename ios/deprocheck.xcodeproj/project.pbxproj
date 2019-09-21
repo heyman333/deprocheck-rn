@@ -18,6 +18,8 @@
 		2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		2DCD954D1E0B4F2C00145EB5 /* deprocheckTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* deprocheckTests.m */; };
 		87225E656D7D61E3F6CA36F3 /* libPods-deprocheck-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6FCC45A4BCDB7582AD2A8AE1 /* libPods-deprocheck-tvOS.a */; };
+		DA0B4E1E2333D980008A26EC /* libReactNativeConfig.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DA0B4E1B2333D933008A26EC /* libReactNativeConfig.a */; };
+		DA7556132328133F0064AF4D /* Fonts in Resources */ = {isa = PBXBuildFile; fileRef = DA7556122328133E0064AF4D /* Fonts */; };
 		EF8CCAE3D778D7A859B76621 /* libPods-deprocheck.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5140F75E9A3EF2262D270FED /* libPods-deprocheck.a */; };
 		FE4346CED683594A715DF34E /* libPods-deprocheck-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B9C759F04068C9E089BF1C11 /* libPods-deprocheck-tvOSTests.a */; };
 /* End PBXBuildFile section */
@@ -36,6 +38,20 @@
 			proxyType = 1;
 			remoteGlobalIDString = 2D02E47A1E0B4A5D006451C7;
 			remoteInfo = "deprocheck-tvOS";
+		};
+		DA0B4E1A2333D933008A26EC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DA0B4E152333D933008A26EC /* ReactNativeConfig.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = EB2648DF1C7BE17A00B8F155;
+			remoteInfo = ReactNativeConfig;
+		};
+		DA0B4E1C2333D933008A26EC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DA0B4E152333D933008A26EC /* ReactNativeConfig.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 3DF7F6AC203AA09B00D0EAB7;
+			remoteInfo = "ReactNativeConfig-tvOS";
 		};
 /* End PBXContainerItemProxy section */
 
@@ -64,6 +80,8 @@
 		74ACA400E4045E9AFF69D3C7 /* Pods-deprocheck.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-deprocheck.release.xcconfig"; path = "Target Support Files/Pods-deprocheck/Pods-deprocheck.release.xcconfig"; sourceTree = "<group>"; };
 		AA3390A041AC684E6AB1AD02 /* libPods-deprocheckTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-deprocheckTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B9C759F04068C9E089BF1C11 /* libPods-deprocheck-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-deprocheck-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		DA0B4E152333D933008A26EC /* ReactNativeConfig.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ReactNativeConfig.xcodeproj; path = "../node_modules/react-native-config/ios/ReactNativeConfig.xcodeproj"; sourceTree = "<group>"; };
+		DA7556122328133E0064AF4D /* Fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Fonts; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
 		ED86A5C51D956FFADD71B150 /* Pods-deprocheck-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-deprocheck-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-deprocheck-tvOSTests/Pods-deprocheck-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -82,6 +100,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DA0B4E1E2333D980008A26EC /* libReactNativeConfig.a in Frameworks */,
 				EF8CCAE3D778D7A859B76621 /* libPods-deprocheck.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -152,6 +171,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				DA0B4E152333D933008A26EC /* ReactNativeConfig.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -159,6 +179,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				DA7556122328133E0064AF4D /* Fonts */,
 				13B07FAE1A68108700A75B9A /* deprocheck */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* deprocheckTests */,
@@ -178,6 +199,15 @@
 				00E356EE1AD99517003FC87E /* deprocheckTests.xctest */,
 				2D02E47B1E0B4A5D006451C7 /* deprocheck-tvOS.app */,
 				2D02E4901E0B4A5D006451C7 /* deprocheck-tvOSTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		DA0B4E162333D933008A26EC /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				DA0B4E1B2333D933008A26EC /* libReactNativeConfig.a */,
+				DA0B4E1D2333D933008A26EC /* libReactNativeConfig-tvOS.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -317,6 +347,12 @@
 			mainGroup = 83CBB9F61A601CBA00E9B192;
 			productRefGroup = 83CBBA001A601CBA00E9B192 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = DA0B4E162333D933008A26EC /* Products */;
+					ProjectRef = DA0B4E152333D933008A26EC /* ReactNativeConfig.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				13B07F861A680F5B00A75B9A /* deprocheck */,
@@ -326,6 +362,23 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		DA0B4E1B2333D933008A26EC /* libReactNativeConfig.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libReactNativeConfig.a;
+			remoteRef = DA0B4E1A2333D933008A26EC /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		DA0B4E1D2333D933008A26EC /* libReactNativeConfig-tvOS.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libReactNativeConfig-tvOS.a";
+			remoteRef = DA0B4E1C2333D933008A26EC /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		00E356EC1AD99517003FC87E /* Resources */ = {
@@ -339,6 +392,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DA7556132328133F0064AF4D /* Fonts in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
 			);
@@ -632,7 +686,37 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = Q5VAQ4ZHM5;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"${PODS_ROOT}/Headers/Public\"",
+					"\"${PODS_ROOT}/Headers/Public/DoubleConversion\"",
+					"\"${PODS_ROOT}/Headers/Public/RNCAsyncStorage\"",
+					"\"${PODS_ROOT}/Headers/Public/RNGestureHandler\"",
+					"\"${PODS_ROOT}/Headers/Public/RNReanimated\"",
+					"\"${PODS_ROOT}/Headers/Public/React-Core\"",
+					"\"${PODS_ROOT}/Headers/Public/React-DevSupport\"",
+					"\"${PODS_ROOT}/Headers/Public/React-RCTActionSheet\"",
+					"\"${PODS_ROOT}/Headers/Public/React-RCTAnimation\"",
+					"\"${PODS_ROOT}/Headers/Public/React-RCTBlob\"",
+					"\"${PODS_ROOT}/Headers/Public/React-RCTImage\"",
+					"\"${PODS_ROOT}/Headers/Public/React-RCTLinking\"",
+					"\"${PODS_ROOT}/Headers/Public/React-RCTNetwork\"",
+					"\"${PODS_ROOT}/Headers/Public/React-RCTSettings\"",
+					"\"${PODS_ROOT}/Headers/Public/React-RCTText\"",
+					"\"${PODS_ROOT}/Headers/Public/React-RCTVibration\"",
+					"\"${PODS_ROOT}/Headers/Public/React-RCTWebSocket\"",
+					"\"${PODS_ROOT}/Headers/Public/React-cxxreact\"",
+					"\"${PODS_ROOT}/Headers/Public/React-fishhook\"",
+					"\"${PODS_ROOT}/Headers/Public/React-jsi\"",
+					"\"${PODS_ROOT}/Headers/Public/React-jsiexecutor\"",
+					"\"${PODS_ROOT}/Headers/Public/React-jsinspector\"",
+					"\"${PODS_ROOT}/Headers/Public/glog\"",
+					"\"${PODS_ROOT}/Headers/Public/react-native-maps\"",
+					"\"${PODS_ROOT}/Headers/Public/yoga\"",
+					"\"$(SRCROOT)/../node_modules/react-native-config/ios/**\"",
+				);
 				INFOPLIST_FILE = deprocheck/Info.plist;
+				INFOPLIST_PREPROCESS = NO;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -652,7 +736,37 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = Q5VAQ4ZHM5;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"${PODS_ROOT}/Headers/Public\"",
+					"\"${PODS_ROOT}/Headers/Public/DoubleConversion\"",
+					"\"${PODS_ROOT}/Headers/Public/RNCAsyncStorage\"",
+					"\"${PODS_ROOT}/Headers/Public/RNGestureHandler\"",
+					"\"${PODS_ROOT}/Headers/Public/RNReanimated\"",
+					"\"${PODS_ROOT}/Headers/Public/React-Core\"",
+					"\"${PODS_ROOT}/Headers/Public/React-DevSupport\"",
+					"\"${PODS_ROOT}/Headers/Public/React-RCTActionSheet\"",
+					"\"${PODS_ROOT}/Headers/Public/React-RCTAnimation\"",
+					"\"${PODS_ROOT}/Headers/Public/React-RCTBlob\"",
+					"\"${PODS_ROOT}/Headers/Public/React-RCTImage\"",
+					"\"${PODS_ROOT}/Headers/Public/React-RCTLinking\"",
+					"\"${PODS_ROOT}/Headers/Public/React-RCTNetwork\"",
+					"\"${PODS_ROOT}/Headers/Public/React-RCTSettings\"",
+					"\"${PODS_ROOT}/Headers/Public/React-RCTText\"",
+					"\"${PODS_ROOT}/Headers/Public/React-RCTVibration\"",
+					"\"${PODS_ROOT}/Headers/Public/React-RCTWebSocket\"",
+					"\"${PODS_ROOT}/Headers/Public/React-cxxreact\"",
+					"\"${PODS_ROOT}/Headers/Public/React-fishhook\"",
+					"\"${PODS_ROOT}/Headers/Public/React-jsi\"",
+					"\"${PODS_ROOT}/Headers/Public/React-jsiexecutor\"",
+					"\"${PODS_ROOT}/Headers/Public/React-jsinspector\"",
+					"\"${PODS_ROOT}/Headers/Public/glog\"",
+					"\"${PODS_ROOT}/Headers/Public/react-native-maps\"",
+					"\"${PODS_ROOT}/Headers/Public/yoga\"",
+					"\"$(SRCROOT)/../node_modules/react-native-config/ios/**\"",
+				);
 				INFOPLIST_FILE = deprocheck/Info.plist;
+				INFOPLIST_PREPROCESS = NO;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
