@@ -155,7 +155,7 @@ const Login: NavigationScreenComponent<{age: number}> = ({navigation}) => {
   };
 
   return (
-    <ScreenWrap mode={state.theme}>
+    <ScreenWrap mode={state.theme} forceInset={{bottom: 'never'}}>
       <Wrap>
         <Header>
           <StyledToggle

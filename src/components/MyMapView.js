@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { AppRegistry, StyleSheet, Text, View } from 'react-native';
-import MapView from 'react-native-maps';
+
+import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
 import Geolocation from '@react-native-community/geolocation';
 
 import styled from 'styled-components/native';
@@ -72,6 +73,7 @@ export default class MyMapView extends Component {
     return (
       <MapContainer>
           <Map
+              provider={PROVIDER_GOOGLE}
               region={this.state.mapRegion}
               showsUserLocation={true}
               followUserLocation={true}

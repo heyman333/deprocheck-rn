@@ -9,6 +9,7 @@
 
 #import <React/RCTBridge.h>
 #import <React/RCTBundleURLProvider.h>
+#import <GoogleMaps/GoogleMaps.h>
 #import <React/RCTRootView.h>
 #import "ReactNativeConfig.h"
 
@@ -18,6 +19,7 @@
 {
 
   NSString *googleMapKey = [ReactNativeConfig envFor:@"IOS_GOOGLE_MAP_KEY"];
+  [GMSServices provideAPIKey:googleMapKey];
   RCTBridge *bridge = [[RCTBridge alloc] initWithDelegate:self launchOptions:launchOptions];
   RCTRootView *rootView = [[RCTRootView alloc] initWithBridge:bridge
                                                    moduleName:@"deprocheck"
