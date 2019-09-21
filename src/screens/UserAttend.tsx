@@ -7,7 +7,7 @@ import ScreenWrap from '../components/ScreenWrap';
 import MyMapView from '../components/MyMapView';
 
 import { navigate } from '../navigators/NavigationService';
-import { AppContext } from '../contexts/AppContext';
+import AppContext from '../contexts/AppContext';
 
 import { img_deprocheck_logo_2, baseline_place_24_px } from '../assets/images';
 
