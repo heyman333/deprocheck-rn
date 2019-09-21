@@ -6,7 +6,7 @@ import DCTouchable from '../components/DCTouchable';
 import DCText from '../components/DCText';
 import ScreenWrap from '../components/ScreenWrap';
 import SwitchToggle from '../components/SwitchToggle';
-import { replace } from '../navigators/NavigationService';
+import { navigate, replace } from '../navigators/NavigationService';
 import { AppContext, UserContext } from '../contexts';
 import { img_deprocheck_logo } from '../assets/images';
 import { requestMemberLoginByName } from '../modules/auth';
@@ -26,6 +26,52 @@ const Body = styled.View`
 `;
 
 const BottomButton = styled(DCTouchable)`
+  background-color: ${({ theme }) => theme.background};
+`
+
+const LogoImage = styled.Image`
+  width: 220px;
+  margin-bottom: 75px;
+`;
+
+//TODO: placeholder 스타일 적용 안됨
+const NameInput = styled.TextInput`
+  box-shadow: none;
+  background-color: transparent;
+  width: 300px;
+  height: 50px;
+  font-size: 14px;
+  border-bottom-color: #222222;
+  border-bottom-width: 2px;
+`;
+
+const JobButtonContainer = styled.View`
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+`;
+
+const JobButton = styled.TouchableOpacity`
+  width: 150px;
+  height: 50px;
+  border: solid 1px #dddddd;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const JobText = styled.Text`
+  color: #222222;
+  font-weight: 500;
+  font-size: 14px;
+  letter-spacing: -0.3px;
+`
+
+const Footer = styled(DCTouchable)`
+  display: flex;
+  justify-content: center;
+  align-items: center;
   position: absolute;
   bottom: 0;
   left: 0;
@@ -52,11 +98,23 @@ const StyledToggle = styled(SwitchToggle).attrs(({ theme }) => ({
 const Logo = styled.Image.attrs({ source: img_deprocheck_logo })`
   width: 220px;
   height: 153px;
+  width: 100%;
+  height: 80px;
+  background-color: #222222;
 `;
 
-const Login: NavigationScreenComponent = () => {
+const EnterText = styled.Text`
+  color: #ffffff;
+  font-size: 18px;
+  font-weight: bold;
+  letter-spacing: -0.36px;
+`;
+
+const Login: NavigationScreenComponent<{age: number}> = ({navigation}) => {
   const { state, dispatch } = React.useContext(AppContext);
   const { dispatch: authDispatch } = React.useContext(UserContext);
+  const age = navigation.getParam("age")
+  
 
   const onLogin = async () => {
     gotoHome();
@@ -84,7 +142,7 @@ const Login: NavigationScreenComponent = () => {
       replace('Admin');
       return;
     }
-    replace('UserHome');
+    replace('UserAttend');
   };
 
   const onPressToggle = () => {
@@ -109,6 +167,35 @@ const Login: NavigationScreenComponent = () => {
         <BottomButton onPress={onLogin}>
           <BottomText>로그인하기</BottomText>
         </BottomButton>
+        <LogoImage
+          source={require('../assets/images/deprocheck-logo.png')}
+          width={220}
+        />
+
+        <NameInput
+          placeholder={`이름을 입력해주세요`}
+        />
+
+        <JobButtonContainer>
+          <JobButton
+            // onClick={onClickJob(true)}
+            // active={deginerSelected === true}
+          >
+            <JobText>Designer</JobText>
+          </JobButton>
+          <JobButton
+            // onClick={onClickJob(false)}
+            // active={deginerSelected === false}
+            style={{ borderLeftWidth: 0 }}
+          >
+            <JobText>Developer</JobText>
+          </JobButton>
+        </JobButtonContainer>
+
+
+        <Footer onPress={onLogin}>
+          <EnterText>입장하기</EnterText>
+        </Footer>
       </Wrap>
     </ScreenWrap>
   );
