@@ -113,7 +113,7 @@ const EnterText = styled.Text`
 
 const Login: React.FC = () => {
   const onLogin = () => {
-    navigate('UserStatus');
+    navigate('UserAttend');
   };
 
   const { state, dispatch } = React.useContext(AppContext);

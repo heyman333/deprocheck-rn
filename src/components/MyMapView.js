@@ -3,6 +3,25 @@ import { AppRegistry, StyleSheet, Text, View } from 'react-native';
 import MapView from 'react-native-maps';
 import Geolocation from '@react-native-community/geolocation';
 
+import styled from 'styled-components/native';
+
+const MapContainer = styled.View`
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 80px;
+  align-items: center;
+  height: 350px;
+`;
+
+const Map = styled(MapView)`
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+`;
+
 export default class MyMapView extends Component {
   state = {
     mapRegion: null,
@@ -51,28 +70,27 @@ export default class MyMapView extends Component {
 
   render() {
     return (
-      <View style={styles.container}>
-        <MapView
-          style={styles.map}
-          region={this.state.mapRegion}
-          showsUserLocation={true}
-          followUserLocation={true}
-          onRegionChange={this.onRegionChange.bind(this)}
-          onPress={this.onMapPress.bind(this)}
-        >
-          <MapView.Marker
-            coordinate={{
-              latitude: (this.state.lastLat + 0.00050) || -36.82339,
-              longitude: (this.state.lastLong + 0.00050) || -73.03569,
-            }}>
-            <View>
-              <Text style={{color: '#000'}}>
-                { this.state.lastLong } / { this.state.lastLat }
-              </Text>
-            </View>
-          </MapView.Marker>
-        </MapView>
-      </View>
+      <MapContainer>
+          <Map
+              region={this.state.mapRegion}
+              showsUserLocation={true}
+              followUserLocation={true}
+              onRegionChange={this.onRegionChange.bind(this)}
+              onPress={this.onMapPress.bind(this)}
+          >
+            <MapView.Marker
+                coordinate={{
+                  latitude: (this.state.lastLat + 0.00050) || -36.82339,
+                  longitude: (this.state.lastLong + 0.00050) || -73.03569,
+                }}>
+              <View>
+                <Text style={{color: '#000'}}>
+                  { this.state.lastLong } / { this.state.lastLat }
+                </Text>
+              </View>
+            </MapView.Marker>
+          </Map>
+      </MapContainer>
     );
   }
 }
@@ -85,7 +103,6 @@ const styles = StyleSheet.create({
     bottom: 80,
     justifyContent: 'flex-end',
     alignItems: 'center',
-
     height: 350,
   },
   map: {
@@ -96,5 +113,3 @@ const styles = StyleSheet.create({
     bottom: 0,
   },
 });
-
-AppRegistry.registerComponent('MyMapView', () => MyMapView);

@@ -36,8 +36,7 @@ export default class AttendStatus extends Component {
   };
 
   render() {
-    const attendWeek = this.props.attendWeek;
-    const attendTime = this.props.attendTime;
+    const { attendWeek, attendTime } = this.props;
 
     return (
       <View>

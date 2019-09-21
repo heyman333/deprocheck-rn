@@ -6,11 +6,9 @@ import DCTouchable from '../components/DCTouchable';
 import DCText from '../components/DCText';
 import ScreenWrap from '../components/ScreenWrap';
 import AttendStatus from '../components/AttendStatus';
-
 import { navigate } from '../navigators/NavigationService';
-import { AppContext } from '../contexts/AppContext';
 
-
+import { img_deprocheck_logo_2 } from '../assets/images';
 
 const Wrap = styled.View`
   flex: 1;
@@ -56,6 +54,7 @@ const LogoImage = styled.Image`
   margin-bottom: 58px;
   margin-top: 45px;
   margin-left: ${(Dimensions.get('window').width - 300) / 2};
+  height= 35px;
 `;
 
 const MoreButton = styled(DCTouchable)`
@@ -80,8 +79,6 @@ const UserAttend: React.FC = () => {
     navigate('Home');
   };
 
-  const { state } = React.useContext(AppContext);
-
   return (
     <ScreenWrap>
       <Wrap>
@@ -89,8 +86,7 @@ const UserAttend: React.FC = () => {
 
         <Body>
           <LogoImage
-            source={require('../asset/deprocheck-logo-2.png')}
-            height={35}
+            source={ img_deprocheck_logo_2 }
           />
 
           <UserNameArea>

@@ -1,8 +1,6 @@
 import React from 'react';
 import styled from 'styled-components/native';
 
-import { Dimensions } from 'react-native';
-
 import DCTouchable from '../components/DCTouchable';
 import DCText from '../components/DCText';
 import ScreenWrap from '../components/ScreenWrap';
@@ -10,7 +8,8 @@ import MyMapView from '../components/MyMapView';
 
 import { navigate } from '../navigators/NavigationService';
 import { AppContext } from '../contexts/AppContext';
-import { img_deprocheck_logo_2 } from '../assets/images';
+
+import { img_deprocheck_logo_2, baseline_place_24_px } from '../assets/images';
 
 
 
@@ -89,10 +88,13 @@ const BottomButton = styled(DCTouchable)`
 
 const LogoImage = styled.Image`
   width: 220px;
+  height: 35px
   margin-bottom: 75px;
+  margin-top: 50px;
+  margin-left: 35px;
 `;
 
-const Footer = styled.View`
+const Footer = styled(DCTouchable)`
   justify-content: center;
   align-items: center;
   position: absolute;
@@ -131,9 +133,7 @@ const UserAttend: React.FC = () => {
     <ScreenWrap>
       <Wrap>
         <LogoImage
-          source={require('../asset/deprocheck-logo-2.png')}
-          height={35}
-          style={{ marginTop: 50, marginLeft: 35 }}
+          source={img_deprocheck_logo_2}
         />
 
         <Body>
@@ -143,7 +143,7 @@ const UserAttend: React.FC = () => {
 
           <LocationArea>
             <LocationIcon
-              source={require('../asset/baseline-place-24-px.png')}
+              source={baseline_place_24_px}
             />
             <LocationText>서울시 강남구 논현로 22길</LocationText>
           </LocationArea>
@@ -153,15 +153,15 @@ const UserAttend: React.FC = () => {
               현위치를 눌러 출석하기를 완료해주세요!
             </HelpText>
           </HelpBox>
+
+
         </Body>
 
         <MyMapView/>
 
-        <DCTouchable onPress={onLogin}>
-          <Footer>
+        <Footer onPress={onLogin}>
             <EnterText>출석하기</EnterText>
-          </Footer>
-        </DCTouchable>
+        </Footer>
       </Wrap>
     </ScreenWrap>
   );
