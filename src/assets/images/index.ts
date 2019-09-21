@@ -5,3 +5,5 @@ export const icon_menu_bar = require('./menu-bar.png');
 export const icon_plus = require('./ico-plus.png');
 export const icon_cancel = require('./ico-cancel.png');
 export const icon_arrow_down = require('./ico-arr-down.png');
+export const img_deprocheck_logo_2 = require('./deprocheck-logo-2.png');
+export const baseline_place_24_px = require('./baseline_place_24_px.png');
