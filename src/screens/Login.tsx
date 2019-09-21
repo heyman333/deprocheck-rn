@@ -6,7 +6,7 @@ import DCTouchable from '../components/DCTouchable';
 import DCText from '../components/DCText';
 import ScreenWrap from '../components/ScreenWrap';
 import SwitchToggle from '../components/SwitchToggle';
-import { navigate, replace } from '../navigators/NavigationService';
+import { replace } from '../navigators/NavigationService';
 import { AppContext, UserContext } from '../contexts';
 import { img_deprocheck_logo } from '../assets/images';
 import { requestMemberLoginByName } from '../modules/auth';
@@ -27,7 +27,7 @@ const Body = styled.View`
 
 const BottomButton = styled(DCTouchable)`
   background-color: ${({ theme }) => theme.background};
-`
+`;
 
 const LogoImage = styled.Image`
   width: 220px;
@@ -66,7 +66,7 @@ const JobText = styled.Text`
   font-weight: 500;
   font-size: 14px;
   letter-spacing: -0.3px;
-`
+`;
 
 const Footer = styled(DCTouchable)`
   display: flex;
@@ -110,11 +110,10 @@ const EnterText = styled.Text`
   letter-spacing: -0.36px;
 `;
 
-const Login: NavigationScreenComponent<{age: number}> = ({navigation}) => {
+const Login: NavigationScreenComponent<{ age: number }> = ({ navigation }) => {
   const { state, dispatch } = React.useContext(AppContext);
   const { dispatch: authDispatch } = React.useContext(UserContext);
-  const age = navigation.getParam("age")
-  
+  const age = navigation.getParam('age');
 
   const onLogin = async () => {
     gotoHome();
@@ -155,7 +154,7 @@ const Login: NavigationScreenComponent<{age: number}> = ({navigation}) => {
   };
 
   return (
-    <ScreenWrap mode={state.theme} forceInset={{bottom: 'never'}}>
+    <ScreenWrap mode={state.theme} forceInset={{ bottom: 'never' }}>
       <Wrap>
         <Header>
           <StyledToggle
@@ -172,14 +171,12 @@ const Login: NavigationScreenComponent<{age: number}> = ({navigation}) => {
           width={220}
         />
 
-        <NameInput
-          placeholder={`이름을 입력해주세요`}
-        />
+        <NameInput placeholder={`이름을 입력해주세요`} />
 
         <JobButtonContainer>
           <JobButton
-            // onClick={onClickJob(true)}
-            // active={deginerSelected === true}
+          // onClick={onClickJob(true)}
+          // active={deginerSelected === true}
           >
             <JobText>Designer</JobText>
           </JobButton>
@@ -191,7 +188,6 @@ const Login: NavigationScreenComponent<{age: number}> = ({navigation}) => {
             <JobText>Developer</JobText>
           </JobButton>
         </JobButtonContainer>
-
 
         <Footer onPress={onLogin}>
           <EnterText>입장하기</EnterText>
