@@ -1,5 +1,5 @@
 // TODO: firebase에서 가져오도록 수정?
-import { SessionDateType } from '../interfaces/sessionDate';
+import { SessionDateType } from '../interfaces';
 export const sessionDateInfos: SessionDateType[] = [
   {
     startTime: new Date('2019-10-12T14:00'),

@@ -3,7 +3,7 @@ import styled from 'styled-components/native';
 import { NavigationScreenComponent } from 'react-navigation';
 import { getInset } from 'react-native-safe-area-view';
 
-import { SessionDateType } from '../interfaces/sessionDate';
+import { SessionDateType } from '../interfaces';
 import { AppContext } from '../contexts';
 import { colors } from '../utils/theme';
 import { isSmallDeviceSize } from '../utils/styleUtils';

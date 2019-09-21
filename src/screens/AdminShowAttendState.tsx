@@ -17,7 +17,8 @@ import ScreenWrap from '../components/ScreenWrap';
 import DCTouchable from '../components/DCTouchable';
 import DCText from '../components/DCText';
 import DateSelectModal from '../components/DateSelectModal';
-import { SessionDateType } from '../interfaces/sessionDate';
+import AttendStateJobSelector from '../components/AttendStateJobSelector';
+import { SessionDateType, ShowJobType } from '../interfaces';
 
 const HORIZONTAL_PADDING = isSmallDeviceSize() ? 16 : 38;
 
@@ -61,6 +62,7 @@ const SessionDateInfoView = styled(DCTouchable).attrs({ noEffect: true })`
   border-bottom-color: #e5e5e5;
   border-bottom-width: 2px;
   padding-bottom: 13px;
+  margin-bottom: 31px;
 `;
 
 const DateText = styled(DCText)`
@@ -82,6 +84,7 @@ const AdminShowAttendState: NavigationScreenComponent = () => {
     sessionDateInfos[0]
   );
   const [isModalVisible, setIsModalVisible] = React.useState(false);
+  const [jobType, setJobType] = React.useState(ShowJobType.ALL);
 
   const curretWeek = sessionDateInfos.findIndex(
     item => item.startTime === sessionDateInfo.startTime
@@ -104,6 +107,10 @@ const AdminShowAttendState: NavigationScreenComponent = () => {
     dispatch({ type: 'SET_TAB_VISIBLE', payload: { tabVisible: true } });
   };
 
+  const onPressType = (type: ShowJobType) => {
+    setJobType(type);
+  };
+
   return (
     <ScreenWrap mode="ADMIN">
       <Wrap>
@@ -121,6 +128,7 @@ const AdminShowAttendState: NavigationScreenComponent = () => {
             )}`}</DateText>
             <ArrowDownImage />
           </SessionDateInfoView>
+          <AttendStateJobSelector onPressType={onPressType} type={jobType} />
         </Body>
         <DateSelectModal
           isVisible={isModalVisible}
