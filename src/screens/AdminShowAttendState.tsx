@@ -17,6 +17,7 @@ import ScreenWrap from '../components/ScreenWrap';
 import DCTouchable from '../components/DCTouchable';
 import DCText from '../components/DCText';
 import DateSelectModal from '../components/DateSelectModal';
+import AttendedMemberList from '../components/AttendedMemberList';
 import AttendStateJobSelector from '../components/AttendStateJobSelector';
 import { SessionDateType, ShowJobType } from '../interfaces';
 
@@ -78,6 +79,54 @@ const ArrowDownImage = styled.Image.attrs({ source: icon_arrow_down })`
   margin-top: 5px;
 `;
 
+const MEMBERS = [
+  {
+    order: 1,
+    name: '한영수',
+    time: new Date(),
+  },
+  {
+    order: 2,
+    name: '한영주',
+    time: new Date(),
+  },
+  {
+    order: 3,
+    name: '한영1',
+    time: new Date(),
+  },
+  {
+    order: 3,
+    name: '한영1',
+    time: new Date(),
+  },
+  {
+    order: 3,
+    name: '한영1',
+    time: new Date(),
+  },
+  {
+    order: 3,
+    name: '한영1',
+    time: new Date(),
+  },
+  {
+    order: 3,
+    name: '한영1',
+    time: new Date(),
+  },
+  {
+    order: 3,
+    name: '한영1',
+    time: new Date(),
+  },
+  {
+    order: 3,
+    name: '한영1',
+    time: new Date(),
+  },
+];
+
 const AdminShowAttendState: NavigationScreenComponent = () => {
   const { dispatch } = React.useContext(AppContext);
   const [sessionDateInfo, setSessionDateInfo] = React.useState(
@@ -111,6 +160,10 @@ const AdminShowAttendState: NavigationScreenComponent = () => {
     setJobType(type);
   };
 
+  const ListWrap = styled.View`
+    flex: 1;
+  `;
+
   return (
     <ScreenWrap mode="ADMIN">
       <Wrap>
@@ -129,6 +182,9 @@ const AdminShowAttendState: NavigationScreenComponent = () => {
             <ArrowDownImage />
           </SessionDateInfoView>
           <AttendStateJobSelector onPressType={onPressType} type={jobType} />
+          <ListWrap>
+            <AttendedMemberList members={MEMBERS} />
+          </ListWrap>
         </Body>
         <DateSelectModal
           isVisible={isModalVisible}

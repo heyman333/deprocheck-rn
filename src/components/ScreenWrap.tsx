@@ -14,7 +14,7 @@ const InnerWrap = styled.View`
 `;
 
 interface Props extends SafeAreaViewProps {
-  children: React.ReactElement;
+  children: React.ReactElement | React.ReactElement[];
   mode: 'ADMIN' | 'MEMBER';
 }
 

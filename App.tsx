@@ -8,6 +8,7 @@ import { createTheme } from './src/utils/theme';
 import { AppContext } from './src/contexts';
 import { AppProvider } from './src/providers/AppProvider';
 import { UserProvider } from './src/providers/UserProvider';
+import CustomModal from './src/components/CustomModal';
 
 const App = () => {
   const appContainer = React.useRef<NavigationContainerComponent>(null);
@@ -35,7 +36,10 @@ const ContextInjectedApp = () => (
   */
   <AppProvider>
     <UserProvider>
-      <App />
+      <React.Fragment>
+        <App />
+        <CustomModal />
+      </React.Fragment>
     </UserProvider>
   </AppProvider>
 );

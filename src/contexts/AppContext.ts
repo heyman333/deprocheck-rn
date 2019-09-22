@@ -1,6 +1,18 @@
 import React from 'react';
+import { ImageSourcePropType } from 'react-native';
 
-export type AactionType = 'CHANGE_THEME' | 'SET_TAB_VISIBLE';
+interface ModalInfosType {
+  titleImage?: ImageSourcePropType;
+  message?: string;
+  subMessage?: string;
+  buttons?: React.ReactElement[];
+}
+
+export type AactionType =
+  | 'CHANGE_THEME'
+  | 'SET_TAB_VISIBLE'
+  | 'SET_MODAL_INFO'
+  | 'SET_MODAL_VISIBLE';
 
 export interface Action {
   type: AactionType;
@@ -10,11 +22,15 @@ export interface Action {
 export interface State {
   theme: 'ADMIN' | 'MEMBER';
   tabVisible: boolean;
+  modalVisible: boolean;
+  modalInfos: ModalInfosType;
 }
 
 export const initialState: State = {
   theme: 'MEMBER',
   tabVisible: false,
+  modalVisible: false,
+  modalInfos: {},
 };
 
 // FIXME: dispatch type 정의

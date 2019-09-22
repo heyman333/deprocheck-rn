@@ -18,6 +18,7 @@ import ScreenWrap from '../components/ScreenWrap';
 import DCText from '../components/DCText';
 import DCTouchable from '../components/DCTouchable';
 import DateSelectModal from '../components/DateSelectModal';
+import AdminMapView from '../components/AdminMapView';
 
 const HORIZONTAL_PADDING = isSmallDeviceSize() ? 16 : 38;
 
@@ -103,7 +104,6 @@ const BottomButton = styled(DCTouchable)`
   justify-content: center;
   align-items: center;
   height: ${getInset('bottom') + 80}px;
-  padding-bottom: ${getInset('bottom')};
   background-color: white;
 `;
 
@@ -171,13 +171,14 @@ const AdminSessionCreate: NavigationScreenComponent = () => {
         <BottomButton onPress={onPressBottomButton}>
           <BottomText>일정 생성하기</BottomText>
         </BottomButton>
-        <DateSelectModal
-          isVisible={isModalVisible}
-          data={sessionDateInfos}
-          onConfirm={onConfirm}
-          onClose={onClose}
-        />
+        <AdminMapView />
       </Wrap>
+      <DateSelectModal
+        isVisible={isModalVisible}
+        data={sessionDateInfos}
+        onConfirm={onConfirm}
+        onClose={onClose}
+      />
     </ScreenWrap>
   );
 };
