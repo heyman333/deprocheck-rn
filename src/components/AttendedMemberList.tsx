@@ -76,6 +76,7 @@ const AttendedMemberList: React.FC<Props> = ({ members }) => {
       renderItem={renderMembers}
       keyExtractor={keyExtractor}
       ItemSeparatorComponent={renderSeparator}
+      contentContainerStyle={{ paddingBottom: 24 }}
       // ListFooterComponent={renderFooter}
     />
   );

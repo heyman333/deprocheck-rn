@@ -44,15 +44,18 @@ const Body = styled.View`
   justify-content: space-between;
 `;
 
-const NameInput = styled.TextInput.attrs({ allowFontScaling: false })`
+const NameInput = styled.TextInput.attrs({
+  allowFontScaling: false,
+  includefontpadding: false,
+})`
   font-size: 14px;
   border-bottom-color: ${({ theme }) => theme.reverseBackColor};
   border-bottom-width: 2px;
   margin-bottom: 19px;
-  padding-bottom: 15px;
+  padding: 0 0 15px 0;
   font-family: ${Platform.OS === 'ios'
     ? 'NotoSansCJKkr-Regular'
-    : 'NotoSansKR - Regular'};
+    : 'NotoSansKR-Regular'};
   color: ${({ theme }) => theme.reverseBackColor};
 `;
 
@@ -118,14 +121,6 @@ const StyledToggle = styled(SwitchToggle).attrs(({ theme }) => ({
 
 const MemberLogo = styled.Image.attrs({
   source: img_deprocheck_logo,
-  resizeMode: 'contain',
-})`
-  width: 220px;
-  height: 153px;
-`;
-
-const AdminLogo = styled.Image.attrs({
-  source: img_deprocheck_logo_2,
   resizeMode: 'contain',
 })`
   width: 220px;
@@ -284,9 +279,6 @@ const Login: NavigationScreenComponent = () => {
   };
 
   const gotoHome = () => {
-    // 화면을 따로 만들고 공통된 컴포넌트 최대한 활용
-    // 사용자 위치는 renderProps 디자인 패턴을 활용해서 재활용
-
     setUserStatus();
     if (state.theme === 'ADMIN') {
       replace('Admin');
