@@ -4,16 +4,16 @@ import { Platform, TextInput, Dimensions } from 'react-native';
 import { NavigationScreenComponent } from 'react-navigation';
 import { getInset } from 'react-native-safe-area-view';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import SplashScreen from 'react-native-splash-screen';
 import _partial from 'lodash/partial';
 
 import { getUserInfo, storeUserInfo } from '../utils/storage';
 import { isSmallDeviceSize } from '../utils/styleUtils';
-import { replace } from '../navigators/NavigationService';
+import { replace, navigate } from '../navigators/NavigationService';
 import { AppContext, UserContext } from '../contexts';
 import { requestMemberLoginByName } from '../modules/auth';
 import {
   img_deprocheck_logo,
-  img_deprocheck_logo_2,
   icon_close,
   img_deprocheck_white,
   icon_baseline_close,
@@ -205,6 +205,7 @@ const Login: NavigationScreenComponent = () => {
     };
 
     initUserStatus();
+    SplashScreen.hide();
   }, [dispatch]);
 
   const setUserStatus = () => {
@@ -235,15 +236,13 @@ const Login: NavigationScreenComponent = () => {
     dispatch({ type: 'SET_MODAL_VISIBLE', payload: { modalVisible: visible } });
   };
 
-  const modalOpen = () => {
-    const inputName = state.theme === 'ADMIN' ? '관리자 번호를' : '이름을';
-
+  const modalOpen = (message: string) => {
     dispatch({
       type: 'SET_MODAL_INFO',
       payload: {
         modalInfos: {
           titleImage: icon_baseline_close,
-          message: `${inputName} 입력해주세요!`,
+          message,
           buttons: (
             <ModalButton onPress={_partial(toggleModal, false)}>
               <ModalText>확인</ModalText>
@@ -256,35 +255,39 @@ const Login: NavigationScreenComponent = () => {
   };
 
   const onLogin = async () => {
-    if ((inputRef.current, name.length === 0)) {
-      modalOpen();
+    if (inputRef.current && name.trim().length === 0) {
+      const inputName = state.theme === 'ADMIN' ? '관리자 번호를' : '이름을';
+      const message = `${inputName}을 입력해 주세요!`;
+      modalOpen(message);
       return;
     }
-
     gotoHome();
-    // try {\
-    //   // FIXME: 일단 아무이름이나 하드코딩
-    //   const data = await requestMemberLoginByName('한영수');
+
+    // try {
+    //   const data = await requestMemberLoginByName(name);
     //   if (data.accessToken) {
     //     authDispatch({
     //       type: 'SET_USER_INFO',
-    //       payload: { userInfo: { name: '한영수' } },
+    //       payload: { userInfo: { name } },
     //     });
 
     //     gotoHome();
     //   }
     // } catch (error) {
-    //   console.log('error', error);
+    //   // 일단 잘못된 이름 및 번호로 경고
+    //   const value = state.theme === 'ADMIN' ? '관리자 번호' : '멤버이름';
+    //   const message = `잘못된 ${value}입니다`;
+    //   modalOpen(message);
     // }
   };
 
   const gotoHome = () => {
     setUserStatus();
     if (state.theme === 'ADMIN') {
-      replace('Admin');
+      navigate('Admin');
       return;
     }
-    replace('UserAttend');
+    navigate('UserAttend');
   };
 
   const onPressToggle = () => {
@@ -319,7 +322,7 @@ const Login: NavigationScreenComponent = () => {
   };
 
   return (
-    <ScreenWrap mode={state.theme} forceInset={{ bottom: 'never' }}>
+    <ScreenWrap forceInset={{ bottom: 'never' }}>
       <Wrap keyboardShouldPersistTaps="handled">
         <Header>
           <StyledToggle

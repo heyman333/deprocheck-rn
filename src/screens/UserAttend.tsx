@@ -1,8 +1,10 @@
 import React from 'react';
 import styled from 'styled-components/native';
+import { Alert, BackHandler } from 'react-native';
 import { getInset } from 'react-native-safe-area-view';
+import { AndroidBackHandler } from 'react-navigation-backhandler';
 
-import AppContext from '../contexts/AppContext';
+// import AppContext from '../contexts/AppContext';
 import { navigate } from '../navigators/NavigationService';
 import { img_deprocheck_logo_2, baseline_place_24_px } from '../assets/images';
 import { isSmallDeviceSize } from '../utils/styleUtils';
@@ -88,30 +90,38 @@ const UserAttend: React.FC = () => {
     navigate('UserStatus');
   };
 
-  const { state } = React.useContext(AppContext);
+  const onBackButtonPressAndroid = () => {
+    Alert.alert('종료', '종료 할까요?', [
+      { text: '네', onPress: BackHandler.exitApp },
+      { text: '아니오' },
+    ]);
+    return true;
+  };
 
   return (
-    <ScreenWrap mode={state.theme} forceInset={{ bottom: 'never' }}>
-      <Wrap>
-        <Header>
-          <LogoImage source={img_deprocheck_logo_2} />
-        </Header>
+    <AndroidBackHandler onBackPress={onBackButtonPressAndroid}>
+      <ScreenWrap forceInset={{ bottom: 'never' }}>
+        <Wrap>
+          <Header>
+            <LogoImage source={img_deprocheck_logo_2} />
+          </Header>
 
-        <Body>
-          <SessionTextWrap>
-            <SessionText>오늘의 세션장소</SessionText>
-          </SessionTextWrap>
-          <LocationArea>
-            <LocationIcon source={baseline_place_24_px} />
-            <LocationText>서울시 강남구 논현로 22길</LocationText>
-          </LocationArea>
-          <MemberMapView />
-        </Body>
-        <Footer onPress={onLogin}>
-          <EnterText>출석하기</EnterText>
-        </Footer>
-      </Wrap>
-    </ScreenWrap>
+          <Body>
+            <SessionTextWrap>
+              <SessionText>오늘의 세션장소</SessionText>
+            </SessionTextWrap>
+            <LocationArea>
+              <LocationIcon source={baseline_place_24_px} />
+              <LocationText>서울시 강남구 논현로 22길</LocationText>
+            </LocationArea>
+            <MemberMapView />
+          </Body>
+          <Footer onPress={onLogin}>
+            <EnterText>출석하기</EnterText>
+          </Footer>
+        </Wrap>
+      </ScreenWrap>
+    </AndroidBackHandler>
   );
 };
 

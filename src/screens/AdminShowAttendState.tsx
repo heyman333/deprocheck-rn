@@ -165,7 +165,7 @@ const AdminShowAttendState: NavigationScreenComponent = () => {
   `;
 
   return (
-    <ScreenWrap mode="ADMIN">
+    <ScreenWrap>
       <Wrap>
         <Header>
           <Logo />

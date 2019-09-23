@@ -145,7 +145,7 @@ const AdminSessionCreate: NavigationScreenComponent = () => {
   };
 
   return (
-    <ScreenWrap mode="ADMIN" forceInset={{ bottom: 'never' }}>
+    <ScreenWrap forceInset={{ bottom: 'never' }}>
       <Wrap>
         <Header>
           <Logo />

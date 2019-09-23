@@ -17,7 +17,7 @@ const Home: NavigationScreenComponent = () => {
   console.log('state', authState.userInfo);
 
   return (
-    <ScreenWrap mode="MEMBER">
+    <ScreenWrap>
       <Wrap>
         <Text>메인화면</Text>
       </Wrap>
