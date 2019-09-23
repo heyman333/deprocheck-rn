@@ -9,7 +9,7 @@ import _partial from 'lodash/partial';
 
 import { getUserInfo, storeUserInfo } from '../utils/storage';
 import { isSmallDeviceSize } from '../utils/styleUtils';
-import { replace, navigate } from '../navigators/NavigationService';
+import { navigate } from '../navigators/NavigationService';
 import { AppContext, UserContext } from '../contexts';
 import { requestMemberLoginByName } from '../modules/auth';
 import {
@@ -261,24 +261,23 @@ const Login: NavigationScreenComponent = () => {
       modalOpen(message);
       return;
     }
-    gotoHome();
 
-    // try {
-    //   const data = await requestMemberLoginByName(name);
-    //   if (data.accessToken) {
-    //     authDispatch({
-    //       type: 'SET_USER_INFO',
-    //       payload: { userInfo: { name } },
-    //     });
+    try {
+      const data = await requestMemberLoginByName(name);
+      if (data.accessToken) {
+        authDispatch({
+          type: 'SET_USER_INFO',
+          payload: { userInfo: { name } },
+        });
 
-    //     gotoHome();
-    //   }
-    // } catch (error) {
-    //   // 일단 잘못된 이름 및 번호로 경고
-    //   const value = state.theme === 'ADMIN' ? '관리자 번호' : '멤버이름';
-    //   const message = `잘못된 ${value}입니다`;
-    //   modalOpen(message);
-    // }
+        gotoHome();
+      }
+    } catch (error) {
+      // 일단 잘못된 이름 및 번호로 경고
+      const value = state.theme === 'ADMIN' ? '관리자 번호' : '멤버이름';
+      const message = `잘못된 ${value}입니다`;
+      modalOpen(message);
+    }
   };
 
   const gotoHome = () => {

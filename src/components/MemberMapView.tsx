@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from 'styled-components/native';
-import Geolocation from '@react-native-community/geolocation';
 
 import MapView, { PROVIDER_GOOGLE, Region } from 'react-native-maps';
 import DCText from '../components/DCText';
+import useLocation from '../hooks/useLocation';
 
 const Wrap = styled.View`
   flex: 1;
@@ -57,24 +57,25 @@ const initialGeoState = {
 };
 
 const MemberMapView: React.FC = () => {
+  const currentLocation = useLocation({
+    latitude: 37.5326,
+    longitude: 127.024612,
+  });
   const [mapGeoInfo, setMapGetInfo] = React.useState<GeoState>(initialGeoState);
 
   React.useEffect(() => {
-    Geolocation.getCurrentPosition(position => {
-      let region = {
-        latitude: position.coords.latitude,
-        longitude: position.coords.longitude,
-        latitudeDelta: 0.00922 * 1.5,
-        longitudeDelta: 0.00421 * 1.5,
-      };
-
-      setMapGetInfo({
-        mapRegion: region,
-        lastLat: region.latitude,
-        lastLong: region.longitude,
-      });
+    const region = {
+      latitude: currentLocation.latitude,
+      longitude: currentLocation.longitude,
+      latitudeDelta: 0.00922 * 1.5,
+      longitudeDelta: 0.00421 * 1.5,
+    };
+    setMapGetInfo({
+      mapRegion: region,
+      lastLat: region.latitude,
+      lastLong: region.longitude,
     });
-  }, []);
+  }, [currentLocation]);
 
   return (
     <Wrap>

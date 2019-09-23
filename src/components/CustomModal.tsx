@@ -9,6 +9,7 @@ import DCText from './DCText';
 
 const ModalWrap = styled.View`
   background-color: white;
+  margin: 0 14px;
 `;
 
 const InnerWrap = styled.View`
@@ -35,7 +36,7 @@ const SubMessage = styled(DCText)`
 const ButtonWrap = styled.View`
   flex-direction: row;
   border-top-width: 1px;
-  border-top-color: ${colors.gray};
+  border-top-color: #eeeeee;
   margin-top: 35px;
 `;
 
