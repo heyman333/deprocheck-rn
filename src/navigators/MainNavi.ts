@@ -6,12 +6,12 @@ import {
 import { fadeIn } from 'react-navigation-transitions';
 
 import Login from '../screens/Login';
-import Home from '../screens/Home';
+
 // import AdminHome from '../screens/AdminHome';
 import AdminTopTabNavi from '../navigators/AdminTopTabNavi';
 import UserAttend from '../screens/UserAttend';
 import UserStatus from '../screens/UserStatus';
-import { Animated, Easing } from 'react-native';
+import { Animated } from 'react-native';
 
 const handleCustomTransition = ({
   scenes,
@@ -39,14 +39,8 @@ const handleCustomTransition = ({
   return {
     transitionSpec: {
       animation: 'spring',
-      config: {
-        stiffness: 1000,
-        damping: 500,
-        mass: 3,
-        overshootClamping: true,
-        restDisplacementThreshold: 0.01,
-        restSpeedThreshold: 0.01,
-      },
+      duration: 280,
+      timing: Animated.timing,
     },
   };
 };
