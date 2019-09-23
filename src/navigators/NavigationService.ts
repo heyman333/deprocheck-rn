@@ -1,4 +1,5 @@
 import {
+  StackActions,
   NavigationActions,
   NavigationDispatch,
   NavigationParams,
@@ -10,6 +11,14 @@ let _dispatch: NavigationDispatch;
 
 export function navigate(routeName: string, params?: NavigationParams) {
   const action = NavigationActions.navigate({
+    routeName,
+    params,
+  });
+  _dispatch(action);
+}
+
+export function replace(routeName: string, params?: NavigationParams) {
+  const action = StackActions.replace({
     routeName,
     params,
   });

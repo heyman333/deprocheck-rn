@@ -9,12 +9,18 @@
 
 #import <React/RCTBridge.h>
 #import <React/RCTBundleURLProvider.h>
+#import <GoogleMaps/GoogleMaps.h>
 #import <React/RCTRootView.h>
+#import "ReactNativeConfig.h"
+#import "RNSplashScreen.h"  // here
 
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+
+  NSString *googleMapKey = [ReactNativeConfig envFor:@"IOS_GOOGLE_MAP_KEY"];
+  [GMSServices provideAPIKey:googleMapKey];
   RCTBridge *bridge = [[RCTBridge alloc] initWithDelegate:self launchOptions:launchOptions];
   RCTRootView *rootView = [[RCTRootView alloc] initWithBridge:bridge
                                                    moduleName:@"deprocheck"
@@ -27,6 +33,7 @@
   rootViewController.view = rootView;
   self.window.rootViewController = rootViewController;
   [self.window makeKeyAndVisible];
+  [RNSplashScreen show];  // here
   return YES;
 }
 
