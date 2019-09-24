@@ -227,7 +227,7 @@ const Login: NavigationScreenComponent = () => {
 
   const onPressClear = () => {
     if (inputRef.current) {
-      inputRef.current.clear();
+      setName('');
       inputRef.current.focus();
     }
   };
@@ -251,7 +251,6 @@ const Login: NavigationScreenComponent = () => {
         },
       },
     });
-    toggleModal(true);
   };
 
   const onLogin = async () => {
