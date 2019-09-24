@@ -6,7 +6,11 @@ export const createSession = async (sessionInfo: SessionInfo) => {
   return data;
 };
 
-export const getAttendances = async (): Promise<AttendeeType[]> => {
-  const { data } = await axios.get('/admin/attendances');
+export const getAttendances = async (date: string): Promise<AttendeeType[]> => {
+  const { data } = await axios.get('/admin/attendances', {
+    params: {
+      date,
+    },
+  });
   return data;
 };

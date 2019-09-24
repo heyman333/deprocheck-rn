@@ -1,17 +1,15 @@
 import React from 'react';
-import { FlatList, Dimensions } from 'react-native';
+import { FlatList } from 'react-native';
 import styled from 'styled-components/native';
-import { getStatusBarHeight } from 'react-native-safe-area-view';
 
-// import DCTouchable from '../components/DCTouchable';
-import DCText from '../components/DCText';
 import { toFullTimeKR } from '../utils/timeUtils';
+import { AttendeeType } from '../interfaces';
 
-const { height: DEVICE_HEIGHT } = Dimensions.get('window');
+import DCText from '../components/DCText';
 
-const List = styled(FlatList)`
-  min-height: ${DEVICE_HEIGHT - getStatusBarHeight() - 260};
-`;
+const List = styled(FlatList as new () => FlatList<AttendeeType>).attrs({
+  contentContainerStyle: { paddingBottom: 14 },
+})``;
 
 const Row = styled.View`
   flex-direction: row;
@@ -19,17 +17,6 @@ const Row = styled.View`
   align-items: center;
   height: 52px;
 `;
-
-// const Footer = styled.View`
-//   justify-content: center;
-//   align-items: center;
-// `;
-
-// const MoreButton = styled(DCTouchable)`
-//   border: 1px solid white;
-//   justify-content: center;
-//   align-items: center;
-// `;
 
 const MemberInfoText = styled(DCText)<{ flex: number }>`
   color: white;
@@ -43,32 +30,46 @@ const Separator = styled.View`
   background-color: white;
 `;
 
+const EmptyView = styled.View`
+  justify-content: center;
+  align-items: center;
+  padding-top: 30px;
+`;
+
+const Desc = styled(DCText)`
+  margin-bottom: 12px;
+  color: white;
+`;
+
 interface Props {
-  members: any;
+  members: AttendeeType[];
+  errorMsg?: string;
 }
 
-const AttendedMemberList: React.FC<Props> = ({ members }) => {
-  const renderMembers = ({ item }: { item: any }) => (
+const AttendedMemberList: React.FC<Props> = ({ members, errorMsg }) => {
+  const renderMembers = ({ item }: { item: AttendeeType }) => (
     <Row>
-      <MemberInfoText flex={1}>{`${item.order}기`}</MemberInfoText>
-      <MemberInfoText flex={1}>{`${item.name}`}</MemberInfoText>
-      <MemberInfoText flex={5}>{`${toFullTimeKR(item.time)}`}</MemberInfoText>
+      <MemberInfoText flex={1}>{`${item.member.termNumber}기`}</MemberInfoText>
+      <MemberInfoText flex={1}>{`${item.member.name}`}</MemberInfoText>
+      <MemberInfoText flex={5}>{`${toFullTimeKR(
+        item.createdAt
+      )}`}</MemberInfoText>
     </Row>
   );
 
-  const keyExtractor = (item: any, index: number) => `${item.name}-${index}`;
+  const keyExtractor = (item: AttendeeType) => `${item.id}`;
 
   const renderSeparator = () => <Separator />;
 
-  // const renderFooter = () => {
-  //   return (
-  //     <Footer>
-  //       <MoreButton onPress>
-  //         <MemberInfoText>더 보기</MemberInfoText>
-  //       </MoreButton>
-  //     </Footer>
-  //   );
-  // };
+  const renderEmpty = () => {
+    let msg = errorMsg || '출석체크 한 회원이 없습니다';
+
+    return (
+      <EmptyView>
+        <Desc>{msg}</Desc>
+      </EmptyView>
+    );
+  };
 
   return (
     <List
@@ -76,8 +77,7 @@ const AttendedMemberList: React.FC<Props> = ({ members }) => {
       renderItem={renderMembers}
       keyExtractor={keyExtractor}
       ItemSeparatorComponent={renderSeparator}
-      contentContainerStyle={{ paddingBottom: 24 }}
-      // ListFooterComponent={renderFooter}
+      ListEmptyComponent={renderEmpty}
     />
   );
 };

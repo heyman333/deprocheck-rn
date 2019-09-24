@@ -34,6 +34,7 @@ const Wrap = styled(KeyboardAwareScrollView)`
 
 const Header = styled.View`
   padding: 38px;
+  flex-direction: row;
 `;
 
 const Body = styled.View`
@@ -251,18 +252,19 @@ const Login: NavigationScreenComponent = () => {
         },
       },
     });
+    toggleModal(true);
   };
 
   const onLogin = async () => {
     if (inputRef.current && name.trim().length === 0) {
       const inputName = state.theme === 'ADMIN' ? '관리자 번호를' : '이름을';
-      const message = `${inputName}을 입력해 주세요!`;
+      const message = `${inputName} 입력해 주세요!`;
       modalOpen(message);
       return;
     }
 
     try {
-      const data = await requestMemberLoginByName(name);
+      const data = await requestMemberLoginByName(name.trim());
       if (data.accessToken) {
         authDispatch({
           type: 'SET_USER_INFO',

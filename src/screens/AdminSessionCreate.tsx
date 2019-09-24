@@ -159,7 +159,6 @@ const ModalText = styled(DCText)`
 const AdminSessionCreate: NavigationScreenComponent = () => {
   const currentLocation = useLocation({ latitude: 0, longitude: 0 });
   const { dispatch } = React.useContext(AppContext);
-  // const { state: authState } = React.useContext(UserContext);
   const [sessionDateInfo, setSessionDateInfo] = React.useState(
     sessionDateInfos[0]
   );
@@ -189,10 +188,13 @@ const AdminSessionCreate: NavigationScreenComponent = () => {
           titleImage: icon_baseline_done,
           message: '2019년 5월 4일 세션 장소는\n서울시 강남구 논현로 입니다.',
           buttons: [
-            <RetryButton onPress={_partial(toggleModal, false)}>
+            <RetryButton
+              onPress={_partial(toggleModal, false)}
+              key="RetryButton"
+            >
               <RetryText>다시하기</RetryText>
             </RetryButton>,
-            <OkButton onPress={onCreateSession}>
+            <OkButton onPress={onCreateSession} key="OkButton">
               <OkText>맞아요!</OkText>
             </OkButton>,
           ],
