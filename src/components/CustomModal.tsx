@@ -48,12 +48,6 @@ const CustomModal: React.FC = () => {
     dispatch({ type: 'SET_MODAL_VISIBLE', payload: { modalVisible: false } });
   };
 
-  React.useEffect(() => {
-    if (modalInfos.message && modalInfos.message.length > 0) {
-      dispatch({ type: 'SET_MODAL_VISIBLE', payload: { modalVisible: true } });
-    }
-  }, [modalInfos.message, dispatch]);
-
   return (
     <Modal
       isVisible={state.modalVisible}

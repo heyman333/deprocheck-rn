@@ -189,19 +189,17 @@ const AdminSessionCreate: NavigationScreenComponent = () => {
           titleImage: icon_baseline_done,
           message: '2019년 5월 4일 세션 장소는\n서울시 강남구 논현로 입니다.',
           buttons: [
-            <RetryButton
-              onPress={_partial(toggleModal, false)}
-              key="RetryButton"
-            >
+            <RetryButton onPress={_partial(toggleModal, false)}>
               <RetryText>다시하기</RetryText>
             </RetryButton>,
-            <OkButton onPress={onCreateSession} key="OkButton">
+            <OkButton onPress={onCreateSession}>
               <OkText>맞아요!</OkText>
             </OkButton>,
           ],
         },
       },
     });
+    toggleModal(true);
   };
 
   const modalOpen = (suc: boolean = true, message: string) => {
@@ -225,6 +223,7 @@ const AdminSessionCreate: NavigationScreenComponent = () => {
         },
       },
     });
+    toggleModal(true);
   };
 
   const onCreateSession = async () => {
