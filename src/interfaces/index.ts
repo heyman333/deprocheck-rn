@@ -27,3 +27,16 @@ export interface SessionInfoResponse {
   to: string;
   name: string;
 }
+
+export interface AttendeeType {
+  createdAt: string;
+  id: number;
+  member: {
+    authority: 'ADMIN' | 'MEMBER';
+    id: number;
+    jobGroup: 'DEVELOPER' | 'DESGINER';
+    name: string;
+    termNumber: number;
+  };
+  updatedAt: string;
+}

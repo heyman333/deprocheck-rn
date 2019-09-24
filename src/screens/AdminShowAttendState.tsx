@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components/native';
 import { NavigationScreenComponent } from 'react-navigation';
 
-import { toYYMMDDKR } from '../utils/timeUtils';
+import { toYYMMDDKR, toYYYYMMDD } from '../utils/timeUtils';
 import { sessionDateInfos } from '../datas/SessionDateInfo';
 import { AppContext } from '../contexts';
 import {
@@ -12,6 +12,7 @@ import {
 } from '../assets/images';
 import { isSmallDeviceSize } from '../utils/styleUtils';
 import { colors } from '../utils/theme';
+import { getAttendances } from '../modules/session';
 
 import ScreenWrap from '../components/ScreenWrap';
 import DCTouchable from '../components/DCTouchable';
@@ -19,7 +20,7 @@ import DCText from '../components/DCText';
 import DateSelectModal from '../components/DateSelectModal';
 import AttendedMemberList from '../components/AttendedMemberList';
 import AttendStateJobSelector from '../components/AttendStateJobSelector';
-import { SessionDateType, ShowJobType } from '../interfaces';
+import { SessionDateType, ShowJobType, AttendeeType } from '../interfaces';
 
 const HORIZONTAL_PADDING = isSmallDeviceSize() ? 16 : 38;
 
@@ -28,6 +29,10 @@ const Header = styled.View`
   justify-content: space-between;
   align-items: center;
   padding: 40px ${HORIZONTAL_PADDING}px 0px ${HORIZONTAL_PADDING}px;
+`;
+
+const ListWrap = styled.View`
+  flex: 1;
 `;
 
 const Logo = styled.Image.attrs({ source: img_deprocheck_white })`
@@ -47,6 +52,7 @@ const Wrap = styled.View`
 `;
 
 const Body = styled.View`
+  flex: 1;
   padding: ${HORIZONTAL_PADDING}px;
 `;
 
@@ -79,51 +85,67 @@ const ArrowDownImage = styled.Image.attrs({ source: icon_arrow_down })`
   margin-top: 5px;
 `;
 
-const MEMBERS = [
+// 더미데이터
+const datas: AttendeeType[] = [
   {
-    order: 1,
-    name: '한영수',
-    time: new Date(),
+    createdAt: '2019-09-24T12:21:35.338Z',
+    id: 0,
+    member: {
+      authority: 'ADMIN',
+      id: 0,
+      jobGroup: 'DEVELOPER',
+      name: 'efef',
+      termNumber: 0,
+    },
+    updatedAt: '2019-09-24T12:21:35.338Z',
   },
   {
-    order: 2,
-    name: '한영주',
-    time: new Date(),
+    createdAt: '2019-09-24T12:21:35.338Z',
+    id: 1,
+    member: {
+      authority: 'ADMIN',
+      id: 0,
+      jobGroup: 'DEVELOPER',
+      name: 'efef',
+      termNumber: 0,
+    },
+    updatedAt: '2019-09-24T12:21:35.338Z',
   },
   {
-    order: 3,
-    name: '한영1',
-    time: new Date(),
+    createdAt: '2019-09-24T12:21:35.338Z',
+    id: 2,
+    member: {
+      authority: 'ADMIN',
+      id: 0,
+      jobGroup: 'DEVELOPER',
+      name: 'efef',
+      termNumber: 0,
+    },
+    updatedAt: '2019-09-24T12:21:35.338Z',
   },
   {
-    order: 3,
-    name: '한영1',
-    time: new Date(),
+    createdAt: '2019-09-24T12:21:35.338Z',
+    id: 3,
+    member: {
+      authority: 'ADMIN',
+      id: 0,
+      jobGroup: 'DEVELOPER',
+      name: 'efef',
+      termNumber: 0,
+    },
+    updatedAt: '2019-09-24T12:21:35.338Z',
   },
   {
-    order: 3,
-    name: '한영1',
-    time: new Date(),
-  },
-  {
-    order: 3,
-    name: '한영1',
-    time: new Date(),
-  },
-  {
-    order: 3,
-    name: '한영1',
-    time: new Date(),
-  },
-  {
-    order: 3,
-    name: '한영1',
-    time: new Date(),
-  },
-  {
-    order: 3,
-    name: '한영1',
-    time: new Date(),
+    createdAt: '2019-09-24T12:21:35.338Z',
+    id: 4,
+    member: {
+      authority: 'ADMIN',
+      id: 0,
+      jobGroup: 'DEVELOPER',
+      name: 'efef',
+      termNumber: 0,
+    },
+    updatedAt: '2019-09-24T12:21:35.338Z',
   },
 ];
 
@@ -134,6 +156,25 @@ const AdminShowAttendState: NavigationScreenComponent = () => {
   );
   const [isModalVisible, setIsModalVisible] = React.useState(false);
   const [jobType, setJobType] = React.useState(ShowJobType.ALL);
+  const [members, setMembers] = React.useState<AttendeeType[]>([]);
+  const [errorMsg, setErrorMsg] = React.useState<string | undefined>(undefined);
+
+  React.useEffect(() => {
+    console.log(toYYYYMMDD(sessionDateInfo.startTime));
+    getAttendInfo(toYYYYMMDD(sessionDateInfo.startTime));
+  }, [sessionDateInfo]);
+
+  const getAttendInfo = async (date: string) => {
+    try {
+      const data: AttendeeType[] = await getAttendances(date);
+      setMembers(data);
+    } catch (error) {
+      console.log('error', error.response);
+      if (error.response.status === 404) {
+        setErrorMsg('해당날짜에 세션이 없습니다');
+      }
+    }
+  };
 
   const curretWeek = sessionDateInfos.findIndex(
     item => item.startTime === sessionDateInfo.startTime
@@ -160,10 +201,6 @@ const AdminShowAttendState: NavigationScreenComponent = () => {
     setJobType(type);
   };
 
-  const ListWrap = styled.View`
-    flex: 1;
-  `;
-
   return (
     <ScreenWrap>
       <Wrap>
@@ -183,9 +220,10 @@ const AdminShowAttendState: NavigationScreenComponent = () => {
           </SessionDateInfoView>
           <AttendStateJobSelector onPressType={onPressType} type={jobType} />
           <ListWrap>
-            <AttendedMemberList members={MEMBERS} />
+            <AttendedMemberList members={members} errorMsg={errorMsg} />
           </ListWrap>
         </Body>
+
         <DateSelectModal
           isVisible={isModalVisible}
           data={sessionDateInfos}
