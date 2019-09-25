@@ -5,7 +5,7 @@ import styled from 'styled-components/native';
 import _partial from 'lodash/partial';
 
 import { toYYMMDDKR } from '../utils/timeUtils';
-import { SessionDateType } from '../interfaces/sessionDate';
+import { SessionDateType } from '../interfaces';
 import { colors } from '../utils/theme';
 import DCText from './DCText';
 import DCTouchable from './DCTouchable';

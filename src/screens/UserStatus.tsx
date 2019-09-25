@@ -31,7 +31,6 @@ const UserNameArea = styled.View`
   width: 300px;
 `;
 
-
 const UserNameText = styled(DCText)`
   font-size: 18px;
   font-weight: bold;
@@ -47,14 +46,13 @@ const Bar = styled.View`
   margin-bottom: 33px;
 `;
 
-
 const LogoImage = styled.Image`
   width: 220px;
   align-self: flex-start;
   margin-bottom: 58px;
   margin-top: 45px;
   margin-left: ${(Dimensions.get('window').width - 300) / 2};
-  height= 35px;
+  height: 35px;
 `;
 
 const MoreButton = styled(DCTouchable)`
@@ -82,17 +80,13 @@ const UserAttend: React.FC = () => {
   return (
     <ScreenWrap>
       <Wrap>
-
-
         <Body>
-          <LogoImage
-            source={ img_deprocheck_logo_2 }
-          />
+          <LogoImage source={img_deprocheck_logo_2} />
 
           <UserNameArea>
             <UserNameText>김프만님의 출석현황</UserNameText>
           </UserNameArea>
-          <Bar/>
+          <Bar />
 
           <AttendStatus
             attendWeek="1주차"
@@ -126,9 +120,7 @@ const UserAttend: React.FC = () => {
           <MoreButton onPress={onLogin}>
             <MoreButtonText>더보기</MoreButtonText>
           </MoreButton>
-
         </Body>
-
       </Wrap>
     </ScreenWrap>
   );

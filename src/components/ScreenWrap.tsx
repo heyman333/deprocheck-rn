@@ -3,6 +3,8 @@ import { StatusBar } from 'react-native';
 import styled from 'styled-components/native';
 import SafeAreaView, { SafeAreaViewProps } from 'react-native-safe-area-view';
 
+import { AppContext } from '../contexts';
+
 let Wrap = styled(SafeAreaView)`
   flex: 1;
   background-color: ${({ theme }) => theme.background};
@@ -14,15 +16,18 @@ const InnerWrap = styled.View`
 `;
 
 interface Props extends SafeAreaViewProps {
-  children: React.ReactElement;
-  mode: 'ADMIN' | 'MEMBER';
+  children: React.ReactElement | React.ReactElement[];
 }
 
-const ScreenWrap: React.FC<Props> = ({ children, mode, forceInset }: Props) => {
+const ScreenWrap: React.FC<Props> = ({ children, forceInset }) => {
+  const {
+    state: { theme },
+  } = React.useContext(AppContext);
+
   return (
     <Wrap forceInset={forceInset}>
       <StatusBar
-        barStyle={mode === 'ADMIN' ? 'light-content' : 'dark-content'}
+        barStyle={theme === 'ADMIN' ? 'light-content' : 'dark-content'}
       />
       <InnerWrap>{children}</InnerWrap>
     </Wrap>

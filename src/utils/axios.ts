@@ -21,6 +21,8 @@ let _currentAuthorizationToken: string | null = null;
 export const setAuthorization = (token: string | null) => {
   _currentAuthorizationToken = token;
 
+  console.log('token', token);
+
   const instance = configureAxios();
   instance.defaults.headers.common.Authorization = token
     ? `Bearer ${token}`

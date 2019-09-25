@@ -2,6 +2,8 @@
 export const colors = {
   white: '#ffffff',
   black: '#222222',
+  blue: '#1818b5',
+  gray: '#999999',
 };
 
 const theme = {

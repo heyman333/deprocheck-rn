@@ -89,7 +89,11 @@ function SwitchToggle(props: Props) {
   };
 
   return (
-    <TouchableOpacity onPress={props.onPress} activeOpacity={0.75}>
+    <TouchableOpacity
+      onPress={props.onPress}
+      activeOpacity={0.75}
+      hitSlop={{ top: 10, right: 10, bottom: 10, left: 10 }}
+    >
       <Animated.View
         style={[
           styles.container,

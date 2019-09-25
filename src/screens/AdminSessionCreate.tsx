@@ -2,8 +2,9 @@ import React from 'react';
 import styled from 'styled-components/native';
 import { NavigationScreenComponent } from 'react-navigation';
 import { getInset } from 'react-native-safe-area-view';
+import _partial from 'lodash/partial';
 
-import { SessionDateType } from '../interfaces/sessionDate';
+import { SessionDateType } from '../interfaces';
 import { AppContext } from '../contexts';
 import { colors } from '../utils/theme';
 import { isSmallDeviceSize } from '../utils/styleUtils';
@@ -13,11 +14,17 @@ import {
   img_deprocheck_white,
   icon_menu_bar,
   icon_plus,
+  icon_baseline_done,
+  icon_baseline_close,
 } from '../assets/images';
+import useLocation from '../hooks/useLocation';
+import { createSession } from '../modules/session';
+
 import ScreenWrap from '../components/ScreenWrap';
 import DCText from '../components/DCText';
 import DCTouchable from '../components/DCTouchable';
 import DateSelectModal from '../components/DateSelectModal';
+import AdminMapView from '../components/AdminMapView';
 
 const HORIZONTAL_PADDING = isSmallDeviceSize() ? 16 : 38;
 
@@ -103,7 +110,6 @@ const BottomButton = styled(DCTouchable)`
   justify-content: center;
   align-items: center;
   height: ${getInset('bottom') + 80}px;
-  padding-bottom: ${getInset('bottom')};
   background-color: white;
 `;
 
@@ -112,7 +118,46 @@ const BottomText = styled(DCText)`
   font-weight: bold;
 `;
 
+const OkButton = styled(DCTouchable)`
+  flex: 1;
+  padding: 15px 0;
+  justify-content: center;
+  align-items: center;
+`;
+
+const RetryButton = styled(DCTouchable)`
+  flex: 1;
+  padding: 15px 0;
+  justify-content: center;
+  align-items: center;
+  border-right-width: 1px;
+  border-right-color: #eeeeee;
+`;
+
+const OkText = styled(DCText)`
+  color: ${colors.blue};
+  font-weight: bold;
+`;
+
+const RetryText = styled(DCText)`
+  color: ${colors.gray};
+  font-weight: bold;
+`;
+
+const ModalButton = styled(DCTouchable)`
+  flex: 1;
+  padding: 15px 0;
+  justify-content: center;
+  align-items: center;
+`;
+
+const ModalText = styled(DCText)`
+  color: ${colors.blue};
+  font-weight: bold;
+`;
+
 const AdminSessionCreate: NavigationScreenComponent = () => {
+  const currentLocation = useLocation({ latitude: 0, longitude: 0 });
   const { dispatch } = React.useContext(AppContext);
   const [sessionDateInfo, setSessionDateInfo] = React.useState(
     sessionDateInfos[0]
@@ -131,8 +176,78 @@ const AdminSessionCreate: NavigationScreenComponent = () => {
     setIsModalVisible(true);
   };
 
-  const onPressBottomButton = () => {
-    // TODO: API 콜
+  const toggleModal = (visible: boolean) => {
+    dispatch({ type: 'SET_MODAL_VISIBLE', payload: { modalVisible: visible } });
+  };
+
+  const openConfirmModal = () => {
+    dispatch({
+      type: 'SET_MODAL_INFO',
+      payload: {
+        modalInfos: {
+          titleImage: icon_baseline_done,
+          message: '2019년 5월 4일 세션 장소는\n서울시 강남구 논현로 입니다.',
+          buttons: [
+            <RetryButton
+              onPress={_partial(toggleModal, false)}
+              key="RetryButton"
+            >
+              <RetryText>다시하기</RetryText>
+            </RetryButton>,
+            <OkButton onPress={onCreateSession} key="OkButton">
+              <OkText>맞아요!</OkText>
+            </OkButton>,
+          ],
+        },
+      },
+    });
+    toggleModal(true);
+  };
+
+  const modalOpen = (suc: boolean = true, message: string) => {
+    let titleImage = icon_baseline_done;
+
+    if (!suc) {
+      titleImage = icon_baseline_close;
+    }
+
+    dispatch({
+      type: 'SET_MODAL_INFO',
+      payload: {
+        modalInfos: {
+          titleImage,
+          message,
+          buttons: (
+            <ModalButton onPress={_partial(toggleModal, false)}>
+              <ModalText>확인</ModalText>
+            </ModalButton>
+          ),
+        },
+      },
+    });
+    toggleModal(true);
+  };
+
+  const onCreateSession = async () => {
+    const data = {
+      address: '운영진이 빌린 곳',
+      date: sessionDateInfo.startTime.toISOString(),
+      from: sessionDateInfo.startTime.toISOString(),
+      latitude: currentLocation.latitude,
+      longitude: currentLocation.longitude,
+      name: '세션장소',
+      to: sessionDateInfo.endTime.toISOString(),
+    };
+
+    try {
+      const result = await createSession(data);
+      if (result) {
+        modalOpen(true, '세선을 생성했습니다');
+      }
+    } catch (error) {
+      modalOpen(false, '세선생성에 실패 했습니다');
+      console.log('error', error);
+    }
   };
 
   const onConfirm = (item: SessionDateType) => {
@@ -145,7 +260,7 @@ const AdminSessionCreate: NavigationScreenComponent = () => {
   };
 
   return (
-    <ScreenWrap mode="ADMIN" forceInset={{ bottom: 'never' }}>
+    <ScreenWrap forceInset={{ bottom: 'never' }}>
       <Wrap>
         <Header>
           <Logo />
@@ -168,16 +283,17 @@ const AdminSessionCreate: NavigationScreenComponent = () => {
             </PlusImageView>
           </SessionDateInfoView>
         </Body>
-        <BottomButton onPress={onPressBottomButton}>
+        <BottomButton onPress={openConfirmModal}>
           <BottomText>일정 생성하기</BottomText>
         </BottomButton>
-        <DateSelectModal
-          isVisible={isModalVisible}
-          data={sessionDateInfos}
-          onConfirm={onConfirm}
-          onClose={onClose}
-        />
+        <AdminMapView />
       </Wrap>
+      <DateSelectModal
+        isVisible={isModalVisible}
+        data={sessionDateInfos}
+        onConfirm={onConfirm}
+        onClose={onClose}
+      />
     </ScreenWrap>
   );
 };

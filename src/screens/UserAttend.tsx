@@ -1,32 +1,40 @@
 import React from 'react';
 import styled from 'styled-components/native';
 import { getInset } from 'react-native-safe-area-view';
+
+
+import { Alert, BackHandler } from 'react-native';
+import { AndroidBackHandler } from 'react-navigation-backhandler';
+
+// import AppContext from '../contexts/AppContext';
+import { navigate } from '../navigators/NavigationService';
+import { img_deprocheck_logo_2, baseline_place_24_px } from '../assets/images';
+import { isSmallDeviceSize } from '../utils/styleUtils';
+import { colors } from '../utils/theme';
+
 import DCTouchable from '../components/DCTouchable';
 import DCText from '../components/DCText';
 import ScreenWrap from '../components/ScreenWrap';
-import MyMapView from '../components/MyMapView';
+import MemberMapView from '../components/MemberMapView';
 
-import { navigate } from '../navigators/NavigationService';
-import AppContext from '../contexts/AppContext';
-
-import { img_deprocheck_logo_2, baseline_place_24_px } from '../assets/images';
-
-
+const HORIZONTAL_PADDING = isSmallDeviceSize() ? 16 : 38;
 
 const Wrap = styled.View`
   flex: 1;
   background-color: ${({ theme }) => theme.background};
 `;
 
+const Header = styled.View`
+  flex: 1;
+  padding: 40px ${HORIZONTAL_PADDING}px 0px ${HORIZONTAL_PADDING}px;
+`;
+
 const Body = styled.View`
-  justify-content: center;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  flex: 5;
 `;
 
 const SessionTextWrap = styled.View`
-  width: 300px;
+  margin: 0px ${HORIZONTAL_PADDING}px;
   margin-bottom: 8px;
 `;
 
@@ -39,11 +47,11 @@ const SessionText = styled(DCText)`
 
 //TODO: 중앙정렬 안되는 문제 해결하기
 const LocationArea = styled.View`
-  display: flex;
   flex-direction: row;
-  margin: 7px;
-  align-items: flex-start;
-  justify-content: flex-start;
+  margin: 0px ${HORIZONTAL_PADDING}px 50px;
+  border-bottom-width: 2px;
+  border-bottom-color: ${colors.black};
+  padding-bottom: 6px;
 `;
 
 const LocationIcon = styled.Image`
@@ -80,41 +88,20 @@ const HelpText = styled(DCText)`
   letter-spacing: -0.24px;
   color: #222222;
 `
-
-const BottomButton = styled(DCTouchable)`
-  background-color: ${({ theme }) => theme.background};
-`
-
 const LogoImage = styled.Image`
   width: 220px;
-  height: 35px
-  margin-bottom: 75px;
-  margin-top: 50px;
-  margin-left: 35px;
+  height: 35px;
 `;
 
 const Footer = styled(DCTouchable)`
   justify-content: center;
   align-items: center;
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  justify-content: center;
-  align-items: center;
   height: 80px;
+  height: ${getInset('bottom') + 80}px;
   background-color: ${({ theme }) => theme.reverseBackColor};
 `;
 
-// const Logo = styled.Image.attrs({ source: img_deprocheck_logo_2 })`
-//   width: 220px;
-//   height: 153px;
-//   width: 100%;
-//   height: 80px;
-//   background-color: #222222;
-// `;
-
-const EnterText = styled.Text`
+const EnterText = styled(DCText)`
   color: #ffffff;
   font-size: 18px;
   font-weight: bold;
@@ -126,43 +113,44 @@ const UserAttend: React.FC = () => {
     navigate('UserStatus');
   };
 
-  const { state } = React.useContext(AppContext);
+  const onBackButtonPressAndroid = () => {
+    Alert.alert('종료', '종료 할까요?', [
+      { text: '네', onPress: BackHandler.exitApp },
+      { text: '아니오' },
+    ]);
+    return true;
+  };
 
   return (
-    <ScreenWrap forceInset={{bottom: 'never'}} >
-      <Wrap>
-        <LogoImage
-          source={img_deprocheck_logo_2}
-        />
+    <AndroidBackHandler onBackPress={onBackButtonPressAndroid}>
+      <ScreenWrap forceInset={{ bottom: 'never' }}>
+        <Wrap>
+          <Header>
+            <LogoImage source={img_deprocheck_logo_2} />
+          </Header>
 
-        <Body>
-          <SessionTextWrap>
-            <SessionText>오늘의 세션장소</SessionText>
-          </SessionTextWrap>
-
-          <LocationArea>
-            <LocationIcon
-              source={baseline_place_24_px}
-            />
-            <LocationText>서울시 강남구 논현로 22길</LocationText>
-          </LocationArea>
-          <Bar/>
-          <HelpBox>
-            <HelpText>
-              현위치를 눌러 출석하기를 완료해주세요!
-            </HelpText>
-          </HelpBox>
-
-
-        </Body>
-
-        <MyMapView/>
-
-        <Footer onPress={onLogin}>
-          <EnterText>출석하기</EnterText>
-        </Footer>
-      </Wrap>
-    </ScreenWrap>
+          <Body>
+            <SessionTextWrap>
+              <SessionText>오늘의 세션장소</SessionText>
+            </SessionTextWrap>
+            <LocationArea>
+              <LocationIcon source={baseline_place_24_px} />
+              <LocationText>서울시 강남구 논현로 22길</LocationText>
+            </LocationArea>
+            <Bar/>
+            <HelpBox>
+              <HelpText>
+                현위치를 눌러 출석하기를 완료해주세요!
+              </HelpText>
+            </HelpBox>
+            <MemberMapView />
+          </Body>
+          <Footer onPress={onLogin}>
+            <EnterText>출석하기</EnterText>
+          </Footer>
+        </Wrap>
+      </ScreenWrap>
+    </AndroidBackHandler>
   );
 };
 

@@ -29,6 +29,7 @@ target 'deprocheck' do
   pod 'Folly', :podspec => '../node_modules/react-native/third-party-podspecs/Folly.podspec'
 
   pod 'react-native-geolocation', :path => '../node_modules/@react-native-community/geolocation'
+  pod 'react-native-splash-screen', :path => '../node_modules/react-native-splash-screen'
 
   # React Native Maps dependencies
   rn_maps_path = '../node_modules/react-native-maps'

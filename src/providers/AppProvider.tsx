@@ -16,11 +16,6 @@ interface Props {
   children?: React.ReactElement;
 }
 
-export interface State {
-  theme: string;
-  tabVisible: boolean;
-}
-
 const reducer = (state: State, action: Action) => {
   switch (action.type) {
     case 'CHANGE_THEME':
@@ -32,6 +27,16 @@ const reducer = (state: State, action: Action) => {
       return {
         ...state,
         tabVisible: action.payload.tabVisible,
+      };
+    case 'SET_MODAL_INFO':
+      return {
+        ...state,
+        modalInfos: action.payload.modalInfos,
+      };
+    case 'SET_MODAL_VISIBLE':
+      return {
+        ...state,
+        modalVisible: action.payload.modalVisible,
       };
     default:
       return state;
