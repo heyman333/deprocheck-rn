@@ -25,7 +25,6 @@ export const getAddress = async (lat: number, lng: number) => {
   } = await axios.get(url);
 
   const formattedAddress = results[1].formatted_address;
-  console.log('formattedAddress', formattedAddress);
 
   return formattedAddress;
 };

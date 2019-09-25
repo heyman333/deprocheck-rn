@@ -262,8 +262,6 @@ ${sessionInfo.sessionAddress} 입니다`,
       to: sessionDateInfo.endTime.toISOString(),
     };
 
-    console.log('Data', data);
-
     try {
       const result = await createSession(data);
       if (result) {

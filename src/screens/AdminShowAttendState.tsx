@@ -160,7 +160,6 @@ const AdminShowAttendState: NavigationScreenComponent = () => {
   const [errorMsg, setErrorMsg] = React.useState<string | undefined>(undefined);
 
   React.useEffect(() => {
-    console.log(toYYYYMMDD(sessionDateInfo.startTime));
     getAttendInfo(toYYYYMMDD(sessionDateInfo.startTime));
   }, [sessionDateInfo]);
 

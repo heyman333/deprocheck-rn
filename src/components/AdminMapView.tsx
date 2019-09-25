@@ -114,8 +114,6 @@ const AdminMapView: React.FC = () => {
           pinCoordinate.longitude
         );
 
-        console.log('formattedAddress', formattedAddress);
-
         dispatch({
           type: 'SET_USER_INFO',
           payload: {
@@ -143,8 +141,6 @@ const AdminMapView: React.FC = () => {
     const coordination: LatLng = e.nativeEvent.coordinate;
     setPinCoordinate(coordination);
   };
-
-  console.log('state', state);
 
   return (
     <Wrap>
