@@ -10,6 +10,7 @@ import { navigate, replace } from '../navigators/NavigationService';
 import { AppContext, UserContext } from '../contexts';
 import { img_deprocheck_logo } from '../assets/images';
 import { requestMemberLoginByName } from '../modules/auth';
+import {bool} from "prop-types";
 
 const Wrap = styled.View`
   flex: 1;
@@ -52,15 +53,15 @@ const JobButtonContainer = styled.View`
   flex-direction: row;
 `;
 
-const JobButton = styled.TouchableOpacity`
+const JobButton = styled(DCTouchable)<{ isLast?: boolean }>`
   width: 150px;
   height: 50px;
   border: solid 1px #dddddd;
   display: flex;
   justify-content: center;
   align-items: center;
+  border-left-width: ${({ isLast }) => (isLast ? 0 : 1)}px;
 `;
-
 const JobText = styled.Text`
   color: #222222;
   font-weight: 500;
@@ -177,17 +178,10 @@ const Login: NavigationScreenComponent<{age: number}> = ({navigation}) => {
         />
 
         <JobButtonContainer>
-          <JobButton
-            // onClick={onClickJob(true)}
-            // active={deginerSelected === true}
-          >
+          <JobButton>
             <JobText>Designer</JobText>
           </JobButton>
-          <JobButton
-            // onClick={onClickJob(false)}
-            // active={deginerSelected === false}
-            style={{ borderLeftWidth: 0 }}
-          >
+          <JobButton isLast>
             <JobText>Developer</JobText>
           </JobButton>
         </JobButtonContainer>

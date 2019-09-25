@@ -46,12 +46,12 @@ export default class MyMapView extends Component {
   }
 
   onRegionChange(region, lastLat, lastLong) {
-    this.setState({
-      mapRegion: region,
-      // If there are no new values set use the the current ones
-      lastLat: lastLat || this.state.lastLat,
-      lastLong: lastLong || this.state.lastLong
-    });
+    // this.setState({
+    //   mapRegion: region,
+    //   // If there are no new values set use the the current ones
+    //   lastLat: lastLat || this.state.lastLat,
+    //   lastLong: lastLong || this.state.lastLong
+    // });
   }
 
   componentWillUnmount() {

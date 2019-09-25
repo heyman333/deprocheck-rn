@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components/native';
-
+import { getInset } from 'react-native-safe-area-view';
 import DCTouchable from '../components/DCTouchable';
 import DCText from '../components/DCText';
 import ScreenWrap from '../components/ScreenWrap';
@@ -70,7 +70,6 @@ const HelpBox = styled.View`
   height: 26px;
   border-radius: 13px;
   background-color: #eeeeee;
-  
   justify-content: center;
   align-items: center;
   margin-top: 48px;
@@ -130,7 +129,7 @@ const UserAttend: React.FC = () => {
   const { state } = React.useContext(AppContext);
 
   return (
-    <ScreenWrap>
+    <ScreenWrap forceInset={{bottom: 'never'}} >
       <Wrap>
         <LogoImage
           source={img_deprocheck_logo_2}
@@ -160,7 +159,7 @@ const UserAttend: React.FC = () => {
         <MyMapView/>
 
         <Footer onPress={onLogin}>
-            <EnterText>출석하기</EnterText>
+          <EnterText>출석하기</EnterText>
         </Footer>
       </Wrap>
     </ScreenWrap>
