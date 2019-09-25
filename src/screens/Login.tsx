@@ -24,11 +24,6 @@ import DCTouchable from '../components/DCTouchable';
 import DCText from '../components/DCText';
 import ScreenWrap from '../components/ScreenWrap';
 import SwitchToggle from '../components/SwitchToggle';
-import { navigate, replace } from '../navigators/NavigationService';
-import { AppContext, UserContext } from '../contexts';
-import { img_deprocheck_logo } from '../assets/images';
-import { requestMemberLoginByName } from '../modules/auth';
-import {bool} from "prop-types";
 
 const { height: DEVICE_HEIGHT } = Dimensions.get('window');
 

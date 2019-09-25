@@ -1,21 +1,22 @@
 import React from 'react';
 import styled from 'styled-components/native';
 import { getInset } from 'react-native-safe-area-view';
-
-
 import { Alert, BackHandler } from 'react-native';
 import { AndroidBackHandler } from 'react-navigation-backhandler';
-
-// import AppContext from '../contexts/AppContext';
 import { navigate } from '../navigators/NavigationService';
-import { img_deprocheck_logo_2, baseline_place_24_px } from '../assets/images';
+
+import { img_deprocheck_logo_2, baseline_place_24_px, icon_baseline_done, icon_baseline_close } from '../assets/images';
 import { isSmallDeviceSize } from '../utils/styleUtils';
 import { colors } from '../utils/theme';
-
 import DCTouchable from '../components/DCTouchable';
 import DCText from '../components/DCText';
 import ScreenWrap from '../components/ScreenWrap';
 import MemberMapView from '../components/MemberMapView';
+import { reqeustAttend } from '../modules/attend';
+import useLocation from '../hooks/useLocation';
+import _partial from 'lodash/partial';
+import {AppContext, UserContext} from '../contexts';
+
 
 const HORIZONTAL_PADDING = isSmallDeviceSize() ? 16 : 38;
 
@@ -67,27 +68,6 @@ const LocationText = styled(DCText)`
   align-self: flex-start;
 `;
 
-const Bar = styled.View`
-  width: 300px;
-  height: 0;
-  border: solid 1.2px #222222;
-`;
-
-const HelpBox = styled.View`
-  width: 226px;
-  height: 26px;
-  border-radius: 13px;
-  background-color: #eeeeee;
-  justify-content: center;
-  align-items: center;
-  margin-top: 48px;
-`
-
-const HelpText = styled(DCText)`
-  font-size: 12px;
-  letter-spacing: -0.24px;
-  color: #222222;
-`
 const LogoImage = styled.Image`
   width: 220px;
   height: 35px;
@@ -108,10 +88,27 @@ const EnterText = styled(DCText)`
   letter-spacing: -0.36px;
 `;
 
+const ModalButton = styled(DCTouchable)`
+  flex: 1;
+  padding: 15px 0;
+  justify-content: center;
+  align-items: center;
+`;
+
+const ModalText = styled(DCText)`
+  color: ${colors.blue};
+  font-weight: bold;
+`;
+
 const UserAttend: React.FC = () => {
-  const onLogin = () => {
-    navigate('UserStatus');
-  };
+  const currentLocation = useLocation({ latitude: 0, longitude: 0 });
+  const { state: userState } = React.useContext(UserContext);
+  const { state, dispatch } = React.useContext(AppContext);
+  // const onLogin = async () => {
+  //   console.log("click");
+  //   await onRequestAttend;
+  //   // navigate('UserStatus');
+  // };
 
   const onBackButtonPressAndroid = () => {
     Alert.alert('종료', '종료 할까요?', [
@@ -119,6 +116,52 @@ const UserAttend: React.FC = () => {
       { text: '아니오' },
     ]);
     return true;
+  };
+
+  const toggleModal = (visible: boolean) => {
+    dispatch({ type: 'SET_MODAL_VISIBLE', payload: { modalVisible: visible } });
+  };
+
+  const modalOpen = (suc: boolean = true, message: string) => {
+    let titleImage = icon_baseline_done;
+
+    if (!suc) {
+      titleImage = icon_baseline_close;
+    }
+
+    dispatch({
+      type: 'SET_MODAL_INFO',
+      payload: {
+        modalInfos: {
+          titleImage,
+          message,
+          buttons: (
+            <ModalButton onPress={_partial(toggleModal, false)}>
+              <ModalText>확인</ModalText>
+            </ModalButton>
+          ),
+        },
+      },
+    });
+    toggleModal(true);
+  };
+
+  const onRequestAttend = async () => {
+    const data = {
+      latitude: currentLocation.latitude,
+      longitude: currentLocation.longitude,
+      name: userState.userInfo.name,
+    };
+
+    try {
+      const result = await reqeustAttend(data);
+      if (result) {
+        modalOpen(true, '출석이 완료되었습니다.');
+      }
+    } catch (error) {
+      modalOpen(false, '아직 세션 장소 500m내에 위치해 있지 않습니다.');
+      console.log('error', error);
+    }
   };
 
   return (
@@ -137,15 +180,9 @@ const UserAttend: React.FC = () => {
               <LocationIcon source={baseline_place_24_px} />
               <LocationText>서울시 강남구 논현로 22길</LocationText>
             </LocationArea>
-            <Bar/>
-            <HelpBox>
-              <HelpText>
-                현위치를 눌러 출석하기를 완료해주세요!
-              </HelpText>
-            </HelpBox>
             <MemberMapView />
           </Body>
-          <Footer onPress={onLogin}>
+          <Footer onPress={onRequestAttend}>
             <EnterText>출석하기</EnterText>
           </Footer>
         </Wrap>
