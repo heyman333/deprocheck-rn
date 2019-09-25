@@ -40,3 +40,9 @@ export interface AttendeeType {
   };
   updatedAt: string;
 }
+
+export interface AttendRequest {
+  latitude: number;
+  longitude: number;
+  name: string;
+}
