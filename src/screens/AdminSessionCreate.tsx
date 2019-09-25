@@ -5,7 +5,7 @@ import { getInset } from 'react-native-safe-area-view';
 import _partial from 'lodash/partial';
 
 import { SessionDateType } from '../interfaces';
-import { AppContext } from '../contexts';
+import { AppContext, UserContext } from '../contexts';
 import { colors } from '../utils/theme';
 import { isSmallDeviceSize } from '../utils/styleUtils';
 import { toYYMMDDKR, toAclockTime } from '../utils/timeUtils';
@@ -17,7 +17,6 @@ import {
   icon_baseline_done,
   icon_baseline_close,
 } from '../assets/images';
-import useLocation from '../hooks/useLocation';
 import { createSession } from '../modules/session';
 
 import ScreenWrap from '../components/ScreenWrap';
@@ -25,6 +24,11 @@ import DCText from '../components/DCText';
 import DCTouchable from '../components/DCTouchable';
 import DateSelectModal from '../components/DateSelectModal';
 import AdminMapView from '../components/AdminMapView';
+
+interface LatLng {
+  latitude: number;
+  longitude: number;
+}
 
 const HORIZONTAL_PADDING = isSmallDeviceSize() ? 16 : 38;
 
@@ -157,7 +161,7 @@ const ModalText = styled(DCText)`
 `;
 
 const AdminSessionCreate: NavigationScreenComponent = () => {
-  const currentLocation = useLocation({ latitude: 0, longitude: 0 });
+  const { state } = React.useContext(UserContext);
   const { dispatch } = React.useContext(AppContext);
   const [sessionDateInfo, setSessionDateInfo] = React.useState(
     sessionDateInfos[0]
@@ -181,12 +185,22 @@ const AdminSessionCreate: NavigationScreenComponent = () => {
   };
 
   const openConfirmModal = () => {
+    const {
+      userInfo: { sessionInfo },
+    } = state;
+
+    if (!sessionInfo) {
+      modalOpen(false, '세션위치를 정해주세요');
+      return;
+    }
+
     dispatch({
       type: 'SET_MODAL_INFO',
       payload: {
         modalInfos: {
           titleImage: icon_baseline_done,
-          message: '2019년 5월 4일 세션 장소는\n서울시 강남구 논현로 입니다.',
+          message: `${toYYMMDDKR(sessionDateInfo.startTime)} 세션장소는 
+${sessionInfo.sessionAddress} 입니다`,
           buttons: [
             <RetryButton
               onPress={_partial(toggleModal, false)}
@@ -229,15 +243,26 @@ const AdminSessionCreate: NavigationScreenComponent = () => {
   };
 
   const onCreateSession = async () => {
+    if (!state.userInfo.sessionInfo) {
+      modalOpen(false, '세션위치가 정확하지 않습니다');
+      return;
+    }
+
+    const {
+      userInfo: { sessionInfo },
+    } = state;
+
     const data = {
-      address: '운영진이 빌린 곳',
+      address: sessionInfo.sessionAddress,
       date: sessionDateInfo.startTime.toISOString(),
       from: sessionDateInfo.startTime.toISOString(),
-      latitude: currentLocation.latitude,
-      longitude: currentLocation.longitude,
+      latitude: sessionInfo.sessionLocation.latitude,
+      longitude: sessionInfo.sessionLocation.longitude,
       name: '세션장소',
       to: sessionDateInfo.endTime.toISOString(),
     };
+
+    console.log('Data', data);
 
     try {
       const result = await createSession(data);

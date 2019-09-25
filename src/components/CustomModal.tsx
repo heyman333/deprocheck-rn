@@ -26,6 +26,7 @@ const TitleImage = styled.Image`
 const Message = styled(DCText)`
   color: ${colors.black};
   font-size: 16px;
+  text-align: center;
 `;
 
 const SubMessage = styled(DCText)`
