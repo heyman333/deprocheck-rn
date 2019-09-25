@@ -28,3 +28,8 @@ export const getAddress = async (lat: number, lng: number) => {
 
   return formattedAddress;
 };
+
+export const getSessionInfo = async () => {
+  const { data } = await axios.get('/sessions');
+  return data;
+};
