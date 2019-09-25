@@ -152,6 +152,8 @@ const AdminMapView: React.FC = () => {
           initialRegion={initialGeoState.mapRegion}
           showsUserLocation={true}
           onPress={onPressMap}
+          showsMyLocationButton={true}
+          showsCompass={true}
         >
           {pinCoordinate && (
             <Marker

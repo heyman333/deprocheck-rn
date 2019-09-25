@@ -5,7 +5,12 @@ import { Alert, BackHandler } from 'react-native';
 import { AndroidBackHandler } from 'react-navigation-backhandler';
 import { navigate } from '../navigators/NavigationService';
 
-import { img_deprocheck_logo_2, baseline_place_24_px, icon_baseline_done, icon_baseline_close } from '../assets/images';
+import {
+  img_deprocheck_logo_2,
+  baseline_place_24_px,
+  icon_baseline_done,
+  icon_baseline_close,
+} from '../assets/images';
 import { isSmallDeviceSize } from '../utils/styleUtils';
 import { colors } from '../utils/theme';
 import DCTouchable from '../components/DCTouchable';
@@ -15,8 +20,7 @@ import MemberMapView from '../components/MemberMapView';
 import { reqeustAttend } from '../modules/attend';
 import useLocation from '../hooks/useLocation';
 import _partial from 'lodash/partial';
-import {AppContext, UserContext} from '../contexts';
-
+import { AppContext, UserContext } from '../contexts';
 
 const HORIZONTAL_PADDING = isSmallDeviceSize() ? 16 : 38;
 
@@ -103,7 +107,7 @@ const ModalText = styled(DCText)`
 const UserAttend: React.FC = () => {
   const currentLocation = useLocation({ latitude: 0, longitude: 0 });
   const { state: userState } = React.useContext(UserContext);
-  const { state, dispatch } = React.useContext(AppContext);
+  const { dispatch } = React.useContext(AppContext);
   // const onLogin = async () => {
   //   console.log("click");
   //   await onRequestAttend;
@@ -152,6 +156,8 @@ const UserAttend: React.FC = () => {
       longitude: currentLocation.longitude,
       name: userState.userInfo.name,
     };
+
+    console.log('data', data);
 
     try {
       const result = await reqeustAttend(data);

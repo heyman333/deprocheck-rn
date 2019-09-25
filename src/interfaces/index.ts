@@ -44,5 +44,5 @@ export interface AttendeeType {
 export interface AttendRequest {
   latitude: number;
   longitude: number;
-  name: string;
+  name?: string;
 }

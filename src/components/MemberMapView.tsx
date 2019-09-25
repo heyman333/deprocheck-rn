@@ -1,13 +1,14 @@
 import React from 'react';
 import styled from 'styled-components/native';
 
-import MapView, { PROVIDER_GOOGLE, Region } from 'react-native-maps';
+import MapView, { PROVIDER_GOOGLE, Region, Marker } from 'react-native-maps';
 import DCText from '../components/DCText';
 import useLocation from '../hooks/useLocation';
+import { baseline_place_44_px } from '../assets/images';
 
 const Wrap = styled.View`
   flex: 1;
-  margin-bottom: 40px;
+  margin-bottom: 45px;
 `;
 
 const MapContainer = styled.View`
@@ -87,7 +88,11 @@ const MemberMapView: React.FC = () => {
           provider={PROVIDER_GOOGLE}
           region={mapGeoInfo.mapRegion}
           showsUserLocation={true}
-        />
+          showsMyLocationButton={true}
+          showsCompass={true}
+        >
+          <Marker image={baseline_place_44_px} coordinate={currentLocation} />
+        </Map>
       </MapContainer>
     </Wrap>
   );
