@@ -1,12 +1,25 @@
 import React from 'react';
 import styled from 'styled-components/native';
 
-import MapView, { PROVIDER_GOOGLE, Region } from 'react-native-maps';
+import MapView, { PROVIDER_GOOGLE, Region, Marker } from 'react-native-maps';
 import { colors } from '../utils/theme';
 import { isSmallDeviceSize } from '../utils/styleUtils';
 import useLocation from '../hooks/useLocation';
+import { getAddress } from '../modules/session';
 
 import DCText from '../components/DCText';
+import { baseline_place_44_px } from '../assets/images';
+import { UserContext } from '../contexts';
+
+interface LatLng {
+  latitude: number;
+  longitude: number;
+}
+
+// interface Point {
+//   x: number;
+//   y: number;
+// }
 
 const HORIZONTAL_PADDING = isSmallDeviceSize() ? 16 : 38;
 
@@ -63,34 +76,100 @@ const AdminMapView: React.FC = () => {
     latitude: 37.5326,
     longitude: 127.024612,
   });
-  const [mapGeoInfo, setMapGetInfo] = React.useState<GeoState>(initialGeoState);
+
+  const { dispatch, state } = React.useContext(UserContext);
+  const [pinCoordinate, setPinCoordinate] = React.useState<LatLng | null>(null);
+  const mapRef = React.useRef<MapView>(null);
+  const pinRef = React.useRef<Marker>(null);
 
   React.useEffect(() => {
-    let region = {
-      latitude: currentLocation.latitude,
-      longitude: currentLocation.longitude,
-      latitudeDelta: 0.00922 * 1.5,
-      longitudeDelta: 0.00421 * 1.5,
+    if (mapRef.current) {
+      const Camera = {
+        center: currentLocation,
+        pitch: 10,
+        heading: 0,
+        zoom: 8,
+      };
+
+      mapRef.current.animateCamera(Camera, { duration: 1000 });
+    }
+
+    if (
+      currentLocation.latitude !== initialGeoState.lastLat ||
+      currentLocation.longitude !== initialGeoState.lastLong
+    ) {
+      setPinCoordinate(currentLocation);
+    }
+  }, [currentLocation]);
+
+  React.useEffect(() => {
+    const getAddressByLocation = async () => {
+      if (!pinCoordinate) {
+        return;
+      }
+
+      try {
+        const formattedAddress = await getAddress(
+          pinCoordinate.latitude,
+          pinCoordinate.longitude
+        );
+
+        dispatch({
+          type: 'SET_USER_INFO',
+          payload: {
+            userInfo: {
+              sessionInfo: {
+                sessionLocation: pinCoordinate,
+                sessionAddress: formattedAddress,
+              },
+            },
+          },
+        });
+      } catch (error) {
+        console.log('error', error);
+      }
     };
 
-    setMapGetInfo({
-      mapRegion: region,
-      lastLat: region.latitude,
-      lastLong: region.longitude,
-    });
-  }, [currentLocation]);
+    if (pinRef.current && pinCoordinate) {
+      pinRef.current.showCallout();
+    }
+
+    getAddressByLocation();
+  }, [pinCoordinate, dispatch]);
+
+  const onPressMap = (e: any) => {
+    const coordination: LatLng = e.nativeEvent.coordinate;
+    setPinCoordinate(coordination);
+  };
 
   return (
     <Wrap>
       <Title>오늘의 세션장소</Title>
       <MapContainer>
         <Map
+          ref={mapRef}
           provider={PROVIDER_GOOGLE}
-          region={mapGeoInfo.mapRegion}
+          initialRegion={initialGeoState.mapRegion}
           showsUserLocation={true}
-        />
+          onPress={onPressMap}
+          showsMyLocationButton={true}
+          showsCompass={true}
+        >
+          {pinCoordinate && (
+            <Marker
+              ref={pinRef}
+              title="세션장소"
+              image={baseline_place_44_px}
+              coordinate={pinCoordinate}
+            />
+          )}
+        </Map>
       </MapContainer>
-      <LocationText>서울시 강남구 논현로 22길 ㅇㅇㅇㅇㅇㅇ</LocationText>
+      {state.userInfo.sessionInfo && (
+        <LocationText numberOfLines={1}>
+          {state.userInfo.sessionInfo.sessionAddress}
+        </LocationText>
+      )}
     </Wrap>
   );
 };

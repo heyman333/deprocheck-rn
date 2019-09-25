@@ -5,11 +5,13 @@ interface Props {
   style?: StyleProp<ViewStyle>;
   children: string | React.ReactElement;
   isLight?: boolean;
+  numberOfLines?: number;
 }
 
 const DCText: React.FC<Props> = ({
   style,
   children,
+  numberOfLines,
   isLight = false,
 }: Props) => {
   const defaultStyle = Platform.select({
@@ -23,7 +25,11 @@ const DCText: React.FC<Props> = ({
   });
 
   return (
-    <Text allowFontScaling={false} style={[defaultStyle, style]}>
+    <Text
+      allowFontScaling={false}
+      style={[defaultStyle, style]}
+      numberOfLines={numberOfLines}
+    >
       {children}
     </Text>
   );
