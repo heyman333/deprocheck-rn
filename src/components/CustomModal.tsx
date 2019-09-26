@@ -55,6 +55,9 @@ const CustomModal: React.FC = () => {
       isVisible={state.modalVisible}
       onBackButtonPress={onClose}
       onBackdropPress={onClose}
+      animationIn="fadeIn"
+      animationOut="fadeOut"
+      backdropTransitionOutTiming={0}
     >
       <ModalWrap>
         <InnerWrap>
