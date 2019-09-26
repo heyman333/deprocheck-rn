@@ -85,6 +85,7 @@ const DateSelectModal: React.FC<Props> = ({
       isVisible={isVisible}
       onBackButtonPress={onClose}
       onBackdropPress={onClose}
+      backdropTransitionOutTiming={0}
     >
       <ModalWrap>
         <FlatList
