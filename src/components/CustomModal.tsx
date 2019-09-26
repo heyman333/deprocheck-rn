@@ -15,6 +15,7 @@ const ModalWrap = styled.View`
 const InnerWrap = styled.View`
   justify-content: center;
   align-items: center;
+  padding: 0 16px;
 `;
 
 const TitleImage = styled.Image`
@@ -54,6 +55,9 @@ const CustomModal: React.FC = () => {
       isVisible={state.modalVisible}
       onBackButtonPress={onClose}
       onBackdropPress={onClose}
+      animationIn="fadeIn"
+      animationOut="fadeOut"
+      backdropTransitionOutTiming={0}
     >
       <ModalWrap>
         <InnerWrap>

@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from 'styled-components/native';
 import { getStatusBarHeight } from 'react-native-safe-area-view';
+import { AndroidBackHandler } from 'react-navigation-backhandler';
+import { Alert, BackHandler } from 'react-native';
 import {
   createNavigator,
   TabRouter,
@@ -8,6 +10,7 @@ import {
   NavigationScreenProp,
   NavigationLeafRoute,
 } from 'react-navigation';
+
 import { AppContext } from '../contexts';
 
 import { isSmallDeviceSize } from '../utils/styleUtils';
@@ -158,14 +161,24 @@ const TopBarView = ({
   const ActiveScreen = descriptor.getComponent();
   const { state } = React.useContext(AppContext);
 
+  const onBackButtonPressAndroid = () => {
+    Alert.alert('종료', '종료 할까요?', [
+      { text: '네', onPress: BackHandler.exitApp },
+      { text: '아니오' },
+    ]);
+    return true;
+  };
+
   return (
-    <Wrap>
-      {!!state.tabVisible && <BottomTouch />}
-      {!!state.tabVisible && (
-        <TopBar navigation={navigation} titles={navigationConfig.titles} />
-      )}
-      <ActiveScreen />
-    </Wrap>
+    <AndroidBackHandler onBackPress={onBackButtonPressAndroid}>
+      <Wrap>
+        {!!state.tabVisible && <BottomTouch />}
+        {!!state.tabVisible && (
+          <TopBar navigation={navigation} titles={navigationConfig.titles} />
+        )}
+        <ActiveScreen />
+      </Wrap>
+    </AndroidBackHandler>
   );
 };
 

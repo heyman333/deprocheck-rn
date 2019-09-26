@@ -93,7 +93,7 @@ const datas: AttendeeType[] = [
     member: {
       authority: 'ADMIN',
       id: 0,
-      jobGroup: 'DEVELOPER',
+      jobGroup: ShowJobType.DEVELOPER,
       name: 'efef',
       termNumber: 0,
     },
@@ -105,7 +105,7 @@ const datas: AttendeeType[] = [
     member: {
       authority: 'ADMIN',
       id: 0,
-      jobGroup: 'DEVELOPER',
+      jobGroup: ShowJobType.DEVELOPER,
       name: 'efef',
       termNumber: 0,
     },
@@ -117,7 +117,7 @@ const datas: AttendeeType[] = [
     member: {
       authority: 'ADMIN',
       id: 0,
-      jobGroup: 'DEVELOPER',
+      jobGroup: ShowJobType.DEVELOPER,
       name: 'efef',
       termNumber: 0,
     },
@@ -129,7 +129,7 @@ const datas: AttendeeType[] = [
     member: {
       authority: 'ADMIN',
       id: 0,
-      jobGroup: 'DEVELOPER',
+      jobGroup: ShowJobType.DEVELOPER,
       name: 'efef',
       termNumber: 0,
     },
@@ -141,7 +141,7 @@ const datas: AttendeeType[] = [
     member: {
       authority: 'ADMIN',
       id: 0,
-      jobGroup: 'DEVELOPER',
+      jobGroup: ShowJobType.DESGINER,
       name: 'efef',
       termNumber: 0,
     },
@@ -167,8 +167,8 @@ const AdminShowAttendState: NavigationScreenComponent = () => {
     try {
       const data: AttendeeType[] = await getAttendances(date);
       setMembers(data);
+      setErrorMsg(undefined);
     } catch (error) {
-      console.log('error', error.response);
       if (error.response.status === 404) {
         setErrorMsg('해당날짜에 세션이 없습니다');
       }
@@ -200,6 +200,13 @@ const AdminShowAttendState: NavigationScreenComponent = () => {
     setJobType(type);
   };
 
+  const filteredMembers = members.filter(({ member }) => {
+    if (jobType === ShowJobType.ALL) {
+      return true;
+    }
+    return member.jobGroup === jobType;
+  });
+
   return (
     <ScreenWrap>
       <Wrap>
@@ -219,7 +226,7 @@ const AdminShowAttendState: NavigationScreenComponent = () => {
           </SessionDateInfoView>
           <AttendStateJobSelector onPressType={onPressType} type={jobType} />
           <ListWrap>
-            <AttendedMemberList members={members} errorMsg={errorMsg} />
+            <AttendedMemberList members={filteredMembers} errorMsg={errorMsg} />
           </ListWrap>
         </Body>
 

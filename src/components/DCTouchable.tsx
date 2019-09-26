@@ -19,11 +19,15 @@ export const DCTouchable: React.FC<Props> = ({
   hitSlop,
   noEffect,
 }) => {
+  const _onPress = () => {
+    requestAnimationFrame(onPress);
+  };
+
   if (noEffect) {
     return (
       <TouchableOpacity
         style={style}
-        onPress={onPress}
+        onPress={_onPress}
         activeOpacity={0.75}
         hitSlop={hitSlop}
       >
