@@ -3,8 +3,9 @@ import styled from 'styled-components/native';
 import { getInset } from 'react-native-safe-area-view';
 import { Alert, BackHandler } from 'react-native';
 import { AndroidBackHandler } from 'react-navigation-backhandler';
-import { navigate } from '../navigators/NavigationService';
+import _partial from 'lodash/partial';
 
+import { SessionInfoResponse } from '../interfaces';
 import {
   img_deprocheck_logo_2,
   baseline_place_24_px,
@@ -13,14 +14,15 @@ import {
 } from '../assets/images';
 import { isSmallDeviceSize } from '../utils/styleUtils';
 import { colors } from '../utils/theme';
+import { AppContext, UserContext } from '../contexts';
+import { reqeustAttend } from '../modules/attend';
+import useLocation from '../hooks/useLocation';
+import { getSessionInfos } from '../modules/session';
+
 import DCTouchable from '../components/DCTouchable';
 import DCText from '../components/DCText';
 import ScreenWrap from '../components/ScreenWrap';
 import MemberMapView from '../components/MemberMapView';
-import { reqeustAttend } from '../modules/attend';
-import useLocation from '../hooks/useLocation';
-import _partial from 'lodash/partial';
-import { AppContext, UserContext } from '../contexts';
 
 const HORIZONTAL_PADDING = isSmallDeviceSize() ? 16 : 38;
 
@@ -106,13 +108,23 @@ const ModalText = styled(DCText)`
 
 const UserAttend: React.FC = () => {
   const currentLocation = useLocation({ latitude: 0, longitude: 0 });
+  const [sessionAddress, setSessionAddress] = React.useState('');
   const { state: userState } = React.useContext(UserContext);
   const { dispatch } = React.useContext(AppContext);
-  // const onLogin = async () => {
-  //   console.log("click");
-  //   await onRequestAttend;
-  //   // navigate('UserStatus');
-  // };
+
+  React.useEffect(() => {
+    const getLastSession = async () => {
+      try {
+        const lastSession = await getSessionInfos();
+        if (lastSession) {
+          setSessionAddress(lastSession.address);
+        }
+      } catch (error) {
+        console.log('error', error);
+      }
+    };
+    getLastSession();
+  });
 
   const onBackButtonPressAndroid = () => {
     Alert.alert('종료', '종료 할까요?', [
@@ -194,7 +206,7 @@ const UserAttend: React.FC = () => {
             </SessionTextWrap>
             <LocationArea>
               <LocationIcon source={baseline_place_24_px} />
-              <LocationText>서울시 강남구 논현로 22길</LocationText>
+              <LocationText>{sessionAddress}</LocationText>
             </LocationArea>
             <MemberMapView />
           </Body>

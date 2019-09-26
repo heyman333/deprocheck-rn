@@ -88,7 +88,7 @@ const AdminMapView: React.FC = () => {
         center: currentLocation,
         pitch: 10,
         heading: 0,
-        zoom: 8,
+        zoom: 14,
       };
 
       mapRef.current.animateCamera(Camera, { duration: 1000 });

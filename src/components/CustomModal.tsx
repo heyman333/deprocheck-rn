@@ -15,6 +15,7 @@ const ModalWrap = styled.View`
 const InnerWrap = styled.View`
   justify-content: center;
   align-items: center;
+  padding: 0 16px;
 `;
 
 const TitleImage = styled.Image`

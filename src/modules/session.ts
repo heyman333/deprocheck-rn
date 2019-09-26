@@ -1,6 +1,8 @@
-import axios from '../utils/axios';
-import { SessionInfo, AttendeeType } from '../interfaces';
 import AppConfig from 'react-native-config';
+import _last from 'lodash/last';
+
+import axios from '../utils/axios';
+import { SessionInfo, AttendeeType, SessionInfoResponse } from '../interfaces';
 
 const GEOCODE_KEY: string = AppConfig.GEOCODE_API_KEY;
 
@@ -29,7 +31,11 @@ export const getAddress = async (lat: number, lng: number) => {
   return formattedAddress;
 };
 
-export const getSessionInfo = async () => {
+export const getSessionInfos = async (): Promise<
+  SessionInfoResponse | undefined
+> => {
   const { data } = await axios.get('/sessions');
-  return data;
+  const lastSession: SessionInfoResponse | undefined = _last(data);
+
+  return lastSession;
 };

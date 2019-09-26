@@ -62,20 +62,19 @@ const MemberMapView: React.FC = () => {
     latitude: 37.5326,
     longitude: 127.024612,
   });
-  const [mapGeoInfo, setMapGetInfo] = React.useState<GeoState>(initialGeoState);
+  const mapRef = React.useRef<MapView>(null);
 
   React.useEffect(() => {
-    const region = {
-      latitude: currentLocation.latitude,
-      longitude: currentLocation.longitude,
-      latitudeDelta: 0.00922 * 1.5,
-      longitudeDelta: 0.00421 * 1.5,
-    };
-    setMapGetInfo({
-      mapRegion: region,
-      lastLat: region.latitude,
-      lastLong: region.longitude,
-    });
+    if (mapRef.current) {
+      const Camera = {
+        center: currentLocation,
+        pitch: 10,
+        heading: 0,
+        zoom: 14,
+      };
+
+      mapRef.current.animateCamera(Camera, { duration: 1000 });
+    }
   }, [currentLocation]);
 
   return (
@@ -85,8 +84,9 @@ const MemberMapView: React.FC = () => {
       </HelpBox>
       <MapContainer>
         <Map
+          ref={mapRef}
           provider={PROVIDER_GOOGLE}
-          region={mapGeoInfo.mapRegion}
+          initialRegion={initialGeoState.mapRegion}
           showsUserLocation={true}
           showsMyLocationButton={true}
           showsCompass={true}

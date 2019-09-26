@@ -203,10 +203,10 @@ const Login: NavigationScreenComponent = () => {
           payload: { theme: storedUserInfo.mode },
         });
       }
+      SplashScreen.hide();
     };
 
     initUserStatus();
-    SplashScreen.hide();
   }, [dispatch]);
 
   const setUserStatus = () => {
