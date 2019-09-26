@@ -34,7 +34,7 @@ export interface AttendeeType {
   member: {
     authority: 'ADMIN' | 'MEMBER';
     id: number;
-    jobGroup: 'DEVELOPER' | 'DESGINER';
+    jobGroup: ShowJobType.DESGINER | ShowJobType.DEVELOPER;
     name: string;
     termNumber: number;
   };
