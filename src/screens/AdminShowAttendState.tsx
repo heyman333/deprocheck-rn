@@ -85,70 +85,6 @@ const ArrowDownImage = styled.Image.attrs({ source: icon_arrow_down })`
   margin-top: 5px;
 `;
 
-// 더미데이터
-const datas: AttendeeType[] = [
-  {
-    createdAt: '2019-09-24T12:21:35.338Z',
-    id: 0,
-    member: {
-      authority: 'ADMIN',
-      id: 0,
-      jobGroup: ShowJobType.DEVELOPER,
-      name: 'efef',
-      termNumber: 0,
-    },
-    updatedAt: '2019-09-24T12:21:35.338Z',
-  },
-  {
-    createdAt: '2019-09-24T12:21:35.338Z',
-    id: 1,
-    member: {
-      authority: 'ADMIN',
-      id: 0,
-      jobGroup: ShowJobType.DEVELOPER,
-      name: 'efef',
-      termNumber: 0,
-    },
-    updatedAt: '2019-09-24T12:21:35.338Z',
-  },
-  {
-    createdAt: '2019-09-24T12:21:35.338Z',
-    id: 2,
-    member: {
-      authority: 'ADMIN',
-      id: 0,
-      jobGroup: ShowJobType.DEVELOPER,
-      name: 'efef',
-      termNumber: 0,
-    },
-    updatedAt: '2019-09-24T12:21:35.338Z',
-  },
-  {
-    createdAt: '2019-09-24T12:21:35.338Z',
-    id: 3,
-    member: {
-      authority: 'ADMIN',
-      id: 0,
-      jobGroup: ShowJobType.DEVELOPER,
-      name: 'efef',
-      termNumber: 0,
-    },
-    updatedAt: '2019-09-24T12:21:35.338Z',
-  },
-  {
-    createdAt: '2019-09-24T12:21:35.338Z',
-    id: 4,
-    member: {
-      authority: 'ADMIN',
-      id: 0,
-      jobGroup: ShowJobType.DESGINER,
-      name: 'efef',
-      termNumber: 0,
-    },
-    updatedAt: '2019-09-24T12:21:35.338Z',
-  },
-];
-
 const AdminShowAttendState: NavigationScreenComponent = () => {
   const { dispatch } = React.useContext(AppContext);
   const [sessionDateInfo, setSessionDateInfo] = React.useState(
@@ -169,6 +105,7 @@ const AdminShowAttendState: NavigationScreenComponent = () => {
       setMembers(data);
       setErrorMsg(undefined);
     } catch (error) {
+      setMembers([]);
       if (error.response.status === 404) {
         setErrorMsg('해당날짜에 세션이 없습니다');
       }
@@ -204,6 +141,7 @@ const AdminShowAttendState: NavigationScreenComponent = () => {
     if (jobType === ShowJobType.ALL) {
       return true;
     }
+
     return member.jobGroup === jobType;
   });
 

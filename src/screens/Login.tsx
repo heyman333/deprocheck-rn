@@ -181,8 +181,8 @@ const ModalText = styled(DCText)`
 `;
 
 enum JobType {
-  DEVELOPER,
-  DESGINER,
+  DEVELOPER = 'DEVELOPER',
+  DESIGNER = 'DESIGNER',
 }
 
 const Login: NavigationScreenComponent = () => {
@@ -196,7 +196,7 @@ const Login: NavigationScreenComponent = () => {
     const initUserStatus = async () => {
       const storedUserInfo = await getUserInfo();
       if (storedUserInfo) {
-        setJobType(storedUserInfo.job);
+        setJobType(storedUserInfo.jobType);
         setName(storedUserInfo.name);
         dispatch({
           type: 'CHANGE_THEME',
@@ -212,8 +212,8 @@ const Login: NavigationScreenComponent = () => {
   const setUserStatus = () => {
     const userInfo = {
       name,
-      job: jobType,
       mode: state.theme,
+      jobType: jobType!,
     };
     storeUserInfo(userInfo);
   };
@@ -260,6 +260,11 @@ const Login: NavigationScreenComponent = () => {
       const inputName = state.theme === 'ADMIN' ? '관리자 번호를' : '이름을';
       const message = `${inputName} 입력해 주세요!`;
       modalOpen(message);
+      return;
+    }
+
+    if (!jobType) {
+      modalOpen('직군을 선택해 주세요!');
       return;
     }
 
@@ -354,10 +359,10 @@ const Login: NavigationScreenComponent = () => {
             {state.theme === 'MEMBER' && (
               <JobButtonContainer>
                 <JobButton
-                  isSelected={jobType === JobType.DESGINER}
-                  onPress={_partial(onSelectJob, JobType.DESGINER)}
+                  isSelected={jobType === JobType.DESIGNER}
+                  onPress={_partial(onSelectJob, JobType.DESIGNER)}
                 >
-                  <JobText isSelected={jobType === JobType.DESGINER}>
+                  <JobText isSelected={jobType === JobType.DESIGNER}>
                     Designer
                   </JobText>
                 </JobButton>

@@ -4,9 +4,9 @@ export interface SessionDateType {
 }
 
 export enum ShowJobType {
-  ALL,
-  DEVELOPER,
-  DESGINER,
+  ALL = 'ALL',
+  DEVELOPER = 'DEVELOPER',
+  DESIGNER = 'DESIGNER',
 }
 
 export interface SessionInfo {
@@ -34,7 +34,7 @@ export interface AttendeeType {
   member: {
     authority: 'ADMIN' | 'MEMBER';
     id: number;
-    jobGroup: ShowJobType.DESGINER | ShowJobType.DEVELOPER;
+    jobGroup: ShowJobType.DESIGNER | ShowJobType.DEVELOPER;
     name: string;
     termNumber: number;
   };

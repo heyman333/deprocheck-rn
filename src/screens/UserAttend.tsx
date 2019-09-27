@@ -5,7 +5,6 @@ import { Alert, BackHandler } from 'react-native';
 import { AndroidBackHandler } from 'react-navigation-backhandler';
 import _partial from 'lodash/partial';
 
-import { SessionInfoResponse } from '../interfaces';
 import {
   img_deprocheck_logo_2,
   baseline_place_24_px,
@@ -168,8 +167,6 @@ const UserAttend: React.FC = () => {
       longitude: currentLocation.longitude,
       name: userState.userInfo.name,
     };
-
-    console.log('data', data);
 
     try {
       const result = await reqeustAttend(data);

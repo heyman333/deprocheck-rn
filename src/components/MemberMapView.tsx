@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components/native';
 
-import MapView, { PROVIDER_GOOGLE, Region, Marker } from 'react-native-maps';
+import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 import DCText from '../components/DCText';
 import useLocation from '../hooks/useLocation';
 import { baseline_place_44_px } from '../assets/images';
@@ -40,12 +40,6 @@ const Map = styled(MapView)`
   bottom: 0;
 `;
 
-interface GeoState {
-  mapRegion: Region;
-  lastLat: number;
-  lastLong: number;
-}
-
 const initialGeoState = {
   mapRegion: {
     latitude: 37.5326,
@@ -63,6 +57,7 @@ const MemberMapView: React.FC = () => {
     longitude: 127.024612,
   });
   const mapRef = React.useRef<MapView>(null);
+  const [marginBottom, setMarginBottom] = React.useState(1);
 
   React.useEffect(() => {
     if (mapRef.current) {
@@ -73,9 +68,16 @@ const MemberMapView: React.FC = () => {
         zoom: 14,
       };
 
-      mapRef.current.animateCamera(Camera, { duration: 1000 });
+      mapRef.current.animateCamera(Camera, {
+        duration: 1000,
+      });
     }
   }, [currentLocation]);
+
+  const onMapReady = () => {
+    // 안드로이드에서 showsMyLocationButton 보이도록 하는 hack code
+    setMarginBottom(0);
+  };
 
   return (
     <Wrap>
@@ -84,12 +86,14 @@ const MemberMapView: React.FC = () => {
       </HelpBox>
       <MapContainer>
         <Map
+          style={{ marginBottom }}
           ref={mapRef}
           provider={PROVIDER_GOOGLE}
           initialRegion={initialGeoState.mapRegion}
           showsUserLocation={true}
           showsMyLocationButton={true}
           showsCompass={true}
+          onMapReady={onMapReady}
         >
           <Marker image={baseline_place_44_px} coordinate={currentLocation} />
         </Map>
