@@ -3,6 +3,7 @@ import styled from 'styled-components/native';
 import { getInset } from 'react-native-safe-area-view';
 import { Alert, BackHandler } from 'react-native';
 import { AndroidBackHandler } from 'react-navigation-backhandler';
+import { NavigationScreenComponent } from 'react-navigation';
 import _partial from 'lodash/partial';
 
 import {
@@ -105,7 +106,7 @@ const ModalText = styled(DCText)`
   font-weight: bold;
 `;
 
-const UserAttend: React.FC = () => {
+const UserAttend: NavigationScreenComponent = () => {
   const currentLocation = useLocation({ latitude: 0, longitude: 0 });
   const [sessionAddress, setSessionAddress] = React.useState('');
   const { state: userState } = React.useContext(UserContext);
