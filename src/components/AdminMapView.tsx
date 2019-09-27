@@ -79,6 +79,7 @@ const AdminMapView: React.FC = () => {
 
   const { dispatch, state } = React.useContext(UserContext);
   const [pinCoordinate, setPinCoordinate] = React.useState<LatLng | null>(null);
+  const [marginBottom, setMarginBottom] = React.useState(1);
   const mapRef = React.useRef<MapView>(null);
   const pinRef = React.useRef<Marker>(null);
 
@@ -142,11 +143,17 @@ const AdminMapView: React.FC = () => {
     setPinCoordinate(coordination);
   };
 
+  const onMapReady = () => {
+    // 안드로이드에서 showsMyLocationButton 보이도록 하는 hack code
+    setMarginBottom(0);
+  };
+
   return (
     <Wrap>
       <Title>오늘의 세션장소</Title>
       <MapContainer>
         <Map
+          style={{ marginBottom }}
           ref={mapRef}
           provider={PROVIDER_GOOGLE}
           initialRegion={initialGeoState.mapRegion}
@@ -154,6 +161,7 @@ const AdminMapView: React.FC = () => {
           onPress={onPressMap}
           showsMyLocationButton={true}
           showsCompass={true}
+          onMapReady={onMapReady}
         >
           {pinCoordinate && (
             <Marker
