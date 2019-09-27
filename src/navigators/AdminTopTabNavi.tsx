@@ -15,6 +15,7 @@ import { AppContext } from '../contexts';
 
 import { isSmallDeviceSize } from '../utils/styleUtils';
 import { img_deprocheck_white, icon_cancel } from '../assets/images';
+
 import DCTouchable from '../components/DCTouchable';
 import DCText from '../components/DCText';
 import AdminSessionCreate from '../screens/AdminSessionCreate';

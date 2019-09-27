@@ -9,7 +9,8 @@
     "ios": "npx react-native run-ios --simulator \"iPhone 6s\"",
     "iosSE": "npx react-native run-ios --simulator \"iPhone SE\"",
     "iosXs": "npx react-native run-ios --simulator \"iPhone Xs\"",
-    "android": "npx react-native run-android"
+    "android": "npx react-native run-android",
+    "tsc": "tsc --noEmit"
   },
   "dependencies": {
     "@react-native-community/async-storage": "^1.6.1",

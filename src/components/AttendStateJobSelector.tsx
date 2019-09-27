@@ -38,8 +38,8 @@ const AttendStateJobSelector: React.FC<Props> = ({ type, onPressType }) => {
       <Button onPress={_partial(onPressType, ShowJobType.ALL)}>
         <Text selected={type === ShowJobType.ALL}>All</Text>
       </Button>
-      <Button onPress={_partial(onPressType, ShowJobType.DESGINER)}>
-        <Text selected={type === ShowJobType.DESGINER}>Designer</Text>
+      <Button onPress={_partial(onPressType, ShowJobType.DESIGNER)}>
+        <Text selected={type === ShowJobType.DESIGNER}>Designer</Text>
       </Button>
       <Button onPress={_partial(onPressType, ShowJobType.DEVELOPER)}>
         <Text selected={type === ShowJobType.DEVELOPER}>Developer</Text>

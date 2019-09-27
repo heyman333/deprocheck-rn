@@ -44,7 +44,7 @@ export default class AttendStatus extends Component {
           <AttendWeek>{attendWeek}</AttendWeek>
           <AttendTime>{attendTime}</AttendTime>
         </AttendBox>
-        <LightBar/>
+        <LightBar />
       </View>
     );
   }

@@ -3,14 +3,14 @@ import AsyncStorage from '@react-native-community/async-storage';
 const USER_INFO_KEY = 'USER_INFO_KEY';
 
 enum JobType {
-  DEVELOPER,
-  DESGINER,
+  DEVELOPER = 'DEVELOPER',
+  DESIGNER = 'DESIGNER',
 }
 
 interface StoredUserInfoType {
   name: string;
-  job?: JobType;
   mode: 'ADMIN' | 'MEMBER';
+  jobType: JobType;
 }
 
 export const storeUserInfo = (storedUserInfo: StoredUserInfoType) => {
