@@ -3,7 +3,9 @@ import styled from 'styled-components/native';
 import { NavigationScreenComponent } from 'react-navigation';
 import { getInset } from 'react-native-safe-area-view';
 import _partial from 'lodash/partial';
+import { FBSessionTimes } from '../interfaces';
 
+import { toIOSString } from '../utils/timeUtils';
 import { SessionDateType } from '../interfaces';
 import { AppContext, UserContext } from '../contexts';
 import { colors } from '../utils/theme';
@@ -18,17 +20,13 @@ import {
   icon_baseline_close,
 } from '../assets/images';
 import { createSession } from '../modules/session';
+import { getSessionDateInfos } from '../modules/firebase';
 
 import ScreenWrap from '../components/ScreenWrap';
 import DCText from '../components/DCText';
 import DCTouchable from '../components/DCTouchable';
 import DateSelectModal from '../components/DateSelectModal';
 import AdminMapView from '../components/AdminMapView';
-
-interface LatLng {
-  latitude: number;
-  longitude: number;
-}
 
 const HORIZONTAL_PADDING = isSmallDeviceSize() ? 16 : 38;
 
@@ -163,14 +161,34 @@ const ModalText = styled(DCText)`
 const AdminSessionCreate: NavigationScreenComponent = () => {
   const { state } = React.useContext(UserContext);
   const { dispatch } = React.useContext(AppContext);
-  const [sessionDateInfo, setSessionDateInfo] = React.useState(
-    sessionDateInfos[0]
-  );
+  const [sessionDates, setSessionDates] = React.useState(sessionDateInfos);
+  const [sessionDateInfo, setSessionDateInfo] = React.useState(sessionDates[0]);
   const [isModalVisible, setIsModalVisible] = React.useState(false);
   const { startTime, endTime } = sessionDateInfo;
   const curretWeek = sessionDateInfos.findIndex(
     item => item.startTime === sessionDateInfo.startTime
   );
+
+  React.useEffect(() => {
+    const getSessionDateInfoFromFB = async () => {
+      const dateInfos = (await getSessionDateInfos()) as {
+        dats: FBSessionTimes[];
+      };
+
+      const sessionDatesFB = dateInfos.dats.map(date => ({
+        startTime: date.startTime.toDate(),
+        endTime: date.endTime.toDate(),
+      }));
+      setSessionDates(sessionDatesFB);
+      setSessionDateInfo(sessionDatesFB[0]);
+    };
+
+    try {
+      getSessionDateInfoFromFB();
+    } catch (error) {
+      console.log(error);
+    }
+  }, []);
 
   const onPressMenu = () => {
     dispatch({ type: 'SET_TAB_VISIBLE', payload: { tabVisible: true } });
@@ -254,12 +272,12 @@ ${sessionInfo.sessionAddress} 입니다`,
 
     const data = {
       address: sessionInfo.sessionAddress,
-      date: sessionDateInfo.startTime.toISOString(),
-      from: sessionDateInfo.startTime.toISOString(),
+      date: toIOSString(sessionDateInfo.startTime),
+      from: toIOSString(sessionDateInfo.startTime),
       latitude: sessionInfo.sessionLocation.latitude,
       longitude: sessionInfo.sessionLocation.longitude,
       name: '세션장소',
-      to: sessionDateInfo.endTime.toISOString(),
+      to: toIOSString(sessionDateInfo.endTime),
     };
 
     try {
@@ -313,7 +331,7 @@ ${sessionInfo.sessionAddress} 입니다`,
       </Wrap>
       <DateSelectModal
         isVisible={isModalVisible}
-        data={sessionDateInfos}
+        data={sessionDates}
         onConfirm={onConfirm}
         onClose={onClose}
       />

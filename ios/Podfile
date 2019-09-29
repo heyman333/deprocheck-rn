@@ -36,6 +36,8 @@ target 'deprocheck' do
   pod 'react-native-google-maps', :path => rn_maps_path
   pod 'GoogleMaps'
   pod 'Google-Maps-iOS-Utils'
+  pod 'Firebase/Analytics'
+  pod 'Firebase/Firestore'
 
   target 'deprocheckTests' do
     inherit! :search_paths

@@ -13,6 +13,7 @@ import {
 import { isSmallDeviceSize } from '../utils/styleUtils';
 import { colors } from '../utils/theme';
 import { getAttendances } from '../modules/session';
+import { getSessionDateInfos } from '../modules/firebase';
 
 import ScreenWrap from '../components/ScreenWrap';
 import DCTouchable from '../components/DCTouchable';
@@ -20,7 +21,12 @@ import DCText from '../components/DCText';
 import DateSelectModal from '../components/DateSelectModal';
 import AttendedMemberList from '../components/AttendedMemberList';
 import AttendStateJobSelector from '../components/AttendStateJobSelector';
-import { SessionDateType, ShowJobType, AttendeeType } from '../interfaces';
+import {
+  SessionDateType,
+  ShowJobType,
+  AttendeeType,
+  FBSessionTimes,
+} from '../interfaces';
 
 const HORIZONTAL_PADDING = isSmallDeviceSize() ? 16 : 38;
 
@@ -87,13 +93,33 @@ const ArrowDownImage = styled.Image.attrs({ source: icon_arrow_down })`
 
 const AdminShowAttendState: NavigationScreenComponent = () => {
   const { dispatch } = React.useContext(AppContext);
-  const [sessionDateInfo, setSessionDateInfo] = React.useState(
-    sessionDateInfos[0]
-  );
+  const [sessionDates, setSessionDates] = React.useState(sessionDateInfos);
+  const [sessionDateInfo, setSessionDateInfo] = React.useState(sessionDates[0]);
   const [isModalVisible, setIsModalVisible] = React.useState(false);
   const [jobType, setJobType] = React.useState(ShowJobType.ALL);
   const [members, setMembers] = React.useState<AttendeeType[]>([]);
   const [errorMsg, setErrorMsg] = React.useState<string | undefined>(undefined);
+
+  React.useEffect(() => {
+    const getSessionDateInfoFromFB = async () => {
+      const dateInfos = (await getSessionDateInfos()) as {
+        dats: FBSessionTimes[];
+      };
+
+      const sessionDatesFB = dateInfos.dats.map(date => ({
+        startTime: date.startTime.toDate(),
+        endTime: date.endTime.toDate(),
+      }));
+      setSessionDates(sessionDatesFB);
+      setSessionDateInfo(sessionDatesFB[0]);
+    };
+
+    try {
+      getSessionDateInfoFromFB();
+    } catch (error) {
+      console.log(error);
+    }
+  }, []);
 
   React.useEffect(() => {
     getAttendInfo(toYYYYMMDD(sessionDateInfo.startTime));
@@ -170,7 +196,7 @@ const AdminShowAttendState: NavigationScreenComponent = () => {
 
         <DateSelectModal
           isVisible={isModalVisible}
-          data={sessionDateInfos}
+          data={sessionDates}
           onConfirm={onConfirm}
           onClose={onClose}
         />

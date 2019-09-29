@@ -2,10 +2,6 @@
 import { SessionDateType } from '../interfaces';
 export const sessionDateInfos: SessionDateType[] = [
   {
-    startTime: new Date('2019-09-28T14:00'),
-    endTime: new Date('2019-09-28T18:00'),
-  },
-  {
     startTime: new Date('2019-10-05T14:00'),
     endTime: new Date('2019-10-05T18:00'),
   },

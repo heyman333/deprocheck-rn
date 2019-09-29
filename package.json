@@ -21,6 +21,7 @@
     "react-dom": "^16.9.0",
     "react-native": "0.60.4",
     "react-native-config": "github:luggit/react-native-config#master",
+    "react-native-firebase": "^5.5.6",
     "react-native-gesture-handler": "^1.4.1",
     "react-native-keyboard-aware-scroll-view": "^0.9.1",
     "react-native-maps": "^0.25.0",

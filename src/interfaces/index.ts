@@ -1,3 +1,9 @@
+interface Timestamp {
+  nanoseconds: number;
+  seconds: number;
+  toDate: () => Date;
+}
+
 export interface SessionDateType {
   startTime: Date;
   endTime: Date;
@@ -45,4 +51,9 @@ export interface AttendRequest {
   latitude: number;
   longitude: number;
   name?: string;
+}
+
+export interface FBSessionTimes {
+  startTime: Timestamp;
+  endTime: Timestamp;
 }
