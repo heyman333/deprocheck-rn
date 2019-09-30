@@ -21,3 +21,5 @@
 IOS_GOOGLE_MAP_KEY=AIzaSyAeBN4N...blabla
 ANDROID_GOOGLE_MAP_KEY=AIzaSyBAyY...blabla
 ```
+
+3. 파이어베이스 연동을 위한 `google-services` 파일 또한 올리지 않습니다. `Author`에게 연락하거나 새로 파이어베이스 프로젝트를 생성 후 디버깅 해주세요

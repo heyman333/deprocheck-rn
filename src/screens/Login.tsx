@@ -263,7 +263,7 @@ const Login: NavigationScreenComponent = () => {
       return;
     }
 
-    if (!jobType) {
+    if (!jobType && state.theme === 'MEMBER') {
       modalOpen('직군을 선택해 주세요!');
       return;
     }

@@ -20,6 +20,7 @@
 		87225E656D7D61E3F6CA36F3 /* libPods-deprocheck-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6FCC45A4BCDB7582AD2A8AE1 /* libPods-deprocheck-tvOS.a */; };
 		DA0B4E1E2333D980008A26EC /* libReactNativeConfig.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DA0B4E1B2333D933008A26EC /* libReactNativeConfig.a */; };
 		DA7556132328133F0064AF4D /* Fonts in Resources */ = {isa = PBXBuildFile; fileRef = DA7556122328133E0064AF4D /* Fonts */; };
+		DA83C53A2340D791005746FC /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DA83C5372340D791005746FC /* GoogleService-Info.plist */; };
 		EF8CCAE3D778D7A859B76621 /* libPods-deprocheck.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5140F75E9A3EF2262D270FED /* libPods-deprocheck.a */; };
 		FE4346CED683594A715DF34E /* libPods-deprocheck-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B9C759F04068C9E089BF1C11 /* libPods-deprocheck-tvOSTests.a */; };
 /* End PBXBuildFile section */
@@ -83,6 +84,7 @@
 		DA0B4E152333D933008A26EC /* ReactNativeConfig.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ReactNativeConfig.xcodeproj; path = "../node_modules/react-native-config/ios/ReactNativeConfig.xcodeproj"; sourceTree = "<group>"; };
 		DA20D7952339559600B08381 /* deprocheck.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = deprocheck.entitlements; path = deprocheck/deprocheck.entitlements; sourceTree = "<group>"; };
 		DA7556122328133E0064AF4D /* Fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Fonts; sourceTree = "<group>"; };
+		DA83C5372340D791005746FC /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
 		ED86A5C51D956FFADD71B150 /* Pods-deprocheck-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-deprocheck-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-deprocheck-tvOSTests/Pods-deprocheck-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -145,6 +147,7 @@
 		13B07FAE1A68108700A75B9A /* deprocheck */ = {
 			isa = PBXGroup;
 			children = (
+				DA83C5372340D791005746FC /* GoogleService-Info.plist */,
 				DA20D7952339559600B08381 /* deprocheck.entitlements */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
@@ -401,6 +404,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DA7556132328133F0064AF4D /* Fonts in Resources */,
+				DA83C53A2340D791005746FC /* GoogleService-Info.plist in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
 			);
@@ -482,10 +486,12 @@
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-deprocheck/Pods-deprocheck-resources.sh",
 				"${PODS_ROOT}/GoogleMaps/Maps/Frameworks/GoogleMaps.framework/Resources/GoogleMaps.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/gRPC-C++/gRPCCertificates-Cpp.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleMaps.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/gRPCCertificates-Cpp.bundle",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;

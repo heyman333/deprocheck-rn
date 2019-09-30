@@ -12,13 +12,15 @@
 #import <GoogleMaps/GoogleMaps.h>
 #import <React/RCTRootView.h>
 #import "ReactNativeConfig.h"
-#import "RNSplashScreen.h"  // here
+#import "RNSplashScreen.h"
+@import Firebase;
 
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
 
+  [FIRApp configure];
   NSString *googleMapKey = [ReactNativeConfig envFor:@"IOS_GOOGLE_MAP_KEY"];
   [GMSServices provideAPIKey:googleMapKey];
   RCTBridge *bridge = [[RCTBridge alloc] initWithDelegate:self launchOptions:launchOptions];
