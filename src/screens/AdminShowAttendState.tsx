@@ -138,7 +138,7 @@ const AdminShowAttendState: NavigationScreenComponent = () => {
     }
   };
 
-  const curretWeek = sessionDateInfos.findIndex(
+  const curretWeek = sessionDates.findIndex(
     item => item.startTime === sessionDateInfo.startTime
   );
 

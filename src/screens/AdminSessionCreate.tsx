@@ -165,7 +165,7 @@ const AdminSessionCreate: NavigationScreenComponent = () => {
   const [sessionDateInfo, setSessionDateInfo] = React.useState(sessionDates[0]);
   const [isModalVisible, setIsModalVisible] = React.useState(false);
   const { startTime, endTime } = sessionDateInfo;
-  const curretWeek = sessionDateInfos.findIndex(
+  const curretWeek = sessionDates.findIndex(
     item => item.startTime === sessionDateInfo.startTime
   );
 
