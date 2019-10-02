@@ -21,7 +21,6 @@ const ModalWrap = styled.View`
   height: 355px;
   background-color: white;
   justify-content: center;
-  align-items: center;
   padding: 20px 20px 27px 20px;
 `;
 
@@ -33,6 +32,7 @@ const DateText = styled(DCText)<{ selected: boolean }>`
   margin-bottom: 5px;
   font-weight: ${({ selected }) => (selected ? 'bold' : 'normal')};
   line-height: 28px;
+  text-align: center;
 `;
 
 const BottomButton = styled(DCTouchable)`
@@ -41,6 +41,7 @@ const BottomButton = styled(DCTouchable)`
   height: 50px;
   justify-content: center;
   align-items: center;
+  align-self: center;
 `;
 
 const BottomText = styled(DCText)`

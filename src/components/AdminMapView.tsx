@@ -1,14 +1,15 @@
 import React from 'react';
 import styled from 'styled-components/native';
+import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 
-import MapView, { PROVIDER_GOOGLE, Region, Marker } from 'react-native-maps';
 import { colors } from '../utils/theme';
 import { isSmallDeviceSize } from '../utils/styleUtils';
 import useLocation from '../hooks/useLocation';
 import { getAddress } from '../modules/session';
 
+import DCTouchable from '../components/DCTouchable';
 import DCText from '../components/DCText';
-import { baseline_place_44_px } from '../assets/images';
+import { baseline_place_44_px, icon_my_location } from '../assets/images';
 import { UserContext } from '../contexts';
 
 interface LatLng {
@@ -16,21 +17,31 @@ interface LatLng {
   longitude: number;
 }
 
-// interface Point {
-//   x: number;
-//   y: number;
-// }
-
 const HORIZONTAL_PADDING = isSmallDeviceSize() ? 16 : 38;
+const MAP_TOP_MARGIN = isSmallDeviceSize() ? 10 : 50;
+const MAP_BOTTOM_MARGIN = isSmallDeviceSize() ? 190 : 220;
 
 const Wrap = styled.View`
-  height: ${isSmallDeviceSize() ? '35%' : '40%'};
-  margin: 0 ${HORIZONTAL_PADDING}px;
+  margin: ${MAP_TOP_MARGIN}px ${HORIZONTAL_PADDING}px ${MAP_BOTTOM_MARGIN}px;
+  flex: 1;
 `;
 
 const MapContainer = styled.View`
   height: 100%;
   margin-bottom: 25px;
+`;
+
+const MyLocationButton = styled(DCTouchable).attrs({
+  hitSlop: { top: 10, right: 10, bottom: 10, left: 10 },
+})`
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+`;
+
+const MyLocationImage = styled.Image.attrs({ source: icon_my_location })`
+  width: 40px;
+  height: 40px;
 `;
 
 const Title = styled(DCText)`
@@ -54,12 +65,6 @@ const Map = styled(MapView)`
   bottom: 0;
 `;
 
-interface GeoState {
-  mapRegion: Region;
-  lastLat: number;
-  lastLong: number;
-}
-
 const initialGeoState = {
   mapRegion: {
     latitude: 37.5326,
@@ -79,29 +84,41 @@ const AdminMapView: React.FC = () => {
 
   const { dispatch, state } = React.useContext(UserContext);
   const [pinCoordinate, setPinCoordinate] = React.useState<LatLng | null>(null);
-  const [marginBottom, setMarginBottom] = React.useState(1);
+  const [onMapReady, setonMapReady] = React.useState(false);
   const mapRef = React.useRef<MapView>(null);
   const pinRef = React.useRef<Marker>(null);
 
   React.useEffect(() => {
-    if (mapRef.current) {
-      const Camera = {
-        center: currentLocation,
-        pitch: 10,
-        heading: 0,
-        zoom: 14,
-      };
-
-      mapRef.current.animateCamera(Camera, { duration: 1000 });
-    }
-
     if (
       currentLocation.latitude !== initialGeoState.lastLat ||
       currentLocation.longitude !== initialGeoState.lastLong
     ) {
       setPinCoordinate(currentLocation);
     }
-  }, [currentLocation]);
+    if (mapRef.current && onMapReady) {
+      const Camera = {
+        center: currentLocation,
+        pitch: 2,
+        heading: 0,
+        zoom: 14,
+      };
+
+      mapRef.current.animateCamera(Camera, { duration: 1000 });
+    }
+  }, [currentLocation, onMapReady]);
+
+  const animateToCurrentPosition = () => {
+    if (mapRef.current) {
+      const Camera = {
+        center: currentLocation,
+        pitch: 2,
+        heading: 0,
+        zoom: 14,
+      };
+
+      mapRef.current.animateCamera(Camera, { duration: 1000 });
+    }
+  };
 
   React.useEffect(() => {
     const getAddressByLocation = async () => {
@@ -143,25 +160,19 @@ const AdminMapView: React.FC = () => {
     setPinCoordinate(coordination);
   };
 
-  const onMapReady = () => {
-    // 안드로이드에서 showsMyLocationButton 보이도록 하는 hack code
-    setMarginBottom(0);
-  };
-
   return (
     <Wrap>
       <Title>오늘의 세션장소</Title>
       <MapContainer>
         <Map
-          style={{ marginBottom }}
           ref={mapRef}
           provider={PROVIDER_GOOGLE}
           initialRegion={initialGeoState.mapRegion}
           showsUserLocation={true}
+          showsMyLocationButton={false}
           onPress={onPressMap}
-          showsMyLocationButton={true}
           showsCompass={true}
-          onMapReady={onMapReady}
+          onMapReady={() => setonMapReady(true)}
         >
           {pinCoordinate && (
             <Marker
@@ -172,6 +183,9 @@ const AdminMapView: React.FC = () => {
             />
           )}
         </Map>
+        <MyLocationButton onPress={animateToCurrentPosition}>
+          <MyLocationImage />
+        </MyLocationButton>
       </MapContainer>
       {state.userInfo.sessionInfo && (
         <LocationText numberOfLines={1}>
