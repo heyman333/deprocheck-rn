@@ -170,14 +170,19 @@ const UserAttend: NavigationScreenComponent = () => {
     };
 
     try {
-      const result = await reqeustAttend(data);
+      const { data: result, status } = await reqeustAttend(data);
       if (result) {
-        modalOpen(true, '출석이 완료되었습니다.');
+        modalOpen(true, '출석이 완료되었습니다');
+        return;
+      }
+
+      if (status === 204) {
+        modalOpen(true, '이미 출석체크 했습니다');
       }
     } catch (error) {
       console.log('error', error);
       if (error.response.status === 400) {
-        modalOpen(false, '현재 출석할 수 있는 세션이 존재하지 않습니다');
+        modalOpen(false, '현재 출석할 수 있는 세션이 \n존재하지 않습니다');
         return;
       }
       if (error.response.status === 401) {
@@ -185,7 +190,7 @@ const UserAttend: NavigationScreenComponent = () => {
         return;
       }
       if (error.response.status === 403) {
-        modalOpen(false, '아직 세션 장소 500m내에 위치해 있지 않습니다.');
+        modalOpen(false, '아직 세션 장소 500m내에 \n위치해 있지 않습니다.');
       }
     }
   };

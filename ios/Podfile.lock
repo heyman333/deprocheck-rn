@@ -276,11 +276,8 @@ DEPENDENCIES:
   - yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
-  https://github.com/CocoaPods/Specs.git:
-    - boost-for-react-native
-    - Google-Maps-iOS-Utils
-    - GoogleMaps
   trunk:
+    - boost-for-react-native
     - BoringSSL-GRPC
     - Crashlytics
     - Fabric
@@ -292,9 +289,11 @@ SPEC REPOS:
     - FirebaseCoreDiagnosticsInterop
     - FirebaseFirestore
     - FirebaseInstanceID
+    - Google-Maps-iOS-Utils
     - GoogleAppMeasurement
     - GoogleDataTransport
     - GoogleDataTransportCCTSupport
+    - GoogleMaps
     - GoogleUtilities
     - "gRPC-C++"
     - gRPC-Core

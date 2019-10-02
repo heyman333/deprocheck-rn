@@ -17,6 +17,7 @@ import {
   icon_close,
   img_deprocheck_white,
   icon_baseline_close,
+  icon_admin_delete,
 } from '../assets/images';
 import { colors } from '../utils/theme';
 
@@ -48,6 +49,7 @@ const Body = styled.View`
 const NameInput = styled.TextInput.attrs({
   allowFontScaling: false,
   includefontpadding: false,
+  textAlignVertical: 'top',
 })`
   font-size: 14px;
   border-bottom-color: ${({ theme }) => theme.reverseBackColor};
@@ -145,7 +147,9 @@ const ClostButton = styled(DCTouchable).attrs({
   right: 5px;
 `;
 
-const CloseIcon = styled.Image.attrs({ source: icon_close })`
+const CloseIcon = styled.Image.attrs(({ source }) => {
+  source;
+})`
   width: 16px;
   height: 16px;
 `;
@@ -353,7 +357,11 @@ const Login: NavigationScreenComponent = () => {
                 }
               />
               <ClostButton onPress={onPressClear}>
-                <CloseIcon />
+                {state.theme === 'ADMIN' ? (
+                  <CloseIcon source={icon_admin_delete} />
+                ) : (
+                  <CloseIcon source={icon_close} />
+                )}
               </ClostButton>
             </NameInputView>
             {state.theme === 'MEMBER' && (

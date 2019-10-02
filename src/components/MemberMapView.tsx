@@ -1,10 +1,12 @@
 import React from 'react';
 import styled from 'styled-components/native';
-
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
-import DCText from '../components/DCText';
+
 import useLocation from '../hooks/useLocation';
-import { baseline_place_44_px } from '../assets/images';
+import { baseline_place_44_px, icon_my_location } from '../assets/images';
+
+import DCText from '../components/DCText';
+import DCTouchable from './DCTouchable';
 
 const Wrap = styled.View`
   flex: 1;
@@ -13,6 +15,19 @@ const Wrap = styled.View`
 
 const MapContainer = styled.View`
   height: 100%;
+`;
+
+const MyLocationButton = styled(DCTouchable).attrs({
+  hitSlop: { top: 10, right: 10, bottom: 10, left: 10 },
+})`
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+`;
+
+const MyLocationImage = styled.Image.attrs({ source: icon_my_location })`
+  width: 40px;
+  height: 40px;
 `;
 
 const HelpBox = styled.View`
@@ -57,10 +72,10 @@ const MemberMapView: React.FC = () => {
     longitude: 127.024612,
   });
   const mapRef = React.useRef<MapView>(null);
-  const [marginBottom, setMarginBottom] = React.useState(1);
+  const [onMapReady, setonMapReady] = React.useState(false);
 
   React.useEffect(() => {
-    if (mapRef.current) {
+    if (mapRef.current && onMapReady) {
       const Camera = {
         center: currentLocation,
         pitch: 10,
@@ -72,31 +87,41 @@ const MemberMapView: React.FC = () => {
         duration: 1000,
       });
     }
-  }, [currentLocation]);
+  }, [currentLocation, onMapReady]);
 
-  const onMapReady = () => {
-    // 안드로이드에서 showsMyLocationButton 보이도록 하는 hack code
-    setMarginBottom(0);
+  const animateToCurrentPosition = () => {
+    if (mapRef.current) {
+      const Camera = {
+        center: currentLocation,
+        pitch: 2,
+        heading: 0,
+        zoom: 14,
+      };
+
+      mapRef.current.animateCamera(Camera, { duration: 1000 });
+    }
   };
 
   return (
     <Wrap>
       <HelpBox>
-        <HelpText>현위치를 눌러 출석하기를 완료해주세요!</HelpText>
+        <HelpText>출석하기 버튼을 눌러 출석을 완료해주세요!</HelpText>
       </HelpBox>
       <MapContainer>
         <Map
-          style={{ marginBottom }}
           ref={mapRef}
           provider={PROVIDER_GOOGLE}
           initialRegion={initialGeoState.mapRegion}
           showsUserLocation={true}
-          showsMyLocationButton={true}
+          showsMyLocationButton={false}
           showsCompass={true}
-          onMapReady={onMapReady}
+          onMapReady={() => setonMapReady(true)}
         >
           <Marker image={baseline_place_44_px} coordinate={currentLocation} />
         </Map>
+        <MyLocationButton onPress={animateToCurrentPosition}>
+          <MyLocationImage />
+        </MyLocationButton>
       </MapContainer>
     </Wrap>
   );
