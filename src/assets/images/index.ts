@@ -11,3 +11,5 @@ export const baseline_place_44_px = require('./baseline-place-44-px.png');
 export const icon_close = require('./close-icon.png');
 export const icon_baseline_close = require('./baseline-close-24-px.png');
 export const icon_baseline_done = require('./baseline-done-24-px.png');
+export const icon_admin_delete = require('./admin-delet.png');
+export const icon_my_location = require('./mygps-icon.png');
