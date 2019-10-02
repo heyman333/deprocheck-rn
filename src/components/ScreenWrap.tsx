@@ -1,5 +1,5 @@
 import React from 'react';
-import { StatusBar } from 'react-native';
+import { Platform, StatusBar } from 'react-native';
 import styled from 'styled-components/native';
 import SafeAreaView, { SafeAreaViewProps } from 'react-native-safe-area-view';
 
@@ -28,6 +28,8 @@ const ScreenWrap: React.FC<Props> = ({ children, forceInset }) => {
     <Wrap forceInset={forceInset}>
       <StatusBar
         barStyle={theme === 'ADMIN' ? 'light-content' : 'dark-content'}
+        translucent={Platform.OS === 'android'}
+        backgroundColor={Platform.OS === 'android' ? 'transparent' : ''}
       />
       <InnerWrap>{children}</InnerWrap>
     </Wrap>
