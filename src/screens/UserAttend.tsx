@@ -170,9 +170,14 @@ const UserAttend: NavigationScreenComponent = () => {
     };
 
     try {
-      const result = await reqeustAttend(data);
+      const { data: result, status } = await reqeustAttend(data);
       if (result) {
-        modalOpen(true, '출석이 완료되었습니다.');
+        modalOpen(true, '출석이 완료되었습니다');
+        return;
+      }
+
+      if (status === 204) {
+        modalOpen(true, '이미 출석체크 했습니다');
       }
     } catch (error) {
       console.log('error', error);
