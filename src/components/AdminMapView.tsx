@@ -18,11 +18,10 @@ interface LatLng {
 }
 
 const HORIZONTAL_PADDING = isSmallDeviceSize() ? 16 : 38;
-const MAP_TOP_MARGIN = isSmallDeviceSize() ? 10 : 50;
 const MAP_BOTTOM_MARGIN = isSmallDeviceSize() ? 190 : 220;
 
 const Wrap = styled.View`
-  margin: ${MAP_TOP_MARGIN}px ${HORIZONTAL_PADDING}px ${MAP_BOTTOM_MARGIN}px;
+  margin: 10px ${HORIZONTAL_PADDING}px ${MAP_BOTTOM_MARGIN}px;
   flex: 1;
 `;
 
