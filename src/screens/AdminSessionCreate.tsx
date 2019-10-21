@@ -286,8 +286,7 @@ ${sessionInfo.sessionAddress} 입니다`,
         modalOpen(true, '세선을 생성했습니다');
       }
     } catch (error) {
-      modalOpen(false, '세선생성에 실패 했습니다');
-      console.log('error', error);
+      modalOpen(false, error.response.data);
     }
   };
 
