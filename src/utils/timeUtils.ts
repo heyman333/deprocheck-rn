@@ -10,7 +10,7 @@ export const toAclockTime = (date: Date) => moment(date).format('HH:00');
 
 export const toYYYYMMDD = (date: Date) => moment(date).format('YYYY-MM-DD');
 
-export const toIOSString = (date: Date) =>
+export const toISOString = (date: Date) =>
   moment(date)
     .add(9, 'h')
     .toISOString();

@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from 'styled-components/native';
 import { NavigationScreenComponent } from 'react-navigation';
+import _defaultTo from 'lodash/defaultTo';
 
 import { toYYMMDDKR, toYYYYMMDD } from '../utils/timeUtils';
-import { sessionDateInfos } from '../datas/SessionDateInfo';
 import { AppContext } from '../contexts';
 import {
   img_deprocheck_white,
@@ -27,6 +27,7 @@ import {
   AttendeeType,
   FBSessionTimes,
 } from '../interfaces';
+import LoadingCover from '../components/LoadingCover';
 
 const HORIZONTAL_PADDING = isSmallDeviceSize() ? 16 : 38;
 
@@ -93,7 +94,7 @@ const ArrowDownImage = styled.Image.attrs({ source: icon_arrow_down })`
 
 const AdminShowAttendState: NavigationScreenComponent = () => {
   const { dispatch } = React.useContext(AppContext);
-  const [sessionDates, setSessionDates] = React.useState(sessionDateInfos);
+  const [sessionDates, setSessionDates] = React.useState([]);
   const [sessionDateInfo, setSessionDateInfo] = React.useState(sessionDates[0]);
   const [isModalVisible, setIsModalVisible] = React.useState(false);
   const [jobType, setJobType] = React.useState(ShowJobType.ALL);
@@ -122,6 +123,9 @@ const AdminShowAttendState: NavigationScreenComponent = () => {
   }, []);
 
   React.useEffect(() => {
+    if (!sessionDateInfo) {
+      return;
+    }
     getAttendInfo(toYYYYMMDD(sessionDateInfo.startTime));
   }, [sessionDateInfo]);
 
@@ -138,8 +142,12 @@ const AdminShowAttendState: NavigationScreenComponent = () => {
     }
   };
 
-  const curretWeek = sessionDates.findIndex(
-    item => item.startTime === sessionDateInfo.startTime
+  const currentWeek = _defaultTo(
+    sessionDates.findIndex(
+      item =>
+        item.startTime === (sessionDateInfo ? sessionDateInfo.startTime : null)
+    ),
+    0
   );
 
   const onPressTime = () => {
@@ -182,12 +190,14 @@ const AdminShowAttendState: NavigationScreenComponent = () => {
         </Header>
         <Body>
           <Title>출석현황</Title>
-          <SessionDateInfoView onPress={onPressTime}>
-            <DateText>{`${curretWeek + 1}주차 ${toYYMMDDKR(
-              sessionDateInfo.startTime
-            )}`}</DateText>
-            <ArrowDownImage />
-          </SessionDateInfoView>
+          {sessionDateInfo && (
+            <SessionDateInfoView onPress={onPressTime}>
+              <DateText>{`${currentWeek + 1}주차 ${toYYMMDDKR(
+                sessionDateInfo.startTime
+              )}`}</DateText>
+              <ArrowDownImage />
+            </SessionDateInfoView>
+          )}
           <AttendStateJobSelector onPressType={onPressType} type={jobType} />
           <ListWrap>
             <AttendedMemberList members={filteredMembers} errorMsg={errorMsg} />
@@ -201,6 +211,7 @@ const AdminShowAttendState: NavigationScreenComponent = () => {
           onClose={onClose}
         />
       </Wrap>
+      {!sessionDateInfo && <LoadingCover />}
     </ScreenWrap>
   );
 };
