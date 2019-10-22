@@ -3,15 +3,15 @@ import styled from 'styled-components/native';
 import { NavigationScreenComponent } from 'react-navigation';
 import { getInset } from 'react-native-safe-area-view';
 import _partial from 'lodash/partial';
+import _defaultTo from 'lodash/defaultTo';
 import { FBSessionTimes } from '../interfaces';
 
-import { toIOSString } from '../utils/timeUtils';
+import { toISOString } from '../utils/timeUtils';
 import { SessionDateType } from '../interfaces';
 import { AppContext, UserContext } from '../contexts';
 import { colors } from '../utils/theme';
 import { isSmallDeviceSize } from '../utils/styleUtils';
 import { toYYMMDDKR, toAclockTime } from '../utils/timeUtils';
-import { sessionDateInfos } from '../datas/SessionDateInfo';
 import {
   img_deprocheck_white,
   icon_menu_bar,
@@ -27,6 +27,7 @@ import DCText from '../components/DCText';
 import DCTouchable from '../components/DCTouchable';
 import DateSelectModal from '../components/DateSelectModal';
 import AdminMapView from '../components/AdminMapView';
+import LoadingCover from '../components/LoadingCover';
 
 const HORIZONTAL_PADDING = isSmallDeviceSize() ? 16 : 38;
 
@@ -161,12 +162,18 @@ const ModalText = styled(DCText)`
 const AdminSessionCreate: NavigationScreenComponent = () => {
   const { state } = React.useContext(UserContext);
   const { dispatch } = React.useContext(AppContext);
-  const [sessionDates, setSessionDates] = React.useState(sessionDateInfos);
-  const [sessionDateInfo, setSessionDateInfo] = React.useState(sessionDates[0]);
+  const [sessionDates, setSessionDates] = React.useState([]);
+  const [sessionDateInfo, setSessionDateInfo] = React.useState<SessionDateType>(
+    sessionDates[0]
+  );
   const [isModalVisible, setIsModalVisible] = React.useState(false);
-  const { startTime, endTime } = sessionDateInfo;
-  const curretWeek = sessionDates.findIndex(
-    item => item.startTime === sessionDateInfo.startTime
+
+  const currentWeek = _defaultTo(
+    sessionDates.findIndex(
+      item =>
+        item.startTime === (sessionDateInfo ? sessionDateInfo.startTime : null)
+    ),
+    0
   );
 
   React.useEffect(() => {
@@ -272,12 +279,12 @@ ${sessionInfo.sessionAddress} 입니다`,
 
     const data = {
       address: sessionInfo.sessionAddress,
-      date: toIOSString(sessionDateInfo.startTime),
-      from: toIOSString(sessionDateInfo.startTime),
+      date: toISOString(sessionDateInfo.startTime),
+      from: toISOString(sessionDateInfo.startTime),
       latitude: sessionInfo.sessionLocation.latitude,
       longitude: sessionInfo.sessionLocation.longitude,
       name: '세션장소',
-      to: toIOSString(sessionDateInfo.endTime),
+      to: toISOString(sessionDateInfo.endTime),
     };
 
     try {
@@ -309,24 +316,30 @@ ${sessionInfo.sessionAddress} 입니다`,
           </MenuButton>
         </Header>
         <Body>
-          <SessionDateTitle>{`${curretWeek +
+          <SessionDateTitle>{`${currentWeek +
             1}주차 세션일정`}</SessionDateTitle>
           <SessionDateInfoView>
-            <DateTimeView>
-              <DateText>{`${toYYMMDDKR(startTime)}`}</DateText>
-              <TimeText>
-                {`${toAclockTime(startTime)} ~ ${toAclockTime(endTime)}`}
-              </TimeText>
-            </DateTimeView>
+            {sessionDateInfo && (
+              <DateTimeView>
+                <DateText>{`${toYYMMDDKR(
+                  sessionDateInfo.startTime
+                )}`}</DateText>
+                <TimeText>
+                  {`${toAclockTime(sessionDateInfo.startTime)} ~ ${toAclockTime(
+                    sessionDateInfo.endTime
+                  )}`}
+                </TimeText>
+              </DateTimeView>
+            )}
             <PlusImageView onPress={onPressPlus}>
               <PlusImage />
             </PlusImageView>
           </SessionDateInfoView>
         </Body>
+        <AdminMapView />
         <BottomButton onPress={openConfirmModal}>
           <BottomText>일정 생성하기</BottomText>
         </BottomButton>
-        <AdminMapView />
       </Wrap>
       <DateSelectModal
         isVisible={isModalVisible}
@@ -334,6 +347,7 @@ ${sessionInfo.sessionAddress} 입니다`,
         onConfirm={onConfirm}
         onClose={onClose}
       />
+      {!sessionDateInfo && <LoadingCover />}
     </ScreenWrap>
   );
 };
