@@ -368,7 +368,7 @@
 				CODE_SIGN_ENTITLEMENTS = depromeet_rn_fabric/Depromeet.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 0;
+				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = Q5VAQ4ZHM5;
 				HEADER_SEARCH_PATHS = (
@@ -435,7 +435,7 @@
 				CODE_SIGN_ENTITLEMENTS = depromeet_rn_fabric/Depromeet.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 0;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = Q5VAQ4ZHM5;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
