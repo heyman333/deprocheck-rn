@@ -119,40 +119,40 @@ const AdminMapView: React.FC = () => {
     }
   };
 
-  React.useEffect(() => {
-    const getAddressByLocation = async () => {
-      if (!pinCoordinate) {
-        return;
-      }
+  const getAddressByLocation = React.useCallback(async () => {
+    if (!pinCoordinate) {
+      return;
+    }
 
-      try {
-        const formattedAddress = await getAddress(
-          pinCoordinate.latitude,
-          pinCoordinate.longitude
-        );
+    try {
+      const formattedAddress = await getAddress(
+        pinCoordinate.latitude,
+        pinCoordinate.longitude
+      );
 
-        dispatch({
-          type: 'SET_USER_INFO',
-          payload: {
-            userInfo: {
-              sessionInfo: {
-                sessionLocation: pinCoordinate,
-                sessionAddress: formattedAddress,
-              },
+      dispatch({
+        type: 'SET_USER_INFO',
+        payload: {
+          userInfo: {
+            sessionInfo: {
+              sessionLocation: pinCoordinate,
+              sessionAddress: formattedAddress,
             },
           },
-        });
-      } catch (error) {
-        console.log('error', error);
-      }
-    };
+        },
+      });
+    } catch (error) {
+      console.log('error', error);
+    }
+  }, [pinCoordinate, dispatch]);
 
+  React.useEffect(() => {
     if (pinRef.current && pinCoordinate) {
       pinRef.current.showCallout();
     }
 
     getAddressByLocation();
-  }, [pinCoordinate, dispatch]);
+  }, [pinCoordinate, getAddressByLocation]);
 
   const onPressMap = (e: any) => {
     const coordination: LatLng = e.nativeEvent.coordinate;

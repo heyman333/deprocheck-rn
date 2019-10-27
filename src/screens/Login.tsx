@@ -46,7 +46,7 @@ const Body = styled.View`
   justify-content: space-between;
 `;
 
-const NameInput = styled.TextInput.attrs({
+const NameInput = styled(TextInput).attrs({
   allowFontScaling: false,
   includefontpadding: false,
   textAlignVertical: 'top',
@@ -196,22 +196,22 @@ const Login: NavigationScreenComponent = () => {
   const [name, setName] = React.useState('');
   const inputRef = React.useRef<TextInput>(null);
 
-  React.useEffect(() => {
-    const initUserStatus = async () => {
-      const storedUserInfo = await getUserInfo();
-      if (storedUserInfo) {
-        setJobType(storedUserInfo.jobType);
-        setName(storedUserInfo.name);
-        dispatch({
-          type: 'CHANGE_THEME',
-          payload: { theme: storedUserInfo.mode },
-        });
-      }
-      SplashScreen.hide();
-    };
-
-    initUserStatus();
+  const initUserStatus = React.useCallback(async () => {
+    const storedUserInfo = await getUserInfo();
+    if (storedUserInfo) {
+      setJobType(storedUserInfo.jobType);
+      setName(storedUserInfo.name);
+      dispatch({
+        type: 'CHANGE_THEME',
+        payload: { theme: storedUserInfo.mode },
+      });
+    }
+    SplashScreen.hide();
   }, [dispatch]);
+
+  React.useEffect(() => {
+    initUserStatus();
+  }, [initUserStatus]);
 
   const setUserStatus = () => {
     const userInfo = {
