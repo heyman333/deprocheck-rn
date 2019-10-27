@@ -176,20 +176,20 @@ const AdminSessionCreate: NavigationScreenComponent = () => {
     0
   );
 
-  React.useEffect(() => {
-    const getSessionDateInfoFromFB = async () => {
-      const dateInfos = (await getSessionDateInfos()) as {
-        dats: FBSessionTimes[];
-      };
-
-      const sessionDatesFB = dateInfos.dats.map(date => ({
-        startTime: date.startTime.toDate(),
-        endTime: date.endTime.toDate(),
-      }));
-      setSessionDates(sessionDatesFB);
-      setSessionDateInfo(sessionDatesFB[0]);
+  const getSessionDateInfoFromFB = async () => {
+    const dateInfos = (await getSessionDateInfos()) as {
+      dats: FBSessionTimes[];
     };
 
+    const sessionDatesFB = dateInfos.dats.map(date => ({
+      startTime: date.startTime.toDate(),
+      endTime: date.endTime.toDate(),
+    }));
+    setSessionDates(sessionDatesFB);
+    setSessionDateInfo(sessionDatesFB[0]);
+  };
+
+  React.useEffect(() => {
     try {
       getSessionDateInfoFromFB();
     } catch (error) {

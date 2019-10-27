@@ -112,19 +112,20 @@ const UserAttend: NavigationScreenComponent = () => {
   const { state: userState } = React.useContext(UserContext);
   const { dispatch } = React.useContext(AppContext);
 
-  React.useEffect(() => {
-    const getLastSession = async () => {
-      try {
-        const lastSession = await getSessionInfos();
-        if (lastSession) {
-          setSessionAddress(lastSession.address);
-        }
-      } catch (error) {
-        console.log('error', error);
+  const getLastSession = async () => {
+    try {
+      const lastSession = await getSessionInfos();
+      if (lastSession) {
+        setSessionAddress(lastSession.address);
       }
-    };
+    } catch (error) {
+      console.log('error', error);
+    }
+  };
+
+  React.useEffect(() => {
     getLastSession();
-  });
+  }, []);
 
   const onBackButtonPressAndroid = () => {
     Alert.alert('종료', '종료 할까요?', [
